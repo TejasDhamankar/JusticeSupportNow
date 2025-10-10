@@ -3,21 +3,27 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, ExternalLink, Scale, Heart, Leaf, Shield, Clock, CheckCircle, Star, TrendingUp } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import { ArrowRight, Scale, Heart, Leaf, Shield, Clock, CheckCircle } from "lucide-react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+// Data Import: This is where you get all the card data directly from utils.
 import { getAllCaseTypes } from "@/lib/utils";
 import { CaseType } from "@/types/case";
+
+// Color palette
+const colors = {
+  darkBlue: "#0A0D14",
+  whiteText: "#F0F6FC",
+  accentGreen: "#2AAA8A",
+  hoverGreen: "#3BC1A0",
+  lightGrayText: "#8B949E",
+  borderGray: "#30363D",
+  accentAmber: "#DBAB09",
+  cardBackground: "#161B22",
+};
 
 const CaseTypesList = () => {
   const caseTypes = getAllCaseTypes();
@@ -25,69 +31,49 @@ const CaseTypesList = () => {
 
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
-      }
-    }
+    visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.2 } },
   };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 30, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut"
-      }
-    }
+    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5 } },
   };
 
-  // Enhanced case categories with icons and descriptions
+  // Centralized slug lists for robust filtering
+  const medicalSlugs = ["cpap", "hernia-mesh", "talcum-powder", "exactech", "depo-provera", "zantac", "infant-formula-nec"];
+  const environmentalSlugs = ["camp-lejeune", "roundup", "paraquat", "pfas-water-contamination", "firefighting-foam"];
+  const militarySlugs = ["3m-earplugs", "camp-lejeune", "firefighting-foam"];
+
   const caseCategories = {
     all: {
       cases: caseTypes,
       icon: Scale,
       title: "All Cases",
-      description: "Complete range of active litigation",
-      color: "from-blue-500 to-indigo-600"
     },
     medical: {
-      cases: caseTypes.filter(c => ["cpap", "hernia-mesh", "nec-formula", "talcum-powder", "exactech"].includes(c.slug)),
+      cases: caseTypes.filter(c => medicalSlugs.includes(c.slug)),
       icon: Heart,
-      title: "Medical & Pharmaceutical",
-      description: "Defective medical devices & dangerous drugs",
-      color: "from-red-500 to-pink-600"
+      title: "Medical & Pharma",
     },
     environmental: {
-      cases: caseTypes.filter(c => ["camp-lejeune", "roundup", "paraquat", "pfas"].includes(c.slug)),
+      cases: caseTypes.filter(c => environmentalSlugs.includes(c.slug)),
       icon: Leaf,
       title: "Environmental",
-      description: "Toxic exposure & environmental hazards",
-      color: "from-green-500 to-emerald-600"
     },
     military: {
-      cases: caseTypes.filter(c => ["3m-earplugs", "camp-lejeune"].includes(c.slug)),
+      cases: caseTypes.filter(c => militarySlugs.includes(c.slug)),
       icon: Shield,
       title: "Military & Veterans",
-      description: "Cases affecting our service members",
-      color: "from-purple-500 to-violet-600"
-    }
+    },
   };
 
-  const CaseCard = ({ caseType, index }: { caseType: CaseType; index: number }) => (
-    <motion.div
-      key={caseType.id}
-      variants={itemVariants}
-      className="h-full"
-    >
+  const CaseCard = ({ caseType }: { caseType: CaseType }) => (
+    <motion.div key={caseType.id} variants={itemVariants} className="h-full">
       <Link href={`/cases/${caseType.slug}`} className="block h-full group">
-        <Card className="h-full overflow-hidden border-none shadow-lg hover:shadow-2xl transition-all duration-300 bg-white group-hover:bg-gradient-to-br group-hover:from-white group-hover:to-gray-50">
-          {/* Image Section */}
+        {/* NOTE: Inline style variable for accent-green to use with hover */}
+        <Card className="h-full flex flex-col overflow-hidden border shadow-lg hover:shadow-2xl transition-all duration-300 hover:border-[var(--accent-green)]" 
+              style={{ backgroundColor: colors.cardBackground, borderColor: colors.borderGray, '--accent-green': colors.accentGreen }}>
+          
           <div className="relative h-56 w-full overflow-hidden">
             <Image
               src={caseType.imageUrl}
@@ -95,51 +81,32 @@ const CaseTypesList = () => {
               fill
               className="object-cover transform transition-transform duration-500 group-hover:scale-105"
             />
-
-            {/* Static Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-
             {/* Hover Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-            {/* Active Badge */}
-            <div className="absolute top-4 right-4">
-              <Badge className="bg-accent/90 text-primary font-bold shadow-lg backdrop-blur-sm">
-                <TrendingUp className="w-3 h-3 mr-1" />
-                Active
-              </Badge>
-            </div>
-
-            {/* Hover Content */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 bg-primary/90">
+            <div
+              className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300"
+              style={{ backgroundColor: `${colors.darkBlue}b3` }}
+            >
               <div className="text-center text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                <CheckCircle className="w-12 h-12 mx-auto mb-3 text-accent" />
+                <CheckCircle className="w-12 h-12 mx-auto mb-3" style={{ color: colors.accentGreen }} />
                 <p className="font-bold text-lg mb-2">View Case Details</p>
                 <p className="text-sm opacity-90">Learn about compensation</p>
               </div>
             </div>
           </div>
 
-          {/* Content Section */}
           <CardHeader className="pt-6 pb-3">
-            <CardTitle className="text-xl font-bold text-primary group-hover:text-primary/90 transition-colors leading-tight">
-              {caseType.title}
-            </CardTitle>
+            <CardTitle className="text-xl font-bold" style={{ color: colors.accentGreen }}>{caseType.title}</CardTitle>
           </CardHeader>
 
-          <CardContent className="pt-0 pb-4">
-            <CardDescription className="text-gray-600 line-clamp-3 leading-relaxed">
-              {caseType.shortDescription}
-            </CardDescription>
-
-            {/* Key Features */}
-            <div className="flex items-center mt-4 space-x-4 text-sm text-gray-500">
+          <CardContent className="pt-0 pb-4 flex-grow">
+            <CardDescription className="line-clamp-3 leading-relaxed" style={{ color: colors.lightGrayText }}>{caseType.shortDescription}</CardDescription>
+            <div className="flex items-center mt-4 space-x-4 text-sm" style={{ color: colors.lightGrayText }}>
               <div className="flex items-center">
-                <Clock className="w-4 h-4 mr-1 text-accent" />
+                <Clock className="w-4 h-4 mr-1.5" style={{ color: colors.accentAmber }} />
                 <span>Free Consult</span>
               </div>
               <div className="flex items-center">
-                <Shield className="w-4 h-4 mr-1 text-green-500" />
+                <Shield className="w-4 h-4 mr-1.5" style={{ color: colors.accentGreen }} />
                 <span>No Win, No Fee</span>
               </div>
             </div>
@@ -147,11 +114,10 @@ const CaseTypesList = () => {
 
           <CardFooter className="pt-0 pb-6">
             <div className="flex items-center justify-between w-full">
-              <div className="flex items-center text-primary text-sm font-bold group-hover:text-accent transition-colors">
-                Learn More
-                <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform duration-200" />
+              <div className="flex items-center text-sm font-bold" style={{ color: colors.whiteText }}>
+                Read More
+                <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
               </div>
-
             </div>
           </CardFooter>
         </Card>
@@ -160,174 +126,83 @@ const CaseTypesList = () => {
   );
 
   return (
-    <section id="case-types" className="py-20 md:py-28 bg-gradient-to-br from-gray-50 via-white to-blue-50/30 relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-accent/10 to-yellow-400/10 rounded-full blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-primary/10 to-blue-500/10 rounded-full blur-3xl" />
-      </div>
-
+    <section id="case-types" className="py-20 md:py-28 relative overflow-hidden" style={{ backgroundColor: colors.darkBlue }}>
       <div className="container mx-auto px-4 relative z-10">
-        {/* Enhanced Header */}
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-        >
-          <Badge variant="outline" className="mb-6 px-4 py-2 text-primary border-primary/30 bg-primary/5 font-bold backdrop-blur-sm">
-            <Scale className="w-4 h-4 mr-2" />
-            ACTIVE LITIGATION
-          </Badge>
+        <Tabs defaultValue="all" className="w-full" onValueChange={setActiveTab}>
+          <div className="flex flex-col md:flex-row md:space-x-12">
+            {/* Left Side: Title and Tabs */}
+            <div className="md:w-5/12 mb-12 md:mb-0 flex flex-col justify-center">
 
-          <h2 className="text-4xl md:text-6xl font-black text-primary mb-6 leading-tight">
-            <span className="bg-gradient-to-r from-primary via-blue-600 to-indigo-600 bg-clip-text text-transparent">
-              Mass Tort &
-            </span>
-            <br />
-            <span className="text-gray-800">Class Action Cases</span>
-          </h2>
+              <h2 className="text-4xl md:text-5xl font-black mb-6 leading-tight" style={{ color: colors.accentGreen }}>
+                Mass Tort & <br /> Class Action Cases
+              </h2>
+              <div className="w-24 h-1 mb-6 rounded-full" style={{ backgroundColor: colors.accentGreen }} />
+              <p className="text-lg md:text-xl mb-8 leading-relaxed" style={{ color: colors.lightGrayText }}>
+                <span className="font-bold" style={{ color: colors.lightGrayText }}>Our firm is actively handling these significant cases. If you've been affected, you may be entitled to substantial compensation.</span>
+              </p>
 
-          <div className="w-24 h-1 bg-gradient-to-r from-accent to-yellow-400 mx-auto mb-6 rounded-full" />
+              {/* CTA Button */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+              >
+                <Link
+                  href="/contact" 
+                  className="inline-flex items-center justify-center text-center px-8 py-4 mb-8 text-lg font-bold rounded-full transition-all duration-300 transform hover:scale-[1.03] shadow-xl"
+                  style={{
+                    backgroundColor: colors.accentGreen, 
+                    color: colors.whiteText, 
+                  }}
+                >
+                  Get a Free, Confidential Case Review
+                  <ArrowRight size={20} className="ml-3" />
+                </Link>
+              </motion.div>
 
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Our firm is actively handling these significant cases. If you've been affected,
-            <span className="font-bold text-primary"> you may be entitled to substantial compensation.</span>
-          </p>
-
-          {/* Trust Indicators */}
-          <div className="flex items-center justify-center space-x-8 mt-8">
-
-            <div className="flex items-center text-gray-600">
-              <Shield className="w-5 h-5 text-blue-500 mr-2" />
-              <span className="font-medium">No Fees</span>
-            </div>
-            <div className="flex items-center text-gray-600">
-              <Clock className="w-5 h-5 text-purple-500 mr-2" />
-              <span className="font-medium">Free Consultation</span>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Desktop view - Enhanced Tabbed Interface */}
-        <div className="hidden md:block">
-          <Tabs defaultValue="all" className="w-full" onValueChange={setActiveTab}>
-            {/* Enhanced Tab Navigation */}
-            <div className="flex justify-center mb-12">
-              <TabsList className="grid h-full grid-cols-4 gap-2 w-full max-w-5xl bg-white/50 backdrop-blur-sm p-2 rounded-2xl shadow-lg border border-white/20">
+              {/* Tabs Triggers */}
+              <TabsList className="grid h-auto grid-cols-2 gap-2 w-full max-w-md p-2 rounded-2xl" style={{ backgroundColor: colors.cardBackground, borderColor: colors.borderGray }}>
                 {Object.entries(caseCategories).map(([key, category]) => {
                   const Icon = category.icon;
                   return (
                     <TabsTrigger
                       key={key}
                       value={key}
-                      className="flex items-center space-x-2 px-6 py-4 rounded-xl font-bold transition-all duration-300 data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-blue-600 data-[state=active]:text-white data-[state=active]:shadow-lg"
+                      className="flex flex-col items-center justify-center gap-1 text-center p-2 h-24 w-full rounded-xl font-bold transition-all duration-300 data-[state=active]:shadow-lg"
+                      style={{
+                        backgroundColor: activeTab === key ? colors.accentGreen : "transparent",
+                        color: colors.whiteText 
+                      }}
                     >
-                      <Icon className="w-4 h-4" />
-                      <span className="hidden sm:inline">{category.title}</span>
-                      <span className="sm:hidden">{key === 'all' ? 'All' : key === 'medical' ? 'Medical' : key === 'environmental' ? 'Env.' : 'Military'}</span>
+                      <Icon className="w-5 h-5" />
+                      <span>{category.title}</span>
                     </TabsTrigger>
                   );
                 })}
               </TabsList>
             </div>
 
-            {/* Tab Content */}
-            {Object.entries(caseCategories).map(([category, data]) => (
-              <TabsContent key={category} value={category} className="mt-0">
-                {activeTab === category && (
-                  <div className="mb-8">
-                    {/* Category Description */}
-                    <div className="text-center mb-8">
-                      <div className={`inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r ${data.color} text-white font-bold shadow-lg mb-4`}>
-                        <data.icon className="w-5 h-5 mr-2" />
-                        {data.description}
-                      </div>
-                    </div>
-
-                    {/* Cases Grid */}
-                    <motion.div
-                      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-                      variants={containerVariants}
-                      initial="hidden"
-                      animate="visible"
-                      key={category} // This ensures re-animation when tab changes
-                    >
-                      {data.cases.map((caseType, index) => (
-                        <CaseCard key={`${category}-${caseType.id}`} caseType={caseType} index={index} />
-                      ))}
-                    </motion.div>
-                  </div>
-                )}
-              </TabsContent>
-            ))}
-          </Tabs>
-        </div>
-
-        {/* Mobile view - Enhanced Carousel */}
-        <div className="md:hidden">
-          <Carousel className="w-full">
-            <CarouselContent className="-ml-4">
-              {caseTypes.map((caseType, index) => (
-                <CarouselItem key={caseType.id} className="pl-4">
-                  <CaseCard caseType={caseType} index={index} />
-                </CarouselItem>
+            {/* Right Side: Case Cards */}
+            <div className="md:w-7/12 h-[48rem] overflow-y-auto pr-4 custom-scrollbar">
+              {Object.entries(caseCategories).map(([category, data]) => (
+                <TabsContent key={category} value={category} className="mt-0">
+                  <motion.div
+                    className="grid grid-cols-1 sm:grid-cols-2 gap-8"
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                    // Ensures re-animation when tab changes
+                    key={category} 
+                  >
+                    {data.cases.map((caseType) => (
+                      <CaseCard key={`${category}-${caseType.id}`} caseType={caseType} />
+                    ))}
+                  </motion.div>
+                </TabsContent>
               ))}
-            </CarouselContent>
-            <div className="flex justify-center mt-8 gap-4">
-              <CarouselPrevious className="relative inset-0 translate-y-0 bg-white/90 hover:bg-white shadow-lg" />
-              <CarouselNext className="relative inset-0 translate-y-0 bg-white/90 hover:bg-white shadow-lg" />
-            </div>
-          </Carousel>
-        </div>
-
-        {/* Enhanced CTA Section */}
-        <motion.div
-          className="text-center mt-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.6 }}
-        >
-          <div className="bg-gradient-to-br from-primary to-blue-600 rounded-3xl p-8 md:p-12 text-white shadow-2xl">
-            <h3 className="text-2xl md:text-3xl font-bold mb-4">
-              Don't Wait - Time Limits Apply
-            </h3>
-            <p className="text-lg opacity-90 mb-8 max-w-2xl mx-auto">
-              Many cases have strict deadlines. Get your free consultation today and learn about your legal options.
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-primary font-black px-8 py-6 text-lg shadow-xl hover:shadow-2xl border-2 border-accent/30 transition-all duration-300 hover:scale-105">
-                <Link href="/cases" className="flex items-center">
-                  Explore All Case Types
-                  <ExternalLink size={20} className="ml-3 group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </Button>
-
-              <Button asChild variant="outline" size="lg" className="bg-white/10 hover:bg-white/20 text-white border-2 border-white/30 hover:border-white/50 font-bold px-8 py-6 text-lg backdrop-blur-sm transition-all duration-300">
-                <a href="tel:9085336944" className="flex items-center">
-                  <Shield className="mr-3 h-5 w-5" />
-                  Call (914) 300 2717
-                </a>
-              </Button>
-            </div>
-
-            {/* Additional Trust Elements */}
-            <div className="flex items-center justify-center space-x-6 mt-8 pt-6 border-t border-white/20">
-              <div className="text-center">
-                <div className="font-bold text-xl text-accent">24/7</div>
-                <div className="text-sm opacity-80">Available</div>
-              </div>
-              <div className="text-center">
-                <div className="font-bold text-xl text-accent">$0</div>
-                <div className="text-sm opacity-80">Upfront Fees</div>
-              </div>
-
             </div>
           </div>
-        </motion.div>
+        </Tabs>
       </div>
     </section>
   );

@@ -1,341 +1,180 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, useAnimation } from "framer-motion";
-import Link from "next/link";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { ArrowRight, Phone, CheckCircle, Shield, Clock, Users, DollarSign, TrendingUp, Star, Award } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowRight, Phone, CheckCircle, Shield, Clock, Scale } from "lucide-react";
+
+// New color palette from your CaseHero component
+const colors = {
+  darkBlue: "#0A0D14",
+  whiteText: "#F0F6FC",
+  accentGreen: "#2AAA8A", // A sophisticated, matte-like teal/green
+  hoverGreen: "#3BC1A0", // A slightly lighter version for hovers
+  lightGrayText: "#8B949E",
+  borderGray: "#30363D",
+  cardBackground: "#161B22",
+};
 
 const Hero = () => {
-  const [currentStat, setCurrentStat] = useState(0);
-  const controls = useAnimation();
-
-
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    controls.start({
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: "easeOut" }
-    });
-  }, [controls]);
-
+    const handleMouseMove = (event: MouseEvent) => {
+      setMousePosition({ x: event.clientX, y: event.clientY });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+  
+  // Animation variants for the main container and its children
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3
-      }
-    }
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
-    }
+      transition: { type: "spring", stiffness: 100, duration: 0.8 },
+    },
   };
 
+  // A more subtle floating animation
   const floatingVariants = {
     animate: {
-      y: [-10, 10, -10],
+      y: [-8, 8, -8],
       transition: {
-        duration: 4,
+        duration: 6,
         repeat: Infinity,
-        ease: "easeInOut"
-      }
-    }
+        ease: "easeInOut",
+      },
+    },
   };
 
   return (
-    <section className="relative min-h-screen pb-32 flex items-center justify-center overflow- ">
-      {/* Animated Background */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src="/images/legal-background.jpg"
-          alt="Legal background"
-          fill
-          priority
-          className="object-cover object-center"
-        />
-        {/* Multiple overlay layers for depth */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/95 via-blue-900/90 to-indigo-900/95" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+    <section
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      style={{ 
+        backgroundColor: colors.darkBlue, 
+        color: colors.whiteText,
+        '--accent-green': colors.accentGreen,
+        '--hover-green': colors.hoverGreen 
+      } as React.CSSProperties}
+    >
+      {/* Interactive Spotlight Effect */}
+      <motion.div
+        className="pointer-events-none absolute -inset-px rounded-xl transition-all duration-300"
+        style={{
+          background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(42, 170, 138, 0.1), transparent 80%)`,
+        }}
+      />
 
-        {/* Animated geometric shapes */}
+      <div className="container mx-auto px-6 relative z-10 flex flex-col lg:flex-row items-center gap-12 py-24 md:py-32">
+        {/* Left Column: Content */}
         <motion.div
-          className="absolute top-20 left-10 w-32 h-32 bg-accent/20 rounded-full blur-xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.6, 0.3],
-          }}
-          transition={{ duration: 4, repeat: Infinity }}
-        />
-        <motion.div
-          className="absolute bottom-20 right-20 w-48 h-48 bg-purple-500/20 rounded-full blur-xl"
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.2, 0.5, 0.2],
-          }}
-          transition={{ duration: 6, repeat: Infinity }}
-        />
-        <motion.div
-          className="absolute top-1/2 left-1/2 w-64 h-64 bg-blue-400/10 rounded-full blur-2xl"
-          animate={{
-            x: [-100, 100, -100],
-            y: [-50, 50, -50],
-            scale: [1, 1.3, 1],
-          }}
-          transition={{ duration: 8, repeat: Infinity }}
-        />
-      </div>
-
-      <div className="container mx-auto px-4 relative z-20 pt-32 pb-20">
-        <motion.div
-          className="max-w-4xl mx-auto text-center"
+          className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
-          {/* Trust Badge */}
-          <motion.div variants={itemVariants}>
-            <Badge
-              variant="outline"
-              className="border-accent/50 bg-accent/10 text-accent px-6 py-2 mb-8 font-bold text-sm backdrop-blur-sm hover:bg-accent/20 transition-all duration-300"
-            >
-              <Shield className="w-4 h-4 mr-2" />
-              FREE 24/7 Consultation
-            </Badge>
-          </motion.div>
-
-          {/* Main Headline */}
-          <motion.div variants={itemVariants}>
-            <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight tracking-tight">
-              <span className="bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">
-                Get The
-              </span>
-              <br />
-              <span className="bg-gradient-to-r from-accent via-yellow-300 to-accent bg-clip-text text-transparent">
-                Compensation
-              </span>
-              <br />
-              <span className="bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">
-                You Deserve
-              </span>
-            </h1>
-          </motion.div>
-
-          {/* Animated Separator */}
-          <motion.div
-            className="mx-auto w-32 mb-8"
-            variants={itemVariants}
+          {/* Headline */}
+          <motion.h1
+            className="text-4xl md:text-6xl font-serif font-bold mb-6 leading-tight tracking-tight text-[#2AAA8A] "
+            
+            variants={itemVariants} 
           >
-            <motion.div
-              className="h-1 bg-gradient-to-r from-transparent via-accent to-transparent rounded-full"
-              animate={{
-                scaleX: [0, 1, 0],
-                opacity: [0, 1, 0],
-              }}
-              transition={{ duration: 2, repeat: Infinity }}
-            />
-          </motion.div>
+            Don't Face Them Alone.
+            <br />
+            Expert Legal Representation
+            <br />
+            Is Here For You.
+          </motion.h1>
 
           {/* Subheadline */}
           <motion.p
-            className="text-xl md:text-2xl mb-12 text-gray-100 font-medium max-w-3xl mx-auto leading-relaxed"
+            className="text-lg md:text-xl mb-8 font-normal max-w-2xl leading-relaxed"
+            style={{ color: colors.lightGrayText }}
             variants={itemVariants}
           >
-            We connect victims with top attorneys who fight for maximum compensation
-
-
+            Our dedicated team is committed to navigating the complexities of the
+            law to protect your rights and achieve the best possible outcome for
+            your case.
           </motion.p>
-
-          {/* CTA Buttons */}
-          <motion.div
-            className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16"
-            variants={itemVariants}
-          >
-            <motion.div
-              whileHover={{ scale: 1.05, y: -3 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ duration: 0.2 }}
-            >
-              <Button
-                asChild
-                size="lg"
-                className="bg-gradient-to-r from-accent via-yellow-400 to-accent hover:from-accent/90 hover:via-yellow-400/90 hover:to-accent/90 text-primary font-black px-8 py-6 text-lg shadow-2xl hover:shadow-accent/25 border-2 border-accent/30 group relative overflow-hidden"
-              >
-                <Link href="#case-evaluation" className="flex items-center relative z-10">
-                  <CheckCircle className="mr-3 h-5 w-5" />
-                  Start My Free Case Review
-                  <motion.div
-                    className="ml-3"
-                    animate={{ x: [0, 5, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                  >
-                    <ArrowRight className="h-5 w-5" />
-                  </motion.div>
-                  {/* Button shine effect */}
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                    animate={{
-                      x: [-100, 300],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      delay: 1,
-                    }}
-                  />
-                </Link>
-              </Button>
-            </motion.div>
-
-            <motion.div
-              whileHover={{ scale: 1.02, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ duration: 0.2 }}
-            >
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="bg-white/10 hover:bg-white/20 text-white border-2 border-white/30 hover:border-white/50 font-bold px-8 py-6 text-lg backdrop-blur-sm shadow-xl group"
-              >
-                <a href="tel:9085336944" className="flex items-center">
-                  <Phone className="mr-3 h-5 w-5 group-hover:animate-pulse" />
-                  Call (914) 300 2717
-                </a>
-              </Button>
-            </motion.div>
+          
+          {/* Value Propositions */}
+          <motion.div className="grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-4 mb-10 w-full max-w-2xl" variants={itemVariants}>
+            <div className="flex items-center gap-3">
+              <CheckCircle size={20} style={{ color: colors.accentGreen }} />
+              <span className="font-medium" style={{ color: colors.lightGrayText }}>Free Consultation</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <Shield size={20} style={{ color: colors.accentGreen }} />
+              <span className="font-medium" style={{ color: colors.lightGrayText }}>No Win, No Fee</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <Clock size={20} style={{ color: colors.accentGreen }} />
+              <span className="font-medium" style={{ color: colors.lightGrayText }}>24/7 Support</span>
+            </div>
           </motion.div>
 
-          {/* Trust Indicators */}
-          {/* <motion.div
-            className="grid grid-cols-2 md:grid-cols-3 gap-8 mb-12"
+          {/* Buttons */}
+          <motion.div
+            className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 w-full sm:w-auto"
             variants={itemVariants}
           >
-            {stats.map((stat, index) => {
-              const Icon = stat.icon;
-              return (
-                <motion.div
-                  key={index}
-                  className="text-center group cursor-pointer"
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <motion.div
-                    className={`inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm mb-3 ${stat.color} group-hover:bg-white/20 transition-all duration-300`}
-                    animate={currentStat === index ? {
-                      scale: [1, 1.2, 1],
-                      rotate: [0, 360, 0],
-                    } : {}}
-                    transition={{ duration: 1 }}
-                  >
-                    <Icon className="w-6 h-6" />
-                  </motion.div>
-                  <motion.p
-                    className="text-2xl md:text-3xl font-black text-white mb-1"
-                    animate={currentStat === index ? {
-                      color: ['#ffffff', '#ffd700', '#ffffff'],
-                    } : {}}
-                    transition={{ duration: 1 }}
-                  >
-                    {stat.number}
-                  </motion.p>
-                  <p className="text-sm font-medium text-gray-300 group-hover:text-white transition-colors">
-                    {stat.text}
-                  </p>
-                </motion.div>
-              );
-            })}
-          </motion.div> */}
-
-          {/* Social Proof */}
-          <motion.div
-            className="flex items-center justify-center space-x-8 text-gray-300"
-            variants={itemVariants}
-          >
-
-
-
-            <motion.div
-              className="hidden md:flex items-center space-x-2"
-              whileHover={{ scale: 1.05 }}
+            {/* Primary Button - MODIFIED TEXT COLOR */}
+            <a
+              href="#case-evaluation"
+              className="group relative w-full sm:w-auto px-8 py-4 rounded-lg font-bold text-lg flex items-center justify-center shadow-lg overflow-hidden transition-all duration-300 ease-in-out"
+              style={{ backgroundColor: colors.accentGreen, color: colors.whiteText }} // Text color changed to whiteText
             >
-              <Shield className="w-5 h-5 text-green-400" />
-              <span className="text-sm font-medium">No Win, No Fee</span>
-            </motion.div>
-          </motion.div>
+              <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full  group-hover:h-56 opacity-20"></span>
+              <span className="relative flex items-center">
+                Get a Free Case Evaluation
+                <ArrowRight className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
+              </span>
+            </a>
 
-          {/* Floating Call-to-Action */}
-          <motion.div
-            className="absolute -bottom-10 left-1/2 transform -translate-x-1/2"
-            variants={floatingVariants}
-            animate="animate"
-          >
-            <motion.div
-              className="bg-gradient-to-r from-accent to-yellow-400 text-primary px-6 py-3 rounded-full font-bold text-sm shadow-2xl"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
+            {/* Secondary Button */}
+            <a
+              href="tel:9143002717"
+              className="w-full sm:w-auto px-8 py-4 rounded-lg font-semibold text-lg flex items-center justify-center transition-colors duration-300 border hover:border-[var(--accent-green)] hover:text-[var(--accent-green)]"
+              style={{ backgroundColor: colors.accentGreen, color: colors.whiteText }}
             >
-              <Link href="#case-evaluation" className="flex items-center">
-                <Clock className="w-4 h-4 mr-2" />
-                Free Consultation - Act Now!
-              </Link>
-            </motion.div>
+              <Phone className="w-5 h-5 mr-2" />
+              Call Us Now
+            </a>
           </motion.div>
         </motion.div>
-      </div>
 
-      {/* Scroll Indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 2, duration: 0.8 }}
-      >
+        {/* Right Column: Visual Element */}
         <motion.div
-          className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
+          className="flex-1 relative hidden lg:flex justify-center items-center"
+          variants={floatingVariants}
+          animate="animate"
         >
-          <motion.div
-            className="w-1 h-3 bg-white/60 rounded-full mt-2"
-            animate={{ scaleY: [1, 0.3, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          />
+          <div 
+            className="relative w-80 h-80 flex items-center justify-center rounded-2xl border shadow-2xl p-4
+                        before:absolute before:top-0 before:left-0 before:w-full before:h-[1px] 
+                        before:bg-gradient-to-r from-transparent via-[var(--accent-green)] to-transparent"
+            style={{ backgroundColor: colors.cardBackground, borderColor: colors.borderGray }}
+          >
+            <Scale
+              className="relative z-10"
+              size={120}
+              strokeWidth={1.5}
+              style={{ color: colors.accentGreen }}
+            />
+          </div>
         </motion.div>
-      </motion.div>
-
-      {/* Particle Effect */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-white/20 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [-20, -100],
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration: Math.random() * 3 + 2,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-            }}
-          />
-        ))}
       </div>
     </section>
   );
