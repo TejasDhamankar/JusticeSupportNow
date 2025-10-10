@@ -7,8 +7,8 @@ import Footer from "@/components/sections/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Lex Claim Connect - Professional Legal Representation",
-  description: "Expert legal assistance for mass tort and class action cases including Camp Lejeune, 3M Earplugs, Roundup, and more. Free case evaluations available.",
+  title: "Justice Support Now | Free Legal Case Evaluation & Mass Tort Assistance",
+  description: "Justice Support Now connects individuals affected by harmful products, corporate negligence, and environmental hazards with trusted legal teams. Get your free case review today and explore active mass tort and class action cases.",
 };
 
 export default function RootLayout({

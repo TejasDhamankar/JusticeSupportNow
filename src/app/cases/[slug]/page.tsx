@@ -306,7 +306,7 @@ export default async function CaseDetailPage({
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-8">
               <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-primary font-black px-8 py-6 text-lg shadow-xl hover:shadow-2xl w-full sm:w-auto">
                 <Link href="#case-evaluation">
-                  Start My Free Case Review
+                  Start My 
                   <ArrowRight className="ml-3 h-5 w-5" />
                 </Link>
               </Button>
