@@ -2,11 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -20,8 +18,6 @@ import {
   AlertCircle,
   ArrowRight,
   User,
-  Mail,
-  Phone,
   Scale,
   ShieldCheck,
   Zap,
@@ -53,6 +49,25 @@ interface ExtendedFormData extends CaseEvaluationFormData {
   agreeToDisclaimer: boolean;
   trustedFormCertUrl?: string;
 }
+
+// *** COLOR PALETTE from the first CaseHero component ***
+const colors = {
+  darkBlue: "#0A0D14",
+  whiteText: "#F0F6FC",
+  accentGreen: "#2AAA8A",
+  hoverGreen: "#3BC1A0",
+  lightGrayText: "#8B949E",
+  borderGray: "#30363D",
+  accentAmber: "#DBAB09",
+  cardBackground: "#161B22",
+};
+
+const TRUST_POINTS = [
+  { icon: Shield, text: "Strictly Confidential" },
+  { icon: DollarSign, text: "Zero Upfront Cost" },
+  { icon: Clock, text: "Fast 24-Hour Review" },
+  { icon: Briefcase, text: "Connect with Top Firms" },
+];
 
 const CaseEvaluation = () => {
   const [formData, setFormData] = useState<ExtendedFormData>({

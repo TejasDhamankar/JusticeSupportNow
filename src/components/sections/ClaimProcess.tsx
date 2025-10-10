@@ -13,56 +13,70 @@ import {
   Clock,
   CheckCircle,
   Star,
-  Users
 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 
+const colors = {
+  darkBlue: "#0A0D14",
+  whiteText: "#F0F6FC",
+  accentGreen: "#2AAA8A",
+  hoverGreen: "#3BC1A0",
+  lightGrayText: "#8B949E",
+  borderGray: "#30363D",
+  accentAmber: "#DBAB09",
+  cardBackground: "#161B22",
+};
+
 const ClaimProcess = () => {
   const steps = [
     {
-      icon: <ClipboardCheck className="h-8 w-8" />,
-      title: "Free Case Review",
-      shortTitle: "Review",
-      description: "Complete our secure form or call us for a no-obligation evaluation of your potential claim by our legal experts.",
+      icon: <ClipboardCheck className={`h-8 w-8 text-[${colors.whiteText}]`} />,
+      title: "Complimentary Case Evaluation",
+      shortTitle: "Evaluation",
+      description:
+        "Fill out our secure form or call us for a free, no-obligation review of your potential claim by our legal team.",
       duration: "5 Minutes",
-      features: ["No obligations", "100% confidential", "Expert evaluation"]
+      features: ["No commitment required", "Completely private", "Professional review"],
     },
     {
-      icon: <UserCheck className="h-8 w-8" />,
-      title: "Eligibility Verification",
-      shortTitle: "Verify",
-      description: "Our specialized team analyzes your information to determine qualification and potential compensation value.",
-      duration: "24-48 Hours",
-      features: ["Detailed analysis", "Compensation estimate", "Risk assessment"]
+      icon: <UserCheck className={`h-8 w-8 text-[${colors.whiteText}]`} />,
+      title: "Eligibility Assessment",
+      shortTitle: "Assess",
+      description:
+        "Our experts carefully review your information to confirm eligibility and estimate possible compensation.",
+      duration: "1-2 Days",
+      features: ["Thorough evaluation", "Preliminary settlement estimate", "Risk analysis"],
     },
     {
-      icon: <FileText className="h-8 w-8" />,
-      title: "Documentation & Evidence",
+      icon: <FileText className={`h-8 w-8 text-[${colors.whiteText}]`} />,
+      title: "Gathering Documentation",
       shortTitle: "Document",
-      description: "We assist in collecting relevant medical records, exposure documentation, and evidence to strengthen your case.",
+      description:
+        "We help collect all necessary medical records, exposure documents, and supporting evidence to strengthen your case.",
       duration: "1-2 Weeks",
-      features: ["Medical records", "Expert testimony", "Evidence gathering"]
+      features: ["Medical records collection", "Expert testimony", "Evidence preparation"],
     },
     {
-      icon: <Scale className="h-8 w-8" />,
-      title: "Legal Representation",
-      shortTitle: "Represent",
-      description: "Our experienced attorneys file your claim and strategically advocate for maximum compensation on your behalf.",
+      icon: <Scale className={`h-8 w-8 text-[${colors.whiteText}]`} />,
+      title: "Professional Legal Support",
+      shortTitle: "Support",
+      description:
+        "Our experienced attorneys file your claim and actively represent you to achieve the maximum possible compensation.",
       duration: "Ongoing",
-      features: ["Expert attorneys", "Strategic advocacy", "Maximum compensation"]
+      features: ["Experienced lawyers", "Strategic representation", "Maximized settlement"],
     },
     {
-      icon: <Coins className="h-8 w-8" />,
-      title: "Compensation",
+      icon: <Coins className={`h-8 w-8 text-[${colors.whiteText}]`} />,
+      title: "Receive Compensation",
       shortTitle: "Receive",
-      description: "Receive the settlement you deserve for medical expenses, lost income, suffering, and other damages.",
-      duration: "Upon Settlement",
-      features: ["Medical expenses", "Lost income", "Pain & suffering"]
-    }
+      description:
+        "Obtain the settlement you are entitled to, covering medical costs, lost wages, and other damages.",
+      duration: "After Settlement",
+      features: ["Medical expense coverage", "Lost income compensation", "Pain & suffering recovery"],
+    },
   ];
 
   const containerVariants = {
@@ -71,9 +85,9 @@ const ClaimProcess = () => {
       opacity: 1,
       transition: {
         staggerChildren: 0.2,
-        delayChildren: 0.3
-      }
-    }
+        delayChildren: 0.3,
+      },
+    },
   };
 
   const itemVariants = {
@@ -84,56 +98,36 @@ const ClaimProcess = () => {
       scale: 1,
       transition: {
         duration: 0.6,
-        ease: "easeOut"
-      }
-    }
+      },
+    },
   };
 
   return (
-    <section id="claim-process" className="py- bg-gradient-to-br from-gray-50 via-white to-blue-50/30 relative overflow-hidden">
-      {/* Enhanced Background Elements */}
+    <section id="claim-process" className={`py-20 bg-[${colors.darkBlue}] relative overflow-hidden`}>
+      {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Subtle background glow element 1 (was pinkLeaf, now accentGreen/10) */}
         <motion.div
-          className="absolute -top-40 -left-40 w-96 h-96 bg-gradient-to-br from-primary/10 to-blue-500/10 rounded-full blur-3xl"
+          className={`absolute -top-40 -left-40 w-96 h-96 bg-[${colors.accentGreen}]/10 rounded-full blur-3xl`}
           animate={{
             scale: [1, 1.2, 1],
             rotate: [0, 180, 360],
           }}
           transition={{ duration: 20, repeat: Infinity }}
         />
+        {/* Subtle background glow element 2 (was coralPink, now accentAmber/10) */}
         <motion.div
-          className="absolute -bottom-40 -right-40 w-96 h-96 bg-gradient-to-br from-accent/10 to-yellow-400/10 rounded-full blur-3xl"
+          className={`absolute -bottom-40 -right-40 w-96 h-96 bg-[${colors.accentAmber}]/10 rounded-full blur-3xl`}
           animate={{
             scale: [1.2, 1, 1.2],
             rotate: [360, 180, 0],
           }}
           transition={{ duration: 25, repeat: Infinity }}
         />
-
-        {/* Floating Particles */}
-        {[...Array(15)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 bg-primary/20 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [-20, -100, -20],
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration: Math.random() * 4 + 3,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-            }}
-          />
-        ))}
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        {/* Enhanced Header */}
+        {/* Header */}
         <motion.div
           className="text-center max-w-4xl mx-auto mb-20"
           initial={{ opacity: 0, y: 30 }}
@@ -141,49 +135,48 @@ const ClaimProcess = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
         >
-          <Badge variant="outline" className="mb-6 px-4 py-2 text-primary border-primary/30 bg-primary/5 font-bold backdrop-blur-sm">
-            <Scale className="w-4 h-4 mr-2" />
-            HOW IT WORKS
-          </Badge>
 
-          <h2 className="text-4xl md:text-6xl font-black text-primary mb-6 leading-tight">
-            <span className="bg-gradient-to-r from-primary via-blue-600 to-indigo-600 bg-clip-text text-transparent">
-              Simple. Fast.
-            </span>
+
+        <h2 className={`text-4xl md:text-6xl font-black text-[${colors.whiteText}] mb-6 leading-tight`}>
+            {/* Changed from gradient to a single, solid accentGreen color */}
+            <span className={`text-[${colors.accentGreen}]`}> 
+              Clear. Efficient.
+       
             <br />
-            <span className="text-gray-800">Results-Driven.</span>
+            Focused on Results.
+             </span>
           </h2>
+         
 
           <motion.div
-            className="w-24 h-1 bg-gradient-to-r from-accent to-yellow-400 mx-auto mb-6 rounded-full"
+            className={`w-24 h-1 bg-[${colors.accentGreen}] mx-auto mb-6 rounded-full`}
             initial={{ width: 0 }}
             whileInView={{ width: 96 }}
             viewport={{ once: true }}
             transition={{ delay: 0.5, duration: 0.8 }}
           />
 
-          <p className="text-xl text-gray-600 leading-relaxed">
-            We've streamlined our legal process to minimize stress while
-            <span className="font-bold text-primary"> maximizing your compensation.</span>
+          <p className={`font-bold text-[${colors.whiteText}]`}>
+            Our legal approach is designed to reduce stress and
+            <span className={`font-bold text-[${colors.whiteText}]`}> secure the best possible outcome for you.</span>
             <br />
-            <span className="text-lg opacity-90">No upfront fees. No hidden costs. Just results.</span>
+            <span className={`font-bold text-[${colors.whiteText}]`}>No upfront charges. No hidden fees. Just dedicated results.</span>
           </p>
 
           {/* Trust Indicators */}
-          <div className="flex items-center justify-center space-x-8 mt-8">
-            <div className="flex items-center text-gray-600">
-              <Shield className="w-5 h-5 text-green-500 mr-2" />
-              <span className="font-medium">No Win, No Fee</span>
+          <div className={`flex items-center justify-center space-x-8 mt-8 text-[${colors.lightGrayText}]`}>
+            <div className="flex items-center">
+              <Shield className="w-5 h-5 mr-2  text-[${colors.whiteText}]" />
+              <span className={`font-bold text-[${colors.whiteText}]`}>No Fees Unless You Win</span>
             </div>
-            <div className="flex items-center text-gray-600">
-              <Clock className="w-5 h-5 text-blue-500 mr-2" />
-              <span className="font-medium">Free Consultation</span>
+            <div className="flex items-center">
+              <Clock className="w-5 h-5 mr-2  text-[${colors.whiteText}]" />
+              <span className={`font-bold text-[${colors.whiteText}]`}>Complimentary Consultation</span>
             </div>
-
           </div>
         </motion.div>
 
-        {/* Enhanced Process Steps */}
+        {/* Process Steps */}
         <motion.div
           className="max-w-7xl mx-auto"
           variants={containerVariants}
@@ -191,19 +184,12 @@ const ClaimProcess = () => {
           whileInView="visible"
           viewport={{ once: true }}
         >
-          {/* Desktop Timeline */}
           <div className="hidden lg:block relative">
             {/* Timeline Line */}
-            <div className="absolute top-32 left-0 right-0 h-1 bg-gradient-to-r from-primary via-accent to-primary rounded-full opacity-20" />
-
+            <div className={`absolute top-32 left-0 right-0 h-1 bg-[${colors.borderGray}] rounded-full opacity-50`} />
             <div className="grid grid-cols-5 gap-8">
               {steps.map((step, index) => (
-                <motion.div
-                  key={index}
-                  variants={itemVariants}
-                  className="relative group"
-                >
-                  {/* Timeline Dot */}
+                <motion.div key={index} variants={itemVariants} className="relative group">
                   <motion.div
                     className="absolute top-32 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
                     initial={{ scale: 0 }}
@@ -211,194 +197,132 @@ const ClaimProcess = () => {
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.2 + 0.5 }}
                   >
-                    <div className="w-16 h-16 bg-gradient-to-r from-primary to-blue-600 rounded-full flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:scale-110">
-                      <div className="text-white">
-                        {step.icon}
-                      </div>
+                    {/* Step Icon Circle (was coralPink, now accentGreen) */}
+                    <div
+                      className={`w-16 h-16 bg-[${colors.accentGreen}] rounded-full flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:scale-110`}
+                    >
+                      <div className="text-white">{step.icon}</div>
                     </div>
-                    {/* Step Number */}
-                    <div className="absolute -top-3 -right-3 w-8 h-8 bg-accent rounded-full flex items-center justify-center text-primary font-bold text-sm shadow-lg">
+                    {/* Step Number Badge (was sleutheYellow, now accentAmber) */}
+                    <div
+                      className={`absolute -top-3 -right-3 w-8 h-8 bg-[${colors.accentAmber}] rounded-full flex items-center justify-center text-[${colors.darkBlue}] font-bold text-sm shadow-lg`}
+                    >
                       {index + 1}
                     </div>
                   </motion.div>
 
-                  {/* Card */}
-                  <Card className="mt-48 border-none shadow-lg hover:shadow-2xl transition-all duration-500 bg-white/80 backdrop-blur-sm group-hover:bg-white group-hover:scale-105">
+                  <Card
+                    // Card Background (was whiteText, now cardBackground)
+                    className={`mt-48 border-[${colors.borderGray}] border shadow-lg hover:shadow-2xl transition-all duration-500 bg-[${colors.cardBackground}]/80 backdrop-blur-sm group-hover:bg-[${colors.cardBackground}] group-hover:scale-105`}
+                  >
                     <CardHeader className="text-center pb-4">
-                      <Badge className="mx-auto mb-3 bg-primary/10 text-primary hover:bg-primary/20">
+                      {/* Duration Badge (was coralPink/20, now accentGreen/20) */}
+                      <Badge className={`mx-auto mb-3 bg-[${colors.accentGreen}]/20 text-[${colors.whiteText}] hover:bg-[${colors.accentGreen}]/30 border-none`}>
                         {step.duration}
                       </Badge>
-                      <CardTitle className="text-lg font-bold text-primary group-hover:text-blue-600 transition-colors">
+                      {/* Title (was blackText, now whiteText/hover accentGreen) */}
+                      <CardTitle className={`text-lg font-bold text-[${colors.accentGreen}] group-hover:text-[${colors.accentGreen}] transition-colors`}>
                         {step.title}
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="text-center">
-                      <CardDescription className="text-gray-600 mb-4 leading-relaxed">
+                      {/* Description (was blackText/80, now lightGrayText) */}
+                      <CardDescription className={`text-[${colors.lightGrayText}] mb-4 leading-relaxed`}>
                         {step.description}
                       </CardDescription>
-
-                      {/* Features List */}
-                      <div className="space-y-2">
+                      <div className="space-y-2">              
                         {step.features.map((feature, idx) => (
-                          <div key={idx} className="flex items-center justify-center text-sm text-gray-500">
-                            <CheckCircle className="w-3 h-3 text-green-500 mr-2" />
+                          <div key={idx} className={`flex items-center justify-center text-sm  text-[${colors.lightGrayText}]`}>
+                            {/* Feature Check Icon (was sleutheYellow, now accentAmber) */}
+                            <CheckCircle className={`w-3 h-3 text-[${colors.accentAmber}] mr-2`} />
                             <span>{feature}</span>
                           </div>
                         ))}
                       </div>
                     </CardContent>
                   </Card>
-
-                  {/* Connecting Arrow */}
-                  {index < steps.length - 1 && (
-                    <motion.div
-                      className="absolute top-32 right-0 transform translate-x-8 -translate-y-1/2 text-primary/40"
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.2 + 0.8 }}
-                    >
-                      <ArrowRight className="w-6 h-6" />
-                    </motion.div>
-                  )}
                 </motion.div>
               ))}
             </div>
           </div>
-
-          {/* Mobile/Tablet View */}
-          <div className="lg:hidden space-y-8">
-            {steps.map((step, index) => (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                className="relative"
-              >
-                <Card className="border-none shadow-lg hover:shadow-xl transition-all duration-300 bg-white/90 backdrop-blur-sm overflow-hidden group">
-                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-blue-600" />
-
-                  <CardHeader className="flex flex-row items-center space-x-4 pb-4">
-                    <div className="relative">
-                      <div className="bg-gradient-to-r from-primary to-blue-600 rounded-full p-4 text-white shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-110">
-                        {step.icon}
-                      </div>
-                      <div className="absolute -top-2 -right-2 w-6 h-6 bg-accent rounded-full flex items-center justify-center text-primary font-bold text-xs shadow-lg">
-                        {index + 1}
-                      </div>
-                    </div>
-                    <div className="flex-1">
-                      <Badge className="mb-2 bg-primary/10 text-primary">
-                        {step.duration}
-                      </Badge>
-                      <CardTitle className="text-xl font-bold text-primary group-hover:text-blue-600 transition-colors">
-                        {step.title}
-                      </CardTitle>
-                    </div>
-                  </CardHeader>
-
-                  <CardContent>
-                    <CardDescription className="text-gray-600 mb-4 leading-relaxed">
-                      {step.description}
-                    </CardDescription>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                      {step.features.map((feature, idx) => (
-                        <div key={idx} className="flex items-center text-sm text-gray-500">
-                          <CheckCircle className="w-3 h-3 text-green-500 mr-2 flex-shrink-0" />
-                          <span>{feature}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Mobile Arrow */}
-                {index < steps.length - 1 && (
-                  <div className="flex justify-center py-4">
-                    <ArrowRight className="w-6 h-6 text-primary/40" />
-                  </div>
-                )}
-              </motion.div>
-            ))}
-          </div>
         </motion.div>
 
-        {/* Enhanced CTA Section */}
-        <motion.div
-          className="text-center mt-20"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.6 }}
+        {/* CTA Section */}
+       <motion.div
+  className="text-center mt-20"
+  initial={{ opacity: 0, y: 30 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.7, delay: 0.6 }}
+>
+  {/* CTA Container (was coralPink, now accentGreen) */}
+  <div
+    className={`bg-[${colors.accentGreen}] rounded-3xl p-8 md:p-12 text-[${colors.whiteText}] shadow-2xl relative overflow-hidden`}
+  >
+    <div className="relative z-10">
+      {/* CTA Badge (was pinkLeaf/20, now whiteText/20) */}
+      <motion.div
+        initial={{ scale: 0 }}
+        whileInView={{ scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.3 }}
+        className={`inline-flex items-center bg-[${colors.whiteText}]/20 rounded-full px-6 py-2 mb-6`}
+      >
+        <Star className={`w-5 h-5 text-[${colors.whiteText}] mr-2`} />
+        <span className={`font-bold text-[${colors.whiteText}]`}>Take the First Step Today</span>
+      </motion.div>
+      <h3 className="text-3xl md:text-4xl font-black mb-4">Your Case Evaluation is Completely Free</h3>
+      <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto leading-relaxed">
+        Act now – deadlines can be strict. Schedule your complimentary consultation today to understand your legal options.
+      </p>
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+        <motion.div whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.98 }}>
+          <Button
+            asChild
+            size="lg"
+            // PRIMARY CTA BUTTON: 
+            // Background: accentGreen
+            // Text Color: whiteText
+            // Border Color: accentGreen/30
+            className={`bg-[${colors.accentGreen}] hover:bg-[${colors.hoverGreen}] text-[${colors.whiteText}] font-black px-8 py-6 text-lg shadow-xl hover:shadow-2xl border-2 border-[${colors.accentGreen}]/30`}
+          >
+            <Link href="#case-evaluation" className="flex items-center">
+              <CheckCircle className="mr-3 h-5 w-5 text-[${colors.whiteText}]" /> {/* Ensured icon is white */}
+              Begin Your Free Case Evaluation
+              <motion.div className="ml-3" animate={{ x: [0, 5, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
+                <ArrowRight className="h-5 w-5" />
+              </motion.div>
+            </Link>
+          </Button>
+        </motion.div>
+        <Button
+          asChild
+          variant="outline"
+          size="lg"
+          // Secondary CTA Button (background whiteText/10, border whiteText/30)
+          className={`bg-[${colors.whiteText}]/10 hover:bg-[${colors.whiteText}]/20 text-[${colors.whiteText}] border-2 border-[${colors.whiteText}]/30 hover:border-[${colors.whiteText}]/50 font-bold px-8 py-6 text-lg backdrop-blur-sm`}
         >
-          <div className="bg-gradient-to-br from-primary via-blue-600 to-indigo-700 rounded-3xl p-8 md:p-12 text-white shadow-2xl relative overflow-hidden">
-            {/* Background Pattern */}
-            <div className="absolute inset-0 opacity-10">
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12" />
-            </div>
-
-            <div className="relative z-10">
-              <motion.div
-                initial={{ scale: 0 }}
-                whileInView={{ scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 }}
-                className="inline-flex items-center bg-accent/20 rounded-full px-6 py-2 mb-6"
-              >
-                <Star className="w-5 h-5 text-accent mr-2" />
-                <span className="font-bold text-accent">Ready to Get Started?</span>
-              </motion.div>
-
-              <h3 className="text-3xl md:text-4xl font-black mb-4">
-                Your Case Review is 100% Free
-              </h3>
-              <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto leading-relaxed">
-                Don't wait - many cases have strict deadlines. Get your free consultation today and learn about your legal options.
-              </p>
-
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                <motion.div
-                  whileHover={{ scale: 1.05, y: -3 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-primary font-black px-8 py-6 text-lg shadow-xl hover:shadow-2xl border-2 border-accent/30">
-                    <Link href="#case-evaluation" className="flex items-center">
-                      <CheckCircle className="mr-3 h-5 w-5" />
-                      Start Your Free Case Review
-                      <motion.div
-                        className="ml-3"
-                        animate={{ x: [0, 5, 0] }}
-                        transition={{ duration: 1.5, repeat: Infinity }}
-                      >
-                        <ArrowRight className="h-5 w-5" />
-                      </motion.div>
-                    </Link>
-                  </Button>
-                </motion.div>
-
-                <Button asChild variant="outline" size="lg" className="bg-white/10 hover:bg-white/20 text-white border-2 border-white/30 hover:border-white/50 font-bold px-8 py-6 text-lg backdrop-blur-sm">
-                  <a href="tel:9085336944" className="flex items-center">
-                    <Phone className="mr-3 h-5 w-5 group-hover:animate-pulse" />
-                    Call (914) 300 2717
-                  </a>
-                </Button>
-              </div>
-
-              {/* Trust Indicators */}
-              <div className="flex items-center justify-center space-x-8 mt-8 pt-6 border-t border-white/20">
-                <div className="text-center">
-                  <div className="font-black text-2xl text-accent">$0</div>
-                  <div className="text-sm opacity-80">Upfront Costs</div>
-                </div>
-                <div className="text-center">
-                  <div className="font-black text-2xl text-accent">24/7</div>
-                  <div className="text-sm opacity-80">Available</div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </motion.div>
+          <a href="tel:9085336944" className="flex items-center">
+            <Phone className="mr-3 h-5 w-5 group-hover:animate-pulse" />
+            Call (914) 300 2717 Now
+          </a>
+        </Button>
+      </div>
+      <div className="flex items-center justify-center space-x-8 mt-8 pt-6 border-t border-white/20">
+        <div className="text-center">
+          {/* Trust Numbers (was sleutheYellow, now accentAmber) */}
+          <div className={`font-black text-2xl text-[${colors.accentAmber}]`}>$0</div>
+          <div className="text-sm opacity-80">No Upfront Charges</div>
+        </div>
+        <div className="text-center">
+          {/* Trust Numbers (was sleutheYellow, now accentAmber) */}
+          <div className={`font-black text-2xl text-[${colors.accentAmber}]`}>24/7</div>
+          <div className="text-sm opacity-80">Support Available</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</motion.div>
       </div>
     </section>
   );
