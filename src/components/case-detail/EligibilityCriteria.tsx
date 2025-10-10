@@ -1,432 +1,183 @@
 "use client";
 
-import { motion } from "framer-motion";
-import {
-  Check,
-  CheckCircle,
-  AlertCircle,
-  Users,
-  Calendar,
-  MapPin,
-  FileText,
-  Phone,
-  ArrowRight,
-  Shield,
-  Clock,
-  Zap,
-  Target,
-  Scale,
-  Award
-} from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
 import { CaseType } from "@/types/case";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import Link from "next/link";
+import { CheckCircle, PlusCircle, AlertCircle, Users, ArrowRight, Target } from "lucide-react";
+
+// --- Animated Counter Component ---
+const AnimatedCounter = ({ value }: { value: number }) => {
+    const ref = React.useRef(null);
+    const motionValue = useMotionValue(0);
+    const springValue = useSpring(motionValue, { duration: 3000 });
+    const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+    useEffect(() => {
+        if (isInView) {
+            motionValue.set(value);
+        }
+    }, [motionValue, isInView, value]);
+
+    useEffect(() =>
+        springValue.on("change", (latest) => {
+            if (ref.current) {
+                (ref.current as HTMLElement).textContent = `${Math.round(latest).toLocaleString()}%`;
+            }
+        }),
+        [springValue]
+    );
+
+    return <span ref={ref} />;
+};
+
+// --- Main Component ---
+
+const colors = {
+    darkBlue: "#0A0D14",
+    whiteText: "#F0F6FC",
+    accentGreen: "#2AAA8A",
+    lightGrayText: "#8B949E",
+    borderGray: "#30363D",
+    cardBackground: "#161B22",
+    accentRed: "#F87171",
+};
 
 interface EligibilityCriteriaProps {
-  caseData: CaseType;
+    caseData: CaseType;
 }
 
-const EligibilityCriteria = ({ caseData }: EligibilityCriteriaProps) => {
-  // Categorize criteria for better organization
-  const categorizeCriteria = (criteria: string[]) => {
-    const essential = criteria.filter((_, index) => index < Math.ceil(criteria.length / 2));
-    const additional = criteria.filter((_, index) => index >= Math.ceil(criteria.length / 2));
-    return { essential, additional };
-  };
+const EligibilityCriteria: React.FC<EligibilityCriteriaProps> = ({ caseData }) => {
+    const { eligibilityCriteria } = caseData;
+    const midpoint = Math.ceil(eligibilityCriteria.length / 2);
+    const essential = eligibilityCriteria.slice(0, midpoint);
+    const additional = eligibilityCriteria.slice(midpoint);
 
-  const { essential, additional } = categorizeCriteria(caseData.eligibilityCriteria);
+    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  // Mock qualification percentage - in real app, this would be calculated
-  const qualificationRate = "92%";
+    useEffect(() => {
+        const handleMouseMove = (event: MouseEvent) => {
+            setMousePosition({ x: event.clientX, y: event.clientY });
+        };
+        window.addEventListener("mousemove", handleMouseMove);
+        return () => window.removeEventListener("mousemove", handleMouseMove);
+    }, []);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
-      }
-    }
-  };
+    const scrollToCaseEvaluation = (e: React.MouseEvent) => {
+        e.preventDefault();
+        document.getElementById("case-evaluation")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5
-      }
-    }
-  };
-
-  const criteriaVariants = {
-    hidden: { opacity: 0, x: -20 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.4
-      }
-    }
-  };
-
-  return (
-    <section className="py-16 sm:py-20 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute -top-20 -left-20 w-48 h-48 sm:w-96 sm:h-96 bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-full blur-2xl sm:blur-3xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            rotate: [0, 180, 360],
-          }}
-          transition={{ duration: 25, repeat: Infinity }}
-        />
-
-        {/* Floating checkmarks */}
-        {[...Array(8)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute text-green-500/5 text-4xl sm:text-6xl font-bold"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [-20, -60, -20],
-              opacity: [0.1, 0.3, 0.1],
-              rotate: [0, 15, 0],
-            }}
-            transition={{
-              duration: Math.random() * 6 + 4,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-            }}
-          >
-            ✓
-          </motion.div>
-        ))}
-      </div>
-
-      <div className="container mx-auto px-4 relative z-10">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="max-w-6xl mx-auto"
-        >
-          {/* Header Section */}
-          <motion.div variants={itemVariants} className="text-center mb-12 sm:mb-16">
-            <Badge className="mb-4 sm:mb-6 px-4 py-2 bg-green-500/10 text-green-700 border-green-500/30 font-bold text-sm sm:text-base">
-              <Target className="w-4 h-4 mr-2" />
-              ELIGIBILITY REQUIREMENTS
-            </Badge>
-
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-primary mb-4 sm:mb-6 leading-tight">
-              <span className="bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 bg-clip-text text-transparent">
-                Do You Qualify
-              </span>
-              <br />
-              <span className="text-gray-800">For Compensation?</span>
-            </h2>
-
+    return (
+        <section className="relative py-20 sm:py-24 overflow-hidden" style={{ backgroundColor: colors.darkBlue }}>
+            {/* Horizontal line */}
+            <div className="w-[80%] mx-auto h-px  mb-12 opacity-70" style={{backgroundColor:colors.accentGreen}} />
+            {/* Interactive Spotlight Effect */}
             <motion.div
-              className="w-16 sm:w-24 h-1 bg-gradient-to-r from-green-500 to-emerald-400 mx-auto mb-4 sm:mb-6 rounded-full"
-              initial={{ width: 0 }}
-              whileInView={{ width: 96 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.5, duration: 0.8 }}
+                className="pointer-events-none absolute -inset-px"
+                style={{
+                    background: `radial-gradient(800px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(42, 170, 138, 0.08), transparent 80%)`,
+                }}
             />
+            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#2AAA8A]/50 to-transparent" />
 
-            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              You may qualify for a {caseData.title} claim if you meet the following criteria.
-              <span className="font-bold text-green-600"> Most of our clients qualify for significant compensation.</span>
-            </p>
-
-            {/* Qualification Rate */}
-            <div className="mt-8">
-              <Card className="inline-block bg-gradient-to-r from-green-500/10 to-emerald-500/10 border-green-200">
-                <CardContent className="px-6 py-4">
-                  <div className="flex items-center space-x-3">
-                    <div className="bg-green-500/20 rounded-full p-2">
-                      <Users className="w-5 h-5 text-green-600" />
-                    </div>
-                    <div>
-                      <div className="text-2xl font-black text-green-700">{qualificationRate}</div>
-                      <div className="text-sm text-green-600">of our clients qualify</div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </motion.div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
-            {/* Main Criteria */}
-            <motion.div variants={itemVariants} className="lg:col-span-2 space-y-8">
-              {/* Essential Criteria */}
-              <Card className="border-none shadow-xl bg-white/80 backdrop-blur-sm">
-                <CardContent className="p-6 sm:p-8">
-                  <div className="flex items-center mb-6">
-                    <div className="bg-green-500/20 rounded-full p-3 mr-4">
-                      <CheckCircle className="w-6 h-6 text-green-600" />
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-black text-primary">Essential Requirements</h3>
-                      <p className="text-gray-600 text-sm">You must meet all of these criteria</p>
-                    </div>
-                  </div>
-
-                  <motion.div
-                    className="space-y-4"
-                    variants={containerVariants}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                  >
-                    {essential.map((criterion, index) => (
-                      <motion.div
-                        key={index}
-                        className="group"
-                        variants={criteriaVariants}
-                        whileHover={{ x: 5 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <Card className="border border-green-200 bg-gradient-to-r from-green-50/50 to-emerald-50/50 hover:from-green-100/50 hover:to-emerald-100/50 transition-all duration-300 group-hover:shadow-md">
-                          <CardContent className="p-4 sm:p-6">
-                            <div className="flex items-start space-x-4">
-                              <div className="bg-green-500/20 rounded-full p-2 flex-shrink-0 group-hover:bg-green-500/30 transition-colors">
-                                <Check className="w-5 h-5 text-green-600" />
-                              </div>
-                              <div className="flex-1">
-                                <p className="text-gray-700 leading-relaxed text-sm sm:text-base font-medium">
-                                  {criterion}
-                                </p>
-                              </div>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      </motion.div>
-                    ))}
-                  </motion.div>
-                </CardContent>
-              </Card>
-
-              {/* Additional Criteria */}
-              {additional.length > 0 && (
-                <Card className="border-none shadow-xl bg-white/80 backdrop-blur-sm">
-                  <CardContent className="p-6 sm:p-8">
-                    <div className="flex items-center mb-6">
-                      <div className="bg-blue-500/20 rounded-full p-3 mr-4">
-                        <AlertCircle className="w-6 h-6 text-blue-600" />
-                      </div>
-                      <div>
-                        <h3 className="text-2xl font-black text-primary">Additional Factors</h3>
-                        <p className="text-gray-600 text-sm">These may strengthen your case</p>
-                      </div>
-                    </div>
+            <div className="container mx-auto px-4 relative z-10">
+                <div className="max-w-4xl mx-auto text-center">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        <Badge className="mb-6 px-4 py-2 font-bold text-sm border" style={{ backgroundColor: colors.accentGreen + '20', color: colors.accentGreen, borderColor: colors.accentGreen + '50' }}>
+                            <Target className="w-4 h-4 mr-2" />
+                            QUALIFICATION BENCHMARKS
+                        </Badge>
+                        <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4" style={{ color: colors.whiteText }}>
+                            Do You Qualify for <span style={{ color: colors.accentGreen }}>Financial Recovery?</span>
+                        </h2>
+                        <p className="text-lg sm:text-xl" style={{ color: colors.lightGrayText }}>
+                            Review the criteria below. If these points describe your situation, you may be eligible to file a claim for the <strong>{caseData.title}</strong> lawsuit.
+                        </p>
+                    </motion.div>
 
                     <motion.div
-                      className="space-y-4"
-                      variants={containerVariants}
-                      initial="hidden"
-                      whileInView="visible"
-                      viewport={{ once: true }}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: 0.2 }}
+                        className="my-12 p-8 rounded-xl border"
+                        style={{ backgroundColor: colors.cardBackground, borderColor: colors.borderGray }}
                     >
-                      {additional.map((criterion, index) => (
-                        <motion.div
-                          key={index}
-                          className="group"
-                          variants={criteriaVariants}
-                          whileHover={{ x: 5 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          <Card className="border border-blue-200 bg-gradient-to-r from-blue-50/50 to-indigo-50/50 hover:from-blue-100/50 hover:to-indigo-100/50 transition-all duration-300 group-hover:shadow-md">
-                            <CardContent className="p-4 sm:p-6">
-                              <div className="flex items-start space-x-4">
-                                <div className="bg-blue-500/20 rounded-full p-2 flex-shrink-0 group-hover:bg-blue-500/30 transition-colors">
-                                  <Check className="w-5 h-5 text-blue-600" />
-                                </div>
-                                <div className="flex-1">
-                                  <p className="text-gray-700 leading-relaxed text-sm sm:text-base font-medium">
-                                    {criterion}
-                                  </p>
-                                </div>
-                              </div>
-                            </CardContent>
-                          </Card>
-                        </motion.div>
-                      ))}
+                        <Users className="w-10 h-10 mx-auto" style={{ color: colors.accentGreen }} />
+                        <div className="text-6xl md:text-7xl font-bold my-2" style={{ color: colors.whiteText }}>
+                            <AnimatedCounter value={92} />
+                        </div>
+                        <p style={{ color: colors.lightGrayText }}>Of Applicants Meet the Criteria for a Successful Claim</p>
                     </motion.div>
-                  </CardContent>
-                </Card>
-              )}
-            </motion.div>
 
-            {/* Sidebar */}
-            <motion.div variants={itemVariants} className="lg:col-span-1 space-y-6">
-              {/* Quick Check Card */}
-              <Card className="border-none shadow-xl bg-gradient-to-br from-accent to-yellow-400 text-primary overflow-hidden relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12" />
-                <CardContent className="p-6 sm:p-8 text-center relative z-10">
-                  <div className="bg-primary/20 rounded-full p-4 inline-flex items-center justify-center mb-4">
-                    <Zap className="w-6 h-6 text-primary" />
-                  </div>
-                  <h3 className="text-xl font-black mb-3">
-                    Quick Eligibility Check
-                  </h3>
-                  <p className="text-primary/80 mb-6 text-sm leading-relaxed">
-                    Get an instant assessment of your case eligibility. Takes less than 2 minutes.
-                  </p>
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: 0.4 }}
+                        className="p-8 rounded-xl border text-left"
+                        style={{ backgroundColor: colors.cardBackground, borderColor: colors.borderGray }}
+                    >
+                        <h3 className="text-2xl font-bold mb-6" style={{ color: colors.whiteText }}>Qualification Checklist</h3>
+                        <div className="space-y-4">
+                            {essential.map((criterion, idx) => (
+                                <div key={idx} className="flex items-start gap-3 p-4 rounded-md" style={{ backgroundColor: colors.darkBlue }}>
+                                    <CheckCircle className="w-5 h-5 flex-shrink-0 mt-1" style={{ color: colors.accentGreen }} />
+                                    <p style={{ color: colors.lightGrayText }}>{criterion}</p>
+                                </div>
+                            ))}
+                            {additional.length > 0 && (
+                                <>
+                                    <h4 className="text-lg font-bold pt-4" style={{ color: colors.whiteText }}>Additional Factors</h4>
+                                    {additional.map((criterion, idx) => (
+                                        <div key={idx} className="flex items-start gap-3 p-4 rounded-md" style={{ backgroundColor: colors.darkBlue }}>
+                                            <PlusCircle className="w-5 h-5 flex-shrink-0 mt-1" style={{ color: colors.lightGrayText }} />
+                                            <p style={{ color: colors.lightGrayText }}>{criterion}</p>
+                                        </div>
+                                    ))}
+                                </>
+                            )}
+                        </div>
+                    </motion.div>
 
-                  <motion.div
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <Button asChild className="w-full bg-primary hover:bg-primary/90 text-accent font-black shadow-lg hover:shadow-xl">
-                      <Link href="#case-evaluation">
-                        <CheckCircle className="mr-2 h-4 w-4" />
-                        Check Now
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </motion.div>
-
-                  <p className="text-primary/70 text-xs mt-3">
-                    Free • No obligation • Instant results
-                  </p>
-                </CardContent>
-              </Card>
-
-              {/* Success Stats */}
-
-
-              {/* Contact Card */}
-              <Card className="border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-blue-500/5 shadow-lg">
-                <CardContent className="p-6 text-center">
-                  <div className="bg-primary/10 rounded-full p-3 inline-flex items-center justify-center mb-4">
-                    <Phone className="w-5 h-5 text-primary" />
-                  </div>
-                  <h4 className="font-bold text-primary mb-3 text-lg">
-                    Speak with an Expert
-                  </h4>
-                  <p className="text-gray-600 mb-4 text-sm leading-relaxed">
-                    Not sure if you qualify? Our legal experts can help determine your eligibility over the phone.
-                  </p>
-
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <Button asChild className="w-full bg-primary hover:bg-primary/90 text-white font-bold">
-                      <a href="tel:9085336944">
-                        <Phone className="mr-2 h-4 w-4" />
-                        Call (914) 300 2717
-                      </a>
-                    </Button>
-                  </motion.div>
-
-                  <p className="text-gray-500 text-xs mt-3">
-                    Free consultation • Available 24/7
-                  </p>
-                </CardContent>
-              </Card>
-
-              {/* Urgency Card */}
-              <Card className="border-2 border-red-200 bg-gradient-to-br from-red-50 to-orange-50 shadow-lg">
-                <CardContent className="p-6">
-                  <div className="flex items-center space-x-3 mb-4">
-                    <Clock className="w-5 h-5 text-red-500" />
-                    <h4 className="font-bold text-red-700">Don't Wait</h4>
-                  </div>
-                  <p className="text-red-600 text-sm mb-4 leading-relaxed">
-                    Filing deadlines apply to all legal claims. The sooner you act, the stronger your case.
-                  </p>
-                  <div className="bg-red-100 rounded-lg p-3 text-center">
-                    <p className="text-red-800 font-bold text-sm">Free review expires soon</p>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </div>
-
-          {/* Bottom CTA */}
-          <motion.div variants={itemVariants} className="mt-16">
-            <Card className="border-none shadow-2xl bg-gradient-to-br from-primary to-blue-600 text-white overflow-hidden relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12" />
-              <CardContent className="p-8 sm:p-12 text-center relative z-10">
-                <div className="bg-accent/20 rounded-full p-4 inline-flex items-center justify-center mb-6">
-                  <Scale className="w-8 h-8 text-accent" />
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: 0.5 }}
+                        className="mt-16"
+                    >
+                        <div className="flex justify-center items-center gap-3 mb-6 p-3 rounded-md text-sm" style={{ backgroundColor: '#450a0a', color: colors.accentRed }}>
+                            <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                            <p className="font-medium">Due to legal deadlines, your time to file a claim is limited. Act now.</p>
+                        </div>
+                        <Button
+                            asChild
+                            size="lg"
+                            className="group relative w-full max-w-md font-bold text-lg py-6 rounded-lg shadow-lg overflow-hidden transition-all duration-300"
+                            style={{ backgroundColor: colors.accentGreen, color: colors.darkBlue }}
+                            onClick={scrollToCaseEvaluation}
+                        >
+                            <a href="#case-evaluation">
+                                <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-full group-hover:h-full opacity-20"></span>
+                                <span className="relative flex items-center">
+                                    Start My Free Evaluation
+                                    <ArrowRight className="ml-2 w-5 h-5" />
+                                </span>
+                            </a>
+                        </Button>
+                    </motion.div>
                 </div>
-
-                <h3 className="text-2xl sm:text-3xl font-black mb-4">
-                  <span className="bg-gradient-to-r from-accent to-yellow-400 bg-clip-text text-transparent">
-                    Think You Qualify?
-                  </span>
-                  <br />
-                  <span className="text-white">Let's Find Out Together</span>
-                </h3>
-
-                <p className="text-lg sm:text-xl text-white/90 mb-8 max-w-2xl mx-auto leading-relaxed">
-                  Our experienced legal team will review your specific situation and determine your eligibility for compensation.
-                  <span className="font-bold text-accent"> Get your free case evaluation now.</span>
-                </p>
-
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-6">
-                  <motion.div
-                    whileHover={{ scale: 1.05, y: -3 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-primary font-black px-8 py-6 text-lg shadow-xl hover:shadow-2xl w-full sm:w-auto">
-                      <Link href="#case-evaluation">
-                        <CheckCircle className="mr-3 h-5 w-5" />
-                        Check My Eligibility
-                        <ArrowRight className="ml-3 h-5 w-5" />
-                      </Link>
-                    </Button>
-                  </motion.div>
-
-                  <motion.div
-                    whileHover={{ scale: 1.05, y: -3 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <Button asChild variant="outline" size="lg" className="bg-white/10 hover:bg-white/20 text-white border-2 border-white/30 hover:border-white/50 font-bold px-8 py-6 text-lg backdrop-blur-sm w-full sm:w-auto">
-                      <a href="tel:9085336944">
-                        <Phone className="mr-3 h-5 w-5" />
-                        Call (914) 300 2717
-                      </a>
-                    </Button>
-                  </motion.div>
-                </div>
-
-                {/* Trust Indicators */}
-                <div className="flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-8 text-white/80 text-sm">
-                  <div className="flex items-center">
-                    <Shield className="w-4 h-4 text-green-400 mr-2" />
-                    <span>No Win, No Fee</span>
-                  </div>
-                  <div className="flex items-center">
-                    <Clock className="w-4 h-4 text-blue-400 mr-2" />
-                    <span>Free Consultation</span>
-                  </div>
-                  <div className="flex items-center">
-                    <Users className="w-4 h-4 text-accent mr-2" />
-                    <span>Expert Legal Team</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        </motion.div>
-      </div>
-    </section>
-  );
+            </div>
+        </section>
+    );
 };
 
 export default EligibilityCriteria;

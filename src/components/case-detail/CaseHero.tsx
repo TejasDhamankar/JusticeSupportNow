@@ -1,285 +1,215 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import Link from "next/link";
-import Image from "next/image";
+import { useState, useEffect } from "react";
 import {
   ArrowLeft,
   Phone,
-  ArrowRight,
-  Share2,
-  Clock,
-  Shield,
-  DollarSign,
-  Users,
-  Award,
   CheckCircle,
   Zap,
-  AlertCircle,
+  Scale,
+  DollarSign,
+  Users,
+  Clock,
   TrendingUp,
-  Star,
-  Scale
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { Card, CardContent } from "@/components/ui/card";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { CaseType } from "@/types/case";
+import { Card } from "@/components/ui/card";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+
+// New color palette with a more sophisticated, matte green
+const colors = {
+  darkBlue: "#0A0D14",
+  whiteText: "#F0F6FC",
+  accentGreen: "#2AAA8A",   // A sophisticated, matte-like teal/green
+  hoverGreen: "#3BC1A0",    // A slightly lighter version for hovers
+  lightGrayText: "#8B949E",
+  borderGray: "#30363D",
+  accentAmber: "#DBAB09",
+  cardBackground: "#161B22",
+};
+
+interface CaseType {
+  title: string;
+  imageUrl: string;
+  shortDescription: string;
+  featured: boolean;
+}
 
 interface CaseHeroProps {
   caseData: CaseType;
 }
 
 const CaseHero = ({ caseData }: CaseHeroProps) => {
-  // Function to handle smooth scrolling to case evaluation
+  const router = useRouter();
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (event: MouseEvent) => {
+      setMousePosition({ x: event.clientX, y: event.clientY });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
   const scrollToCaseEvaluation = (e: React.MouseEvent) => {
     e.preventDefault();
-    const caseEvaluationElement = document.getElementById('case-evaluation');
-    if (caseEvaluationElement) {
-      caseEvaluationElement.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
-    }
+    const element = document.getElementById("case-evaluation");
+    if (element) element.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  // Mock data for case-specific stats - in real app, this would come from the caseData
   const caseStats = {
-    potentialCompensation: "$10,000 - $500,000+",
-    casesWon: "2,500+",
-    avgSettlement: "$125,000",
-    timeLimit: caseData.featured ? "LIMITED TIME" : "ACTIVE"
+    potentialCompensation: "$15,000 - $1,000,000+",
+    casesWon: "3,200+",
+    avgSettlement: "$180,000",
+    timeLimit: caseData.featured ? "ACT FAST" : "OPEN",
+  };
+
+  const statItems = [
+    { icon: DollarSign, label: "Expected Settlement Range", value: caseStats.potentialCompensation },
+    { icon: TrendingUp, label: "Typical Recovery Amount", value: caseStats.avgSettlement },
+    { icon: Users, label: "Successful Claims", value: caseStats.casesWon },
+    { icon: Clock, label: "Current Claim Window", value: caseStats.timeLimit },
+  ];
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100 } },
   };
 
   return (
-    <section className="pt-36  pb-16 sm:pb-20 relative overflow-hidden">
-      {/* Enhanced Background with Parallax Effect */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src={caseData.imageUrl}
-          alt={caseData.title}
-          fill
-          priority
-          className="object-cover scale-110"
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/95 via-blue-900/90 to-indigo-900/85" />
 
-        {/* Animated Overlay Pattern */}
+<section
+      className="pt-32 pb-20 relative overflow-hidden min-h-[100vh] flex items-center"
+      style={{ backgroundColor: colors.darkBlue, color: colors.whiteText, '--accent-green': colors.accentGreen, '--hover-green': colors.hoverGreen } as React.CSSProperties}
+    >
+      
+      {/* Interactive Spotlight Effect */}
+      <motion.div
+        className="pointer-events-none absolute -inset-px rounded-xl transition-all duration-300"
+        style={{
+          background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(42, 170, 138, 0.1), transparent 80%)`,
+        }}
+      />
+
+      <div className="container mx-auto px-4 relative z-10 w-full">
         <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12"
-          animate={{ x: [-100, 200] }}
-          transition={{ duration: 8, repeat: Infinity, repeatType: "reverse" }}
-        />
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-center"
+        >
+          <div className="lg:col-span-3">
+            <motion.div variants={itemVariants}>
+              <Breadcrumb className="mb-8">
+                <BreadcrumbList className="text-sm">
+                  <BreadcrumbItem>
+                    <BreadcrumbLink href="/" style={{ color: colors.lightGrayText }} className="hover:text-white transition-colors">Homepage</BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator style={{ color: colors.accentGreen }} />
+                  <BreadcrumbItem>
+                    <BreadcrumbLink href="/cases" style={{ color: colors.lightGrayText }} className="hover:text-white transition-colors">View All Claims</BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator style={{ color: colors.accentGreen }} />
+                  <BreadcrumbItem>
+                    <BreadcrumbLink className="font-semibold cursor-default" style={{ color: colors.whiteText }}>{caseData.title}</BreadcrumbLink>
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb>
+            </motion.div>
 
-        {/* Floating Elements */}
-        {[...Array(6)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 bg-accent/30 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [-20, -60, -20],
-              opacity: [0.3, 0.8, 0.3],
-              scale: [1, 1.5, 1],
-            }}
-            transition={{
-              duration: Math.random() * 4 + 3,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-6xl mx-auto text-white">
-          {/* Enhanced Breadcrumbs */}
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <Breadcrumb className="mb-6 text-white/70">
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbLink asChild className="hover:text-accent transition-colors">
-                    <Link href="/">Home</Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator className="text-white/50" />
-                <BreadcrumbItem>
-                  <BreadcrumbLink asChild className="hover:text-accent transition-colors">
-                    <Link href="/cases">Legal Cases</Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator className="text-white/50" />
-                <BreadcrumbItem>
-                  <BreadcrumbLink className="text-accent font-medium">
-                    {caseData.title}
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
-          </motion.div>
-
-          {/* Enhanced Back Button */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="mb-6"
-          >
-            <Button
-              asChild
-              variant="ghost"
-              className="text-accent hover:text-accent/80 hover:bg-white/10 -ml-3 group backdrop-blur-sm border border-white/20 hover:border-accent/50 transition-all duration-300"
-            >
-              <Link href="/cases" className="flex items-center">
-                <ArrowLeft size={16} className="mr-2 transition-transform group-hover:-translate-x-1" />
-                <span className="hidden sm:inline">Back to All Cases</span>
-                <span className="sm:hidden">Back</span>
-              </Link>
-            </Button>
-          </motion.div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-start">
-            {/* Main Content */}
-            <div className="lg:col-span-2">
-              {/* Status Badges */}
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="flex flex-wrap gap-2 sm:gap-3 mb-6"
-              >
-                <Badge className="bg-green-500/20 text-green-300 border-green-500/30 px-3 py-1 text-xs sm:text-sm font-bold backdrop-blur-sm">
-                  <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 mr-1.5" />
-                  ACTIVE LITIGATION
+            <motion.div variants={itemVariants} className="flex flex-wrap gap-3 mb-6">
+              <Badge className="font-bold px-3 py-1 rounded-full border-transparent" style={{ backgroundColor: colors.accentGreen + '20', color: colors.accentGreen }}>
+                <CheckCircle size={16} className="mr-1.5" /> CURRENTLY FILING
+              </Badge>
+              {caseData.featured && (
+                <Badge className="font-bold px-3 py-1 rounded-full border-transparent animate-pulse" style={{ backgroundColor: colors.accentAmber + '20', color: colors.accentAmber }}>
+                  <Zap size={16} className="mr-1.5" /> TIME-SENSITIVE
                 </Badge>
+              )}
+            </motion.div>
 
-                {caseData.featured && (
-                  <Badge className="bg-red-500/20 text-red-300 border-red-500/30 px-3 py-1 text-xs sm:text-sm font-bold backdrop-blur-sm animate-pulse">
-                    <Zap className="w-3 h-3 sm:w-4 sm:h-4 mr-1.5" />
-                    URGENT DEADLINES
-                  </Badge>
-                )}
+            <motion.h1 variants={itemVariants} className="text-5xl lg:text-7xl font-serif font-bold mb-6 tracking-tighter" style={{ color: colors.whiteText, textShadow: '0 0 30px rgba(0,0,0,0.5)' }}>
+              {caseData.title} Claim
+            </motion.h1>
 
-                <Badge className="bg-accent/20 text-accent border-accent/30 px-3 py-1 text-xs sm:text-sm font-bold backdrop-blur-sm">
-                  <Scale className="w-3 h-3 sm:w-4 sm:h-4 mr-1.5" />
-                  NO WIN, NO FEE
-                </Badge>
-              </motion.div>
+            <motion.p variants={itemVariants} className="text-lg sm:text-xl mb-10 max-w-2xl leading-relaxed" style={{ color: colors.lightGrayText }}>
+              {caseData.shortDescription}
+            </motion.p>
 
-              {/* Case Title */}
-              <motion.h1
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-6 leading-tight"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.3 }}
+            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 max-w-lg">
+              <Button
+                size="lg"
+                className="group relative flex-1 font-bold py-4 rounded-lg shadow-lg overflow-hidden transition-all duration-300 text-lg"
+                style={{ backgroundColor: colors.accentGreen, color: colors.darkBlue }}
+                onClick={scrollToCaseEvaluation}
               >
-                <span className="bg-gradient-to-r from-accent to-yellow-400 bg-clip-text text-transparent">
-                  {caseData.title}
-                </span>
-                <br />
-                <span className="text-white text-2xl sm:text-3xl md:text-4xl">Claims & Compensation</span>
-              </motion.h1>
+                <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-56 group-hover:h-56 opacity-20"></span>
+                <span className="relative">Start Free Claim Review</span>
+              </Button>
 
-              {/* Enhanced Separator */}
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: 120 }}
-                transition={{ duration: 0.8, delay: 0.5 }}
-                className="mb-6"
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                style={{ borderColor: colors.borderGray, color: colors.lightGrayText }}
+                className="flex-1 rounded-lg py-4 font-semibold transition-colors hover:border-[var(--accent-green)] hover:text-[var(--accent-green)]"
               >
-                <div className="w-16 sm:w-24 h-1 bg-gradient-to-r from-accent to-yellow-400 rounded-full" />
-              </motion.div>
-
-              {/* Description */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.6 }}
-                className="mb-8"
-              >
-                <p className="text-lg sm:text-xl text-white/90 mb-6 leading-relaxed">
-                  {caseData.shortDescription}
-                  <span className="font-bold text-accent"> Get the compensation you deserve.</span>
-                </p>
-
-                {/* Urgency Notice */}
-
-
-                {/* Main CTAs */}
-                <div className="flex flex-col sm:flex-row gap-4 mb-6">
-                  <motion.div
-                    whileHover={{ scale: 1.05, y: -3 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="flex-1"
-                  >
-                    <Button
-                      size="lg"
-                      className="w-full bg-gradient-to-r from-accent to-yellow-400 hover:from-accent/90 hover:to-yellow-400/90 text-primary font-black text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 shadow-xl hover:shadow-2xl group transition-all duration-300"
-                      onClick={scrollToCaseEvaluation}
-                    >
-                      <CheckCircle className="mr-2 sm:mr-3 h-5 w-5" />
-                      <span className="hidden sm:inline">Check Your Eligibility</span>
-                      <span className="sm:hidden">Check Eligibility</span>
-                      <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                    </Button>
-                  </motion.div>
-
-                  <motion.div
-                    whileHover={{ scale: 1.05, y: -3 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="flex-1"
-                  >
-                    <Button
-                      asChild
-                      variant="outline"
-                      size="lg"
-                      className="w-full border-2 border-white/30 text-white hover:bg-white/10 hover:border-white/50 px-6 sm:px-8 py-4 sm:py-6 font-bold text-base sm:text-lg backdrop-blur-sm transition-all duration-300"
-                    >
-                      <a href="tel:9085336944" className="flex text-black items-center justify-center">
-                        <Phone size={20} className="mr-2 sm:mr-3 text-black" />
-                        <span className=" text-black sm:inline">Call (914) 300 2717</span>
-                        <span className="sm:hidden ">Call Now</span>
-                      </a>
-                    </Button>
-                  </motion.div>
-                </div>
-
-                {/* Trust Indicators */}
-
-              </motion.div>
-            </div>
-
-            {/* Stats Sidebar */}
-
+                <a href="tel:9143002717" className="flex items-center justify-center gap-2">
+                  <Phone size={20} />
+                  Speak to an Attorney
+                </a>
+              </Button>
+            </motion.div>
           </div>
 
-          {/* Share Button - Mobile Friendly */}
-          <motion.div
-            className="fixed bottom-6 right-6 sm:hidden z-50"
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 1, duration: 0.5 }}
-          >
-            <Button
-              variant="outline"
-              size="icon"
-              className="rounded-full bg-white/10 border-white/20 text-white hover:bg-white/20 backdrop-blur-sm shadow-lg"
+          <motion.div variants={itemVariants} className="lg:col-span-2 w-full max-w-md mx-auto lg:mx-0 lg:justify-self-end">
+            <Card
+              style={{ backgroundColor: colors.cardBackground, borderColor: colors.borderGray }}
+              className="p-6 shadow-2xl rounded-xl border relative before:absolute before:top-0 before:left-0 before:w-full before:h-[1px] before:bg-gradient-to-r from-transparent via-[var(--accent-green)] to-transparent"
             >
-              <Share2 size={16} />
-              <span className="sr-only">Share case</span>
-            </Button>
+              <h3 className="text-xl font-bold mb-4 border-b pb-4" style={{ color: colors.whiteText, borderColor: colors.borderGray }}>
+                Vital Claim Statistics
+              </h3>
+              <div className="space-y-5">
+                {statItems.map((item) => (
+                  <div key={item.label} className="flex gap-4 items-center">
+                    <div style={{ backgroundColor: colors.borderGray }} className="p-3 rounded-lg flex-shrink-0">
+                      <item.icon className="w-6 h-6" style={{ color: colors.accentGreen }} />
+                    </div>
+                    <div>
+                      <p className="uppercase font-semibold text-xs tracking-wider" style={{ color: colors.lightGrayText }}>{item.label}</p>
+                      <p className="text-xl font-bold" style={{ color: colors.whiteText }}>{item.value}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Card>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
+
+      {/* <div className="w-[80%] mx-auto h-px  mb-12 opacity-70" style={{backgroundColor:colors.accentGreen}} />  */}
     </section>
+   
   );
 };
 

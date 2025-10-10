@@ -238,7 +238,7 @@ export default function CasesPage() {
               <span className="font-bold text-primary"> Each case represents an opportunity for justice and compensation.</span>
             </p>
           </div>
-
+          {/* ALl Cases */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {caseTypes.map((caseType, index) => (
               <Card key={caseType.id} className="group overflow-hidden hover:shadow-2xl transition-all duration-500 h-full flex flex-col bg-white/80 backdrop-blur-sm border border-gray-200 hover:border-primary/30">
