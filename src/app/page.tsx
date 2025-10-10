@@ -10,6 +10,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col">
       <Header />
+      
       <div className="pt-0"> {/* Removed extra padding since Hero handles its own spacing */}
         <Hero />
         <CaseTypesList />
