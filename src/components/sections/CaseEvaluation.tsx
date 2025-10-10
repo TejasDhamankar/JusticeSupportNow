@@ -21,21 +21,17 @@ import {
   Scale,
   ShieldCheck,
   Zap,
+  Shield,
+  DollarSign,
+  Clock,
+  Briefcase,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CaseEvaluationFormData, FormStatus } from "@/types/form";
 import { getAllCaseTypes } from "@/lib/utils";
+import { Label } from "@radix-ui/react-dropdown-menu";
 
 
-// --- Re-declare the color palette for consistency ---
-const colors = {
-  darkBlue: "#0A0D14",
-  whiteText: "#F0F6FC",
-  accentGreen: "#2AAA8A",
-  lightGrayText: "#8B949E",
-  borderGray: "#30363D",
-  cardBackground: "#161B22",
-};
 
 declare global {
   interface Window {
