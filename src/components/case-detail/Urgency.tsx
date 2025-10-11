@@ -7,15 +7,18 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { AlertCircle, Zap, ArrowRight, Phone, Shield, Calendar, Scale } from "lucide-react";
 
-// Define the color palette to match your theme
+// Light theme color palette
 const colors = {
-    darkBlue: "#0A0D14",
-    whiteText: "#F0F6FC",
-    accentGreen: "#2AAA8A",
-    lightGrayText: "#8B949E",
-    borderGray: "#30363D",
-    cardBackground: "#161B22",
-    accentRed: "#F87171",
+  background: "#FFFFFF",
+  textPrimary: "#212529",
+  textSecondary: "#6c757d",
+  accentGreen: "#2AAA8A",
+  hoverGreen: "#3BC1A0",
+  accentAmber: "#DBAB09",
+  border: "#E9ECEF",
+  cardBackground: "#F8F9FA",
+  accentRed: "#DC3545", // A bootstrap-like danger red
+  darkBlue: "#0A0D14", // Kept for button text
 };
 
 interface UrgencyCtaProps {
@@ -31,7 +34,7 @@ const UrgencyCTA: React.FC<UrgencyCtaProps> = ({ caseData }) => {
     ];
 
     return (
-        <section className="relative py-20 sm:py-24" style={{ backgroundColor: colors.darkBlue }}>
+        <section className="relative py-20 sm:py-24" style={{ backgroundColor: colors.background }}>
             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#2AAA8A]/50 to-transparent" />
 
             <div className="container mx-auto px-4 relative z-10 max-w-6xl">
@@ -53,11 +56,11 @@ const UrgencyCTA: React.FC<UrgencyCtaProps> = ({ caseData }) => {
                             <AlertCircle className="w-8 h-8" style={{ color: colors.accentRed }} />
                         </motion.div>
                         
-                        <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4" style={{ color: colors.whiteText }}>
+                        <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4" style={{ color: colors.textPrimary }}>
                             The Time to Act is Now
                         </h2>
-                        <p className="text-lg leading-relaxed" style={{ color: colors.lightGrayText }}>
-                            The legal window to file a <strong style={{ color: colors.whiteText }}>{caseData.title}</strong> claim is strictly limited. Delaying can result in the forfeiture of your right to compensation.
+                        <p className="text-lg leading-relaxed" style={{ color: colors.textSecondary }}>
+                            The legal window to file a <strong style={{ color: colors.textPrimary }}>{caseData.title}</strong> claim is strictly limited. Delaying can result in the forfeiture of your right to compensation.
                         </p>
                     </motion.div>
 
@@ -71,7 +74,7 @@ const UrgencyCTA: React.FC<UrgencyCtaProps> = ({ caseData }) => {
                     >
                         {urgencyPoints.map((point, index) => (
                             <div key={index} className="group relative p-6 rounded-xl transition-all duration-300" 
-                                style={{ backgroundColor: colors.cardBackground, border: `1px solid ${colors.borderGray}` }}
+                                style={{ backgroundColor: colors.cardBackground, border: `1px solid ${colors.border}` }}
                             >
                                 <div 
                                     className="absolute -inset-px rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -83,8 +86,8 @@ const UrgencyCTA: React.FC<UrgencyCtaProps> = ({ caseData }) => {
                                 <div className="relative z-10 flex items-start gap-4">
                                     <point.icon className="w-6 h-6 flex-shrink-0 mt-1" style={{ color: colors.accentGreen }} />
                                     <div>
-                                        <h3 className="font-bold text-lg" style={{ color: colors.whiteText }}>{point.title}</h3>
-                                        <p className="text-sm" style={{ color: colors.lightGrayText }}>{point.description}</p>
+                                        <h3 className="font-bold text-lg" style={{ color: colors.textPrimary }}>{point.title}</h3>
+                                        <p className="text-sm" style={{ color: colors.textSecondary }}>{point.description}</p>
                                     </div>
                                 </div>
                             </div>
@@ -99,7 +102,7 @@ const UrgencyCTA: React.FC<UrgencyCtaProps> = ({ caseData }) => {
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
                     className="mt-16 pt-12 border-t text-center"
-                    style={{ borderColor: colors.borderGray }}
+                    style={{ borderColor: colors.border }}
                 >
                     <div className="flex flex-col sm:flex-row sm:justify-center gap-4">
                         <Button
@@ -120,8 +123,8 @@ const UrgencyCTA: React.FC<UrgencyCtaProps> = ({ caseData }) => {
                             asChild
                             size="lg"
                             variant="outline"
-                            className="font-semibold text-lg py-6 px-8 rounded-lg transition-colors hover:border-white hover:text-white"
-                            style={{ borderColor: colors.borderGray, color: colors.lightGrayText }}
+                            className="font-semibold text-lg py-6 px-8 rounded-lg transition-colors hover:border-accentGreen hover:text-accentGreen"
+                            style={{ borderColor: colors.border, color: colors.textSecondary }}
                         >
                             <a href="tel:9143002717" className="flex items-center justify-center gap-2">
                                 <Phone size={20} />
@@ -129,7 +132,7 @@ const UrgencyCTA: React.FC<UrgencyCtaProps> = ({ caseData }) => {
                             </a>
                         </Button>
                     </div>
-                     <p className="text-center mt-6 text-xs" style={{ color: colors.lightGrayText }}>
+                     <p className="text-center mt-6 text-xs" style={{ color: colors.textSecondary }}>
                         Strictly confidential • No fee unless you win
                     </p>
                 </motion.div>

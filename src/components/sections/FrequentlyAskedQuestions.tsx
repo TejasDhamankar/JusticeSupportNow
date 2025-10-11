@@ -26,16 +26,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 
 const FrequentlyAskedQuestions = () => {
-  // New "Cyber-Chic" Dark Color Palette
+  // Light theme color palette
   const colors = {
-    darkBlue: "#0A0D14",
-    whiteText: "#2AAA8A", // Updated from #F0F6FC
+    background: "#FFFFFF",
+    textPrimary: "#212529",
+    textSecondary: "#6c757d",
     accentGreen: "#2AAA8A",
     hoverGreen: "#3BC1A0",
-    lightGrayText: "#8B949E",
-    borderGray: "#30363D",
     accentAmber: "#DBAB09",
-    cardBackground: "#161B22",
+    border: "#E9ECEF",
+    cardBackground: "#F8F9FA",
   };
 
   const faqs = [
@@ -114,8 +114,9 @@ const FrequentlyAskedQuestions = () => {
   return (
     <section
       id="faq"
-      style={{ backgroundColor: colors.darkBlue, color: colors.whiteText }}
+      style={{ backgroundColor: colors.background, color: colors.textPrimary }}
     >
+      <div className="w-[80%] mx-auto h-px  mb-12 opacity-70" style={{backgroundColor:colors.accentGreen}} />
       <div className="container mx-auto px-4 py-16 lg:py-24">
         {/* Header - Left Aligned */}
         <motion.div
@@ -128,7 +129,7 @@ const FrequentlyAskedQuestions = () => {
           <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
             Frequently Asked Questions
           </h2>
-          <p className="text-lg" style={{ color: colors.lightGrayText }}>
+          <p className="text-lg" style={{ color: colors.textSecondary }}>
             Find clear, straightforward answers to common legal questions to help you move forward with confidence.
           </p>
         </motion.div>
@@ -143,7 +144,7 @@ const FrequentlyAskedQuestions = () => {
             viewport={{ once: true }}
             variants={containerVariants}
           >
-            <h3 className="text-2xl font-bold mb-6 flex items-center" style={{ color: colors.whiteText }}>
+            <h3 className="text-2xl font-bold mb-6 flex items-center" style={{ color: colors.textPrimary }}>
               <HelpCircle className="w-6 h-6 mr-3" style={{ color: colors.accentGreen }} />
               Top Questions
             </h3>
@@ -153,8 +154,8 @@ const FrequentlyAskedQuestions = () => {
                   <div
                     className="h-full p-6 rounded-lg border transition-all duration-300 hover:border-accentGreen"
                     style={{
-                      backgroundColor: colors.cardBackground,
-                      borderColor: colors.borderGray,
+                      backgroundColor: colors.background,
+                      borderColor: colors.border,
                     }}
                   >
                     <div className="flex items-center mb-4">
@@ -164,7 +165,7 @@ const FrequentlyAskedQuestions = () => {
                       />
                       <h4 className="font-semibold">{faq.question}</h4>
                     </div>
-                    <p className="text-sm" style={{ color: colors.lightGrayText }}>
+                    <p className="text-sm" style={{ color: colors.textSecondary }}>
                       {faq.answer}
                     </p>
                   </div>
@@ -180,7 +181,7 @@ const FrequentlyAskedQuestions = () => {
             viewport={{ once: true }}
             variants={containerVariants}
           >
-            <h3 className="text-2xl font-bold mb-6 flex items-center" style={{ color: colors.whiteText }}>
+            <h3 className="text-2xl font-bold mb-6 flex items-center" style={{ color: colors.textPrimary }}>
               <FileText className="w-6 h-6 mr-3" style={{ color: colors.accentGreen }} />
               More Information
             </h3>
@@ -188,14 +189,14 @@ const FrequentlyAskedQuestions = () => {
               type="single"
               collapsible
               className="w-full rounded-lg"
-              style={{ backgroundColor: colors.cardBackground, borderColor: colors.borderGray }}
+              style={{ backgroundColor: colors.background, border: `1px solid ${colors.border}` }}
             >
               {allFaqs.map((faq) => (
                 <AccordionItem
                   key={faq.id}
                   value={faq.id}
                   className="border-b"
-                  style={{ borderColor: colors.borderGray }}
+                  style={{ borderColor: colors.border }}
                 >
                   <AccordionTrigger className="p-6 text-left font-medium text-lg hover:no-underline">
                     <span className="flex-1">{faq.question}</span>
@@ -203,7 +204,7 @@ const FrequentlyAskedQuestions = () => {
                   </AccordionTrigger>
                   <AccordionContent
                     className="px-6 pb-6 text-base"
-                    style={{ color: colors.lightGrayText }}
+                    style={{ color: colors.textSecondary }}
                   >
                     {faq.answer}
                   </AccordionContent>
@@ -222,8 +223,8 @@ const FrequentlyAskedQuestions = () => {
             <Card
               className="mt-20 text-center rounded-lg" // Removed border-2
               style={{
-                backgroundColor: colors.cardBackground, // Changed from darkBlue to cardBackground for consistency
-                // Removed borderColor: colors.accentGreen,
+                backgroundColor: colors.background,
+                borderColor: colors.border,
               }}
             >
               <CardContent className="p-8 md:p-12">
@@ -236,7 +237,7 @@ const FrequentlyAskedQuestions = () => {
                 </h3>
                 <p
                   className="max-w-2xl mx-auto mb-8 text-lg font-bold text-[#F0F6FC]"
-             
+                  style={{ color: colors.textPrimary }}
                 >
                   Your situation is unique. Contact us for a free, no-obligation consultation to get personalized answers from our legal experts.
                 </p>
@@ -247,7 +248,7 @@ const FrequentlyAskedQuestions = () => {
                     className="font-bold text-base transition-all"
                     style={{
                       backgroundColor: colors.accentGreen,
-                      color: '#FFFFFF', // Pure white text
+                      color: colors.background,
                     }}
                     onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = colors.hoverGreen)}
                     onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = colors.accentGreen)}
@@ -262,8 +263,8 @@ const FrequentlyAskedQuestions = () => {
                     size="lg"
                     className="font-bold text-base transition-all"
                     style={{
-                      backgroundColor: colors.accentGreen, // Accent Green background
-                      color: '#FFFFFF', // Pure white text
+                      backgroundColor: colors.accentGreen,
+                      color: colors.background,
                     }}
                     onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = colors.hoverGreen)}
                     onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = colors.accentGreen)}

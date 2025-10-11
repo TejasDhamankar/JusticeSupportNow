@@ -61,15 +61,16 @@ interface ExtendedFormData extends CaseEvaluationFormData {
 }
 
 // *** COLOR PALETTE from the first CaseHero component ***
+// Light theme color palette
 const colors = {
-  darkBlue: "#0A0D14",
-  whiteText: "#F0F6FC",
+  background: "#FFFFFF",
+  textPrimary: "#212529",
+  textSecondary: "#6c757d",
   accentGreen: "#2AAA8A",
   hoverGreen: "#3BC1A0",
-  lightGrayText: "#8B949E",
-  borderGray: "#30363D",
   accentAmber: "#DBAB09",
-  cardBackground: "#161B22",
+  border: "#E9ECEF",
+  cardBackground: "#F8F9FA",
 };
 
 const TRUST_POINTS = [
@@ -163,11 +164,11 @@ const CaseEvaluation = () => {
     <section
       id="case-evaluation"
       style={{
-        backgroundColor: colors.darkBlue,
+        backgroundColor: colors.background,
         '--accent-green': colors.accentGreen,
-        '--border-gray': colors.borderGray,
+        '--border-gray': colors.border,
         '--card-background': colors.cardBackground,
-        '--light-gray-text': colors.lightGrayText,
+        '--light-gray-text': colors.textSecondary,
       } as React.CSSProperties}
       className="py-16 sm:py-24"
     >
@@ -175,7 +176,7 @@ const CaseEvaluation = () => {
       <div className="container mx-auto px-4">
         <motion.div
           className="max-w-6xl mx-auto rounded-xl border overflow-hidden md:grid md:grid-cols-5"
-          style={{ borderColor: colors.borderGray, backgroundColor: colors.cardBackground }}
+          style={{ borderColor: colors.border, backgroundColor: colors.cardBackground }}
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
@@ -186,15 +187,15 @@ const CaseEvaluation = () => {
             className="col-span-2 p-8 sm:p-12 flex flex-col justify-between"
             style={{
               backgroundColor: colors.accentGreen, // Changed background to accentGreen
-              color: colors.whiteText, // Ensures all default text in this div is white
+              color: colors.background, // Ensures all default text in this div is white
             }}
           >
             <div>
-              <Scale className="w-10 h-10 mb-6" style={{ color: colors.whiteText }} /> {/* Icon color also to white for contrast */}
-              <h2 className="text-3xl font-bold mb-4 leading-tight " style={{ color: colors.whiteText }}> {/* Changed h2 text color to white */}
+              <Scale className="w-10 h-10 mb-6" style={{ color: colors.background }} /> {/* Icon color also to white for contrast */}
+              <h2 className="text-3xl font-bold mb-4 leading-tight " style={{ color: colors.background }}> {/* Changed h2 text color to white */}
                 Start Your Free<br />Case Assessment
               </h2>
-              <p style={{ color: colors.whiteText }} className="mb-8 text-lg" > {/* Changed paragraph text color to white for better contrast */}
+              <p style={{ color: colors.background }} className="mb-8 text-lg" > {/* Changed paragraph text color to white for better contrast */}
                 Your path to justice begins here. Fill out the form and a dedicated legal specialist will evaluate your claim immediately.
               </p>
               <div className="space-y-4">
@@ -206,23 +207,23 @@ const CaseEvaluation = () => {
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.2 + i * 0.1, duration: 0.5 }}
                   >
-                    <point.icon className="w-5 h-5 mr-3 flex-shrink-0" style={{ color: colors.whiteText }} /> {/* Icon color also to white for contrast */}
-                    <span className="font-semibold" style={{ color: colors.whiteText }}>{point.text}</span>
+                    <point.icon className="w-5 h-5 mr-3 flex-shrink-0" style={{ color: colors.background }} /> {/* Icon color also to white for contrast */}
+                    <span className="font-semibold" style={{ color: colors.background }}>{point.text}</span>
                   </motion.div>
                 ))}
               </div>
             </div>
-            <div className="mt-10 pt-6 border-t" style={{ borderColor: colors.whiteText }}> {/* Changed border color to white */}
-              <p style={{ color: colors.whiteText }} className="text-sm italic"> {/* Changed text color to white */}
+            <div className="mt-10 pt-6 border-t" style={{ borderColor: colors.background }}> {/* Changed border color to white */}
+              <p style={{ color: colors.background }} className="text-sm italic"> {/* Changed text color to white */}
                 "No matter how complex your case, we connect you with experienced counsel to fight for the compensation you deserve."
               </p>
             </div>
           </div>
 
           {/* RIGHT PANEL: Form */}
-          <div className="col-span-3 p-8 sm:p-12" style={{ backgroundColor: colors.darkBlue }}>
+          <div className="col-span-3 p-8 sm:p-12" style={{ backgroundColor: colors.background, color: colors.textPrimary }}>
             <h3 className="text-2xl font-bold mb-2" style={{ color: colors.accentGreen }}>Qualify in 60 Seconds</h3>
-            <p className="mb-8" style={{ color: colors.lightGrayText }}>All information is kept private and secure.</p>
+            <p className="mb-8" style={{ color: colors.textSecondary }}>All information is kept private and secure.</p>
             <form ref={formRef} onSubmit={handleSubmit} method="POST">
               <div className="space-y-6">
                 {/* Contact Info */}
@@ -239,7 +240,7 @@ const CaseEvaluation = () => {
                 </fieldset>
 
                 {/* Case Details */}
-                <fieldset className="p-4 border rounded-lg" style={{ borderColor: colors.borderGray }}>
+                <fieldset className="p-4 border rounded-lg" style={{ borderColor: colors.border }}>
                   <legend className="px-2 text-sm font-bold" style={{ color: colors.accentGreen }}>
                     <Scale className="inline-block w-4 h-4 mr-1 mb-0.5" /> Case Details
                   </legend>
@@ -248,7 +249,7 @@ const CaseEvaluation = () => {
                       <SelectTrigger className="h-12 bg-transparent border-[var(--border-gray)] focus:border-[var(--accent-green)] transition-colors">
                         <SelectValue placeholder="Choose your case type*" />
                       </SelectTrigger>
-                      <SelectContent style={{ backgroundColor: colors.cardBackground, borderColor: colors.borderGray }}>
+                      <SelectContent style={{ backgroundColor: colors.cardBackground, borderColor: colors.border }}>
                         {caseTypes.map((c) => (<SelectItem key={c.id} value={c.slug}>{c.title}</SelectItem>))}
                         <SelectItem value="other">Other / Unsure</SelectItem>
                       </SelectContent>
@@ -258,7 +259,7 @@ const CaseEvaluation = () => {
                 </fieldset>
 
                 {/* Agreements */}
-                <div style={{ backgroundColor: colors.cardBackground, borderColor: colors.borderGray }} className="border rounded-lg p-4 space-y-4">
+                <div style={{ backgroundColor: colors.cardBackground, borderColor: colors.border }} className="border rounded-lg p-4 space-y-4">
                   <h4 className="font-bold text-base"  style={{ color: colors.accentGreen }} >Required Agreements</h4>
                   {[
                     { id: "agreeToQualification", label: "I want to see if I may qualify for compensation." },
@@ -292,7 +293,7 @@ const CaseEvaluation = () => {
                         <div style={{ color: formStatus.type === 'success' ? colors.accentGreen : colors.accentAmber }}>
                           {formStatus.type === "success" ? (<CheckCircle2 className="mr-3 mt-0.5 flex-shrink-0 w-5 h-5" />) : (<AlertCircle className="mr-3 mt-0.5 flex-shrink-0 w-5 h-5" />)}
                         </div>
-                        <p className="font-medium text-sm" style={{ color: formStatus.type === 'success' ? colors.whiteText : colors.accentAmber }}>{formStatus.message}</p>
+                        <p className="font-medium text-sm" style={{ color: formStatus.type === 'success' ? colors.textPrimary : colors.accentAmber }}>{formStatus.message}</p>
                       </div>
                     </motion.div>
                   )}
@@ -303,7 +304,7 @@ const CaseEvaluation = () => {
                   <Button
                     type="submit" size="lg" disabled={isSubmitting}
                     className="group relative w-full text-lg font-bold px-10 py-7 transition-all duration-300 shadow-lg overflow-hidden"
-                    style={{ backgroundColor: colors.accentGreen, color: colors.whiteText }}
+                    style={{ backgroundColor: colors.accentGreen, color: colors.background }}
                   >
                     <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-56 group-hover:h-56 opacity-20"></span>
                     <span className="relative flex items-center justify-center">

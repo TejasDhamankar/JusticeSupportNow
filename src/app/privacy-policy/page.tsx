@@ -2,8 +2,8 @@ import React from "react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Lex Claim Connect",
-  description: "How Lex Claim Connect collects, uses, and protects your personal information",
+  title: "Privacy Policy | Justic Suppot Now",
+  description: `How ${"Justic Suppot Now"} collects, uses, and protects your personal informati`,
 };
 
 const PrivacyPolicyPage = () => {
@@ -15,7 +15,7 @@ const PrivacyPolicyPage = () => {
         <p className="text-lg mb-6">Last Updated: {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">1. Introduction</h2>
-        <p>Lex Claim Connect ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website lexclaimconnect.com (the "Site") or use our services.</p>
+        <p>Justic Suppot Now", ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website lexclaimconnect.com (the "Site") or use our services.</p>
         <p>Please read this privacy policy carefully. If you do not agree with the terms of this privacy policy, please do not access the site.</p>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">2. Information We Collect</h2>

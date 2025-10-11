@@ -18,14 +18,17 @@ import {
     CheckCircle, Lightbulb, FileText, DollarSign, ArrowRight
 } from "lucide-react";
 
-// The dark theme color palette
+// Light theme color palette
 const colors = {
-    darkBlue: "#0A0D14",
-    whiteText: "#F0F6FC",
-    accentGreen: "#2AAA8A",
-    lightGrayText: "#8B949E",
-    borderGray: "#30363D",
-    cardBackground: "#161B22",
+  background: "#FFFFFF",
+  textPrimary: "#212529",
+  textSecondary: "#6c757d",
+  accentGreen: "#2AAA8A",
+  hoverGreen: "#3BC1A0",
+  accentAmber: "#DBAB09",
+  border: "#E9ECEF",
+  cardBackground: "#F8F9FA",
+  darkBlue: "#0A0D14", // Kept for button text
 };
 
 interface CaseFAQProps {
@@ -52,12 +55,12 @@ const CaseFAQ = ({ caseData }: CaseFAQProps) => {
     const allFAQs = [...caseData.faqs.map((faq) => ({ ...faq, icon: HelpCircle })), ...commonFAQs];
 
     return (
-        <section className="relative py-20 sm:py-24 overflow-hidden" style={{ backgroundColor: colors.darkBlue }}>
+        <section className="relative py-20 sm:py-24 overflow-hidden" style={{ backgroundColor: colors.background }}>
             {/* Interactive Spotlight Effect */}
             <motion.div
                 className="pointer-events-none absolute -inset-px"
                 style={{
-                    background: `radial-gradient(800px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(42, 170, 138, 0.1), transparent 80%)`,
+                    background: `radial-gradient(800px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(42, 170, 138, 0.08), transparent 80%)`,
                 }}
             />
             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#2AAA8A]/50 to-transparent" />
@@ -77,10 +80,10 @@ const CaseFAQ = ({ caseData }: CaseFAQProps) => {
                                 <Lightbulb className="w-4 h-4 mr-2" />
                                 FREQUENTLY ASKED QUESTIONS
                             </Badge>
-                            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4" style={{ color: colors.whiteText }}>
+                            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4" style={{ color: colors.textPrimary }}>
                                 Answers About the <span style={{ color: colors.accentGreen }}>{caseData.title}</span> Lawsuit
                             </h2>
-                            <p className="text-lg" style={{ color: colors.lightGrayText }}>
+                            <p className="text-lg" style={{ color: colors.textSecondary }}>
                                 Find clear answers to common questions about the legal process and what to expect.
                             </p>
                         </motion.div>
@@ -96,19 +99,19 @@ const CaseFAQ = ({ caseData }: CaseFAQProps) => {
                                     <AccordionItem
                                         key={index}
                                         value={`faq-${index}`}
-                                        className="border rounded-lg data-[state=open]:border-[#2AAA8A]/50 transition-all"
-                                        style={{ backgroundColor: colors.cardBackground, borderColor: colors.borderGray }}
+                                        className="border rounded-lg data-[state=open]:border-accentGreen/50 transition-all"
+                                        style={{ backgroundColor: colors.cardBackground, borderColor: colors.border }}
                                     >
-                                        <AccordionTrigger className="text-left font-semibold text-lg p-6 hover:no-underline" style={{ color: colors.whiteText }}>
+                                        <AccordionTrigger className="text-left font-semibold text-lg p-6 hover:no-underline" style={{ color: colors.textPrimary }}>
                                             <div className="flex items-center gap-4 flex-1">
-                                                <div className="p-3 rounded-lg flex-shrink-0" style={{ backgroundColor: colors.borderGray }}>
+                                                <div className="p-3 rounded-lg flex-shrink-0" style={{ backgroundColor: colors.border }}>
                                                     <faq.icon className="w-5 h-5" style={{ color: colors.accentGreen }} />
                                                 </div>
                                                 <span className="block text-left">{faq.question}</span>
                                             </div>
-                                            <Plus className="h-5 w-5 shrink-0 transition-transform duration-300 data-[state=open]:rotate-45" style={{ color: colors.lightGrayText }} />
+                                            <Plus className="h-5 w-5 shrink-0 transition-transform duration-300 data-[state=open]:rotate-45" style={{ color: colors.textSecondary }} />
                                         </AccordionTrigger>
-                                        <AccordionContent className="pb-6 px-6 text-base" style={{ color: colors.lightGrayText }}>
+                                        <AccordionContent className="pb-6 px-6 text-base" style={{ color: colors.textSecondary }}>
                                             <div className="pl-16">{faq.answer}</div>
                                         </AccordionContent>
                                     </AccordionItem>
@@ -126,9 +129,9 @@ const CaseFAQ = ({ caseData }: CaseFAQProps) => {
                         className="relative"
                     >
                         <div className="lg:sticky top-28">
-                            <Card className="shadow-2xl rounded-xl border p-8" style={{ backgroundColor: colors.cardBackground, borderColor: colors.borderGray }}>
-                                <h3 className="text-2xl font-bold mb-4" style={{ color: colors.whiteText }}>Still Have Questions?</h3>
-                                <p className="mb-6" style={{ color: colors.lightGrayText }}>
+                            <Card className="shadow-2xl rounded-xl border p-8" style={{ backgroundColor: colors.cardBackground, borderColor: colors.border }}>
+                                <h3 className="text-2xl font-bold mb-4" style={{ color: colors.textPrimary }}>Still Have Questions?</h3>
+                                <p className="mb-6" style={{ color: colors.textSecondary }}>
                                     Our partners are ready to provide a free, confidential consultation to address your specific concerns.
                                 </p>
                                 <div className="space-y-4 mb-8">
@@ -136,7 +139,7 @@ const CaseFAQ = ({ caseData }: CaseFAQProps) => {
                                         asChild
                                         size="lg"
                                         className="group relative w-full font-bold text-lg py-6 rounded-lg shadow-lg overflow-hidden transition-all duration-300"
-                                        style={{ backgroundColor: colors.accentGreen, color: colors.darkBlue }}
+                                        style={{ backgroundColor: colors.accentGreen, color: colors.background }}
                                     >
                                         <a href="#case-evaluation">
                                             <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-full group-hover:h-56 opacity-20"></span>
@@ -150,8 +153,8 @@ const CaseFAQ = ({ caseData }: CaseFAQProps) => {
                                         asChild
                                         size="lg"
                                         variant="outline"
-                                        className="w-full font-semibold text-lg py-6 rounded-lg transition-colors hover:border-white hover:text-white"
-                                        style={{ borderColor: colors.borderGray, color: colors.lightGrayText }}
+                                        className="w-full font-semibold text-lg py-6 rounded-lg transition-colors hover:border-accentGreen hover:text-accentGreen"
+                                        style={{ borderColor: colors.border, color: colors.textSecondary }}
                                     >
                                         <a href="tel:9143002717" className="flex items-center justify-center gap-2">
                                             <Phone size={20} />
@@ -159,12 +162,12 @@ const CaseFAQ = ({ caseData }: CaseFAQProps) => {
                                         </a>
                                     </Button>
                                 </div>
-                                <div className="border-t pt-6" style={{ borderColor: colors.borderGray }}>
-                                    <h4 className="font-bold mb-4 text-center" style={{ color: colors.whiteText }}>Case Statistics</h4>
-                                    <div className="space-y-3 text-sm" style={{ color: colors.lightGrayText }}>
-                                        <div className="flex justify-between"><span>Cases Filed:</span> <span className="font-semibold" style={{ color: colors.whiteText }}>2,500+</span></div>
-                                        <div className="flex justify-between"><span>Average Settlement:</span> <span className="font-semibold" style={{ color: colors.whiteText }}>$125K</span></div>
-                                        <div className="flex justify-between"><span>Our Response Time:</span> <span className="font-semibold" style={{ color: colors.whiteText }}>Under 24 Hrs</span></div>
+                                <div className="border-t pt-6" style={{ borderColor: colors.border }}>
+                                    <h4 className="font-bold mb-4 text-center" style={{ color: colors.textPrimary }}>Case Statistics</h4>
+                                    <div className="space-y-3 text-sm" style={{ color: colors.textSecondary }}>
+                                        <div className="flex justify-between"><span>Cases Filed:</span> <span className="font-semibold" style={{ color: colors.textPrimary }}>2,500+</span></div>
+                                        <div className="flex justify-between"><span>Average Settlement:</span> <span className="font-semibold" style={{ color: colors.textPrimary }}>$125K</span></div>
+                                        <div className="flex justify-between"><span>Our Response Time:</span> <span className="font-semibold" style={{ color: colors.textPrimary }}>Under 24 Hrs</span></div>
                                     </div>
                                 </div>
                             </Card>
