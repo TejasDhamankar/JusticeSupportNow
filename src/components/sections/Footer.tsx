@@ -190,7 +190,8 @@ const Footer = () => {
           {/* RIGHT SIDE: Brand and Contact */}
           <motion.div variants={itemVariants} className="bg-[#161B22] border border-[#30363D] rounded-xl p-8 flex flex-col justify-between backdrop-blur-sm">
             <div>
-              <img src="/logo.png" alt="Justice Support Now Logo" className="w-auto h-20 mb-4" />
+              {/* Add new JusticSuppor Logo */}
+              {/* <img src="/logo.png" alt="Justice Support Now Logo" className="w-auto h-20 mb-4" /> */}
               <p className="text-[#8B949E] mb-6 leading-relaxed">
                 Trusted legal guidance for those affected by corporate wrongdoing. We fight for you.
               </p>

@@ -21,21 +21,17 @@ import {
   Scale,
   ShieldCheck,
   Zap,
+  Shield,
+  DollarSign,
+  Clock,
+  Briefcase,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CaseEvaluationFormData, FormStatus } from "@/types/form";
 import { getAllCaseTypes } from "@/lib/utils";
+import { Label } from "@radix-ui/react-dropdown-menu";
+import axios from "axios";
 
-
-// --- Re-declare the color palette for consistency ---
-const colors = {
-  darkBlue: "#0A0D14",
-  whiteText: "#F0F6FC",
-  accentGreen: "#2AAA8A",
-  lightGrayText: "#8B949E",
-  borderGray: "#30363D",
-  cardBackground: "#161B22",
-};
 
 declare global {
   interface Window {
@@ -276,7 +272,7 @@ const CaseEvaluation = () => {
                     <Button type="submit" name="submit" className="w-full font-bold text-lg py-6 group relative overflow-hidden" style={{ backgroundColor: colors.accentGreen, color: colors.darkBlue }} disabled={isSubmitting}>
                       {isSubmitting ? "Submitting..." :
                         <>
-                          <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-56 group-hover:h-56 opacity-20"></span>
+                          <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-full group-hover:h-56 opacity-20"></span>
                           <span className="relative flex items-center">Get My Free Assessment <ArrowRight className="ml-2 w-5 h-5" /></span>
                         </>
                       }

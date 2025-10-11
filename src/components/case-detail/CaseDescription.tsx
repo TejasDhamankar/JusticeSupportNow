@@ -133,7 +133,7 @@ const CaseDescription = ({ caseData }: CaseDescriptionProps) => {
                             style={{ backgroundColor: colors.accentGreen, color: colors.darkBlue }}
                         >
                             <a href="#case-evaluation">
-                                <span className="absolute w-0 h-0 transition-all duration-400 ease-out bg-white rounded-full group-hover:w-full group-hover:h-full opacity-20"></span>
+                                <span className="absolute w-0 h-0 transition-all duration-400 ease-out bg-white rounded-full group-hover:w-full group-hover:h-56 opacity-20"></span>
                                 <span className="relative flex items-center">
                                     Begin Your Free Assessment
                                     <ArrowRight className="ml-2 w-5 h-5" />

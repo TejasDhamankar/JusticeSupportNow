@@ -162,7 +162,7 @@ const CaseHero = ({ caseData }: CaseHeroProps) => {
                 style={{ backgroundColor: colors.accentGreen, color: colors.darkBlue }}
                 onClick={scrollToCaseEvaluation}
               >
-                <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-56 group-hover:h-56 opacity-20"></span>
+                <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-full group-hover:h-56 opacity-20"></span>
                 <span className="relative">Start Free Claim Review</span>
               </Button>
 
