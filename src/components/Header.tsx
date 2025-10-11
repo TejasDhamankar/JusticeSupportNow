@@ -129,21 +129,21 @@ const Header: FC = () => {
   }, [lastScrollY]);
 
   const groupedCaseTypes = () => {
-    const popularCases = caseTypes.slice(0, 4);
-    const medicalCases = caseTypes.filter(c =>
+    const PopularCases = caseTypes.slice(0, 4);
+    const MedicalCases = caseTypes.filter(c =>
       c.title.includes("CPAP") ||
       c.title.includes("Hernia") ||
       c.title.includes("Exactech") ||
       c.title.includes("NEC")
     );
-    const environmentalCases = caseTypes.filter(c =>
+    const EnvironmentalCases = caseTypes.filter(c =>
       c.title.includes("Camp Lejeune") ||
       c.title.includes("Roundup") ||
       c.title.includes("PFAS") ||
       c.title.includes("Paraquat")
     );
 
-    return { popularCases, medicalCases, environmentalCases };
+    return { PopularCases, MedicalCases, EnvironmentalCases };
   };
 
   return (
@@ -227,7 +227,7 @@ const Header: FC = () => {
                       <Accordion type="multiple" className="w-full">
                         {Object.entries(groupedCaseTypes()).map(([category, cases]) => (
                           <AccordionItem key={category} value={category} className="border-b-0">
-                            <AccordionTrigger className="font-semibold text-lg hover:no-underline py-3" style={{ color: colors.textPrimary }}>
+                            <AccordionTrigger className="font-semibold text-lg hover:no-underline py-3 uppercase" style={{ color: colors.textPrimary }}>
                               {category}
                             </AccordionTrigger>
                             <AccordionContent>
@@ -237,7 +237,7 @@ const Header: FC = () => {
                                     key={item.id}
                                     href={`/cases/${item.slug}`}
                                     onClick={() => setMobileMenuOpen(false)}
-                                    className="block py-2 text-md"
+                                    className="block py-2 text-md uppercase"
                                     style={{ color: colors.textSecondary }}
                                   >
                                     {item.title}
