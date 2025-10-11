@@ -94,9 +94,8 @@ const CaseTypesList = () => {
     "Popular Cases": caseTypes.slice(0, 6),
     "Product Liability": caseTypes.filter((c) =>
       [
-        "VR Headset", "Surgical Robot", "Contaminated Medical Scopes", "IVC Filter",
-        "Pressure Cooker", "Inclined Sleeper", "Sunscreen Benzene", "Defective Airbag", "Boeing 737 MAX",
-      ].some((key) => c.title.includes(key))
+        "Tylenol Autism & ADHD", "Zantac Cancer", "Exactech Joint Replacement", "hair-straightener-cancer",
+        "Paraquat Herbicide",].some((key) => c.title.includes(key))
     ),
     "Military & Veterans": caseTypes.filter((c) =>
       ["Body Armor", "Red Hill Water", "3m-earplugs", "camp-lejeune"].some((key) => c.slug.includes(key) || c.title.includes(key))

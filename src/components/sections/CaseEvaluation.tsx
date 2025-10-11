@@ -306,7 +306,7 @@ const CaseEvaluation = () => {
                     className="group relative w-full text-lg font-bold px-10 py-7 transition-all duration-300 shadow-lg overflow-hidden"
                     style={{ backgroundColor: colors.accentGreen, color: colors.background }}
                   >
-                    <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-56 group-hover:h-56 opacity-20"></span>
+                    <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-full group-hover:h-56 opacity-20"></span>
                     <span className="relative flex items-center justify-center">
                       {isSubmitting ? (
                         <>
