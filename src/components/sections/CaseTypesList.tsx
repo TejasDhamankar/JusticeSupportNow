@@ -112,6 +112,7 @@ const CaseTypesList = () => {
 
   return (
     <section id="case-types" className="py-20 md:py-28" style={{ backgroundColor: colors.darkBlue }}>
+       <div className="w-[80%] mx-auto h-px  mb-12 opacity-70" style={{backgroundColor:colors.accentGreen}} />
       <div className="container mx-auto px-4">
         <Tabs defaultValue={defaultTab} className="w-full">
           <div className="flex flex-col md:flex-row md:items-start md:space-x-12">

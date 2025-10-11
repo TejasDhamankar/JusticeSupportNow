@@ -11,6 +11,7 @@ export const getAllCaseTypes = (): CaseType[] => {
     {
       "id": "1",
       "slug": "vr-headset-injury",
+      "featured": false,
       "title": "VR Headset Eye Strain & Injury",
       "shortDescription": "Users of virtual reality (VR) headsets who have suffered from severe eye strain, vision damage, or neurological issues may have a claim against manufacturers.",
       "fullDescription": "Virtual reality technology has surged in popularity for gaming and professional applications. However, prolonged use of VR headsets has been linked to significant health concerns. Lawsuits allege that manufacturers failed to adequately warn consumers about the risks of vergence-accommodation conflict, a condition where the eyes are forced to focus at a fixed distance (the screen) while converging at a different distance (the virtual object), leading to severe eye strain, headaches, dizziness, and potential long-term vision damage. Additional concerns include photosensitive seizure risks and neck strain from the weight of the devices.",
@@ -44,6 +45,7 @@ export const getAllCaseTypes = (): CaseType[] => {
     {
       "id": "2",
       "slug": "loot-box-gambling",
+      "featured": false,
       "title": "Video Game Loot Box Addiction",
       "shortDescription": "Families of minors who have developed gambling addictions and spent significant amounts of money on video game 'loot boxes' may seek compensation.",
       "fullDescription": "Loot boxes are randomized virtual item packs in video games that players can purchase with real money. Numerous lawsuits and regulatory investigations allege that these mechanics constitute an unregulated and predatory form of gambling specifically targeted at children. The system uses sophisticated psychological triggers, such as variable reward schedules, to foster compulsive spending and addiction. Families claim that game publishers like EA, Activision, and Epic Games have knowingly profited from these addictive mechanics without proper warnings or age-gating, leading to financial harm and severe mental health issues in minors.",
@@ -76,6 +78,7 @@ export const getAllCaseTypes = (): CaseType[] => {
     {
       "id": "3",
       "slug": "defective-body-armor",
+      "featured": true,
       "title": "Defective Military Body Armor",
       "shortDescription": "Service members injured due to the failure of military-issued body armor, such as the Pinnacle Armor SAPI plates, may be eligible for compensation.",
       "fullDescription": "Body armor is a critical piece of equipment for military personnel in combat zones. Lawsuits have been filed against manufacturers, alleging that certain models of body armor, including Dragon Skin and specific series of Small Arms Protective Inserts (SAPI plates), failed to meet military specifications and offered inadequate protection. These defects, allegedly known by the manufacturers, could include a susceptibility to degradation in extreme temperatures or a failure to stop projectiles they were rated to defeat, placing service members at an unacceptable risk of serious injury or death.",
@@ -107,6 +110,7 @@ export const getAllCaseTypes = (): CaseType[] => {
     {
       "id": "4",
       "slug": "red-hill-water",
+      "featured": false,
       "title": "Red Hill Water Contamination",
       "shortDescription": "Military families and residents of Hawaii exposed to jet fuel contamination from the Red Hill Bulk Fuel Storage Facility may be entitled to compensation.",
       "fullDescription": "In 2021, the U.S. Navy's Red Hill Bulk Fuel Storage Facility on Oahu, Hawaii, leaked thousands of gallons of jet fuel into the island's primary drinking water aquifer. This contaminated the water supply for approximately 93,000 people in and around Joint Base Pearl Harbor-Hickam. Residents reported immediate health effects, including nausea, rashes, chemical burns, and neurological symptoms. Lawsuits allege the Navy was aware of the facility's deteriorating condition for years and acted negligently, causing long-term health risks and property damage for affected families.",
@@ -139,6 +143,7 @@ export const getAllCaseTypes = (): CaseType[] => {
     {
       "id": "5",
       "slug": "surgical-robot-malfunction",
+      "featured": true,
       "title": "Surgical Robot Malfunctions",
       "shortDescription": "Patients injured during procedures involving surgical robots, such as the da Vinci Surgical System, may have a claim against the manufacturer for device malfunction.",
       "fullDescription": "Robotic-assisted surgery is marketed as a less invasive option with faster recovery times. However, systems like the da Vinci robot have been linked to thousands of injuries and complications. Lawsuits allege defects in the system can lead to serious surgical errors, including burns from electrical arcing, perforated organs, torn blood vessels, and nerve damage. Claims against the manufacturer, Intuitive Surgical, assert that the company failed to provide adequate training for surgeons and knowingly concealed defects in its instruments and design.",
@@ -172,6 +177,7 @@ export const getAllCaseTypes = (): CaseType[] => {
     {
       "id": "6",
       "slug": "contaminated-scopes",
+      "featured": false,
       "title": "Contaminated Medical Scopes",
       "shortDescription": "Patients who developed 'superbug' infections after a procedure with a contaminated duodenoscope may be eligible for significant compensation.",
       "fullDescription": "Duodenoscopes are flexible, lighted tubes used for endoscopic procedures (ERCP) to diagnose and treat conditions in the pancreas and bile ducts. A design flaw in certain models, particularly those made by Olympus, made the devices notoriously difficult to clean and disinfect properly. This allowed deadly, antibiotic-resistant bacteria ('superbugs') like CRE to survive the cleaning process and be transmitted from one patient to another. Lawsuits allege that manufacturers knew about this design flaw for years but failed to warn hospitals, leading to numerous outbreaks and patient deaths.",
@@ -204,6 +210,7 @@ export const getAllCaseTypes = (): CaseType[] => {
     {
       "id": "7",
       "slug": "ivc-filter-failure",
+      "featured": true,
       "title": "IVC Filter Complications",
       "shortDescription": "Patients implanted with an IVC filter who experienced device fracture, migration, or perforation of organs may be eligible for compensation.",
       "fullDescription": "An Inferior Vena Cava (IVC) filter is a small, cage-like device implanted in the largest vein in the body to catch blood clots and prevent them from reaching the lungs. While intended to be life-saving, certain models of retrievable IVC filters, such as those made by C.R. Bard and Cook Medical, have been linked to high rates of failure. The device's thin metal struts can fracture, sending fragments into the heart or lungs, or the entire device can migrate and perforate the vena cava wall. These complications can lead to life-threatening internal bleeding and require complex, high-risk surgery to correct.",
@@ -237,6 +244,7 @@ export const getAllCaseTypes = (): CaseType[] => {
     {
       "id": "8",
       "slug": "tepezza-hearing-loss",
+      "featured": false,
       "title": "Tepezza Hearing Loss",
       "shortDescription": "Patients who took the thyroid eye disease (TED) drug Tepezza and subsequently suffered from hearing loss or tinnitus may be eligible for compensation.",
       "fullDescription": "Tepezza (teprotumumab) is the first and only FDA-approved prescription medicine for the treatment of thyroid eye disease. While effective for many, a growing number of patients have reported serious and potentially permanent hearing-related side effects, including hearing loss, tinnitus (ringing in the ears), and autophony (hearing one's own voice abnormally loud). Lawsuits allege that the drug's manufacturer, Horizon Therapeutics, failed to adequately warn patients and doctors about the severity and potential permanence of these auditory side effects, which were underrepresented in initial clinical trials.",
@@ -268,6 +276,7 @@ export const getAllCaseTypes = (): CaseType[] => {
     {
       "id": "9",
       "slug": "elmiron-vision-damage",
+      "featured": false,
       "title": "Elmiron Vision Damage",
       "shortDescription": "Long-term users of the bladder medication Elmiron who developed a unique form of progressive vision loss may be entitled to substantial compensation.",
       "fullDescription": "Elmiron (pentosan polysulfate sodium) is a prescription medication used to treat interstitial cystitis, or 'painful bladder syndrome.' For decades, it was the only oral medication approved for this condition. However, recent studies have linked long-term Elmiron use to a specific and irreversible eye condition called pigmentary maculopathy. This condition damages the retina, leading to symptoms like blurred vision, difficulty reading, trouble adjusting to dim light, and potentially permanent vision loss or blindness. Lawsuits allege the manufacturer knew of this risk but failed to warn patients for decades.",
@@ -301,6 +310,7 @@ export const getAllCaseTypes = (): CaseType[] => {
     {
       "id": "10",
       "slug": "pressure-cooker-explosion",
+      "featured": true,
       "title": "Pressure Cooker Explosions",
       "shortDescription": "Individuals who suffered severe burns and other injuries from an exploding pressure cooker may be eligible for compensation from the manufacturer.",
       "fullDescription": "Modern electric pressure cookers, such as the Instant Pot, Crock-Pot Multi-Cooker, and others, are marketed with 'safety features' that are supposed to prevent the lid from opening while the contents are still under pressure. However, numerous lawsuits allege that these safety mechanisms are defective. A design flaw can allow the lid to be opened prematurely, causing the superheated contents to erupt violently and unexpectedly. This can result in catastrophic second and third-degree burns, scarring, and other serious injuries to anyone nearby.",
@@ -334,6 +344,7 @@ export const getAllCaseTypes = (): CaseType[] => {
     {
       "id": "11",
       "slug": "inclined-sleeper-death",
+      "featured": false,
       "title": "Inclined Sleeper Infant Deaths",
       "shortDescription": "Families whose infants suffered injury or death due to an inclined sleeper, like the Fisher-Price Rock 'n Play, may have a wrongful death claim.",
       "fullDescription": "Inclined infant sleepers, most notably the Fisher-Price Rock 'n Play, were marketed for years as a safe sleeping environment for babies. However, the inclined design poses a serious risk of positional asphyxia. When an infant's head falls forward in the inclined position, their airway can be restricted, leading to suffocation and death. After dozens of infant deaths were linked to the Rock 'n Play and similar products, they were recalled. Lawsuits allege that manufacturers knew the products were not safe for unsupervised sleep, contradicting guidance from pediatricians, but continued to market them as sleepers for profit.",
@@ -364,6 +375,7 @@ export const getAllCaseTypes = (): CaseType[] => {
     {
       "id": "12",
       "slug": "sunscreen-benzene",
+      "featured": false,
       "title": "Sunscreen Benzene Contamination",
       "shortDescription": "Individuals who regularly used certain aerosol sunscreen products and were diagnosed with cancer may be eligible for compensation due to benzene contamination.",
       "fullDescription": "In 2021, the independent laboratory Valisure discovered high levels of benzene, a known human carcinogen, in numerous popular brands of aerosol sunscreen and after-sun care products. Benzene is not an ingredient in sunscreen but is believed to be a contaminant from the manufacturing process, particularly related to the propellant chemicals used in spray cans. Johnson & Johnson subsequently recalled several of its Neutrogena and Aveeno aerosol sunscreen lines. Lawsuits allege that manufacturers were negligent in their quality control and failed to ensure their products were free of this dangerous chemical, increasing users' risk of leukemia and other blood cancers.",
@@ -396,6 +408,7 @@ export const getAllCaseTypes = (): CaseType[] => {
     {
       "id": "13",
       "slug": "asbestos-mesothelioma",
+      "featured": false,
       "title": "Asbestos Exposure & Mesothelioma",
       "shortDescription": "Workers and their families exposed to asbestos who have been diagnosed with mesothelioma, lung cancer, or asbestosis have a right to significant compensation.",
       "fullDescription": "Asbestos is a naturally occurring mineral that was widely used for decades in construction, shipbuilding, automotive parts, and other industries for its fire-resistant properties. When asbestos-containing materials are disturbed, microscopic fibers are released into the air and can be inhaled. These fibers become lodged in the lining of the lungs, abdomen, or heart, and can cause diseases like mesothelioma (a rare and aggressive cancer), lung cancer, and asbestosis (a progressive scarring of the lungs) decades after the initial exposure. Lawsuits have proven that many companies knew about the dangers of asbestos for years but deliberately concealed the risks from their workers and the public.",
@@ -428,6 +441,7 @@ export const getAllCaseTypes = (): CaseType[] => {
     {
       "id": "14",
       "slug": "welding-fume-parkinsonism",
+      "featured": false,
       "title": "Welding Fume Parkinsonism",
       "shortDescription": "Welders who developed Parkinson's-like neurological symptoms may be eligible for compensation due to manganese exposure from welding fumes.",
       "fullDescription": "Welding fumes contain a mixture of toxic metal particles, including manganese. Chronic inhalation of manganese fumes is known to cause a neurological disorder called manganism, or manganese-induced parkinsonism, which has symptoms nearly identical to Parkinson's disease, including tremors, slowed movement, balance problems, and cognitive issues. Lawsuits allege that manufacturers of welding rods and equipment knew about the severe neurological risks associated with manganese fumes but failed to provide adequate warnings to welders, leading to thousands of debilitating and irreversible injuries.",
@@ -461,6 +475,7 @@ export const getAllCaseTypes = (): CaseType[] => {
     {
       "id": "15",
       "slug": "lead-pipe-water",
+      "featured": false,
       "title": "Lead Pipe Water Contamination",
       "shortDescription": "Residents, especially families with children, in municipalities with known lead pipe infrastructure who have suffered from lead poisoning may have a claim.",
       "fullDescription": "Despite being banned for decades, millions of lead service lines remain in use across the country, carrying drinking water to homes and schools. Lead can leach from these pipes into the water, posing a severe health risk, especially to children and pregnant women. There is no safe level of lead exposure. It can cause irreversible neurological damage, developmental delays, learning disabilities, and behavioral problems in children. Lawsuits against municipalities and water authorities allege negligence in their failure to replace these pipes, properly treat the water to prevent corrosion, and adequately warn residents of the danger.",
@@ -494,6 +509,7 @@ export const getAllCaseTypes = (): CaseType[] => {
     {
       "id": "16",
       "slug": "social-media-youth-harm",
+      "featured": false,
       "title": "Social Media & Youth Mental Health",
       "shortDescription": "Families of teens who have developed severe depression, anxiety, eating disorders, or attempted suicide may have claims against social media companies like Meta and TikTok.",
       "fullDescription": "A growing body of evidence and numerous lawsuits allege that the design of social media platforms like Instagram, Facebook, TikTok, and Snapchat is deliberately addictive and harmful to the mental health of young users. The lawsuits claim that companies use powerful algorithms that push harmful content (related to eating disorders, self-harm, etc.), employ manipulative design features to maximize screen time, and create social comparison pressures that have led to a nationwide youth mental health crisis. The claims assert companies knew of these harms but prioritized user engagement and profit over the safety of children.",
@@ -527,6 +543,7 @@ export const getAllCaseTypes = (): CaseType[] => {
     {
       "id": "17",
       "slug": "defective-airbag-inflators",
+      "featured": false,
       "title": "Defective Airbag Inflators",
       "shortDescription": "Victims injured by airbag inflators that ruptured and sprayed metal shrapnel during a crash may be eligible for compensation from the auto or parts manufacturer.",
       "fullDescription": "While the Takata airbag recall was the largest in history, other manufacturers have also faced lawsuits over defective airbag inflators. The core issue involves the use of volatile chemical propellants that can degrade over time, especially in high-heat and humidity climates. Upon a crash, these degraded propellants can cause the metal inflator canister to explode with excessive force, sending metal fragments flying into the vehicle cabin like shrapnel. These fragments can cause catastrophic injuries or death, turning a life-saving device into a lethal one. Lawsuits target both the parts manufacturer and the automaker for using these dangerous designs.",
@@ -559,6 +576,7 @@ export const getAllCaseTypes = (): CaseType[] => {
     {
       "id": "18",
       "slug": "boeing-737-max",
+      "featured": false,
       "title": "Boeing 737 MAX Crashes",
       "shortDescription": "Families of the victims of the Lion Air Flight 610 and Ethiopian Airlines Flight 302 crashes may be eligible for wrongful death compensation from Boeing.",
       "fullDescription": "In a span of five months between 2018 and 2019, two brand-new Boeing 737 MAX aircraft crashed, killing all 346 people on board. Investigations revealed that a primary cause was a new flight control system called MCAS (Maneuvering Characteristics Augmentation System). The system, designed to counteract the plane's tendency to pitch up, was fed by a single sensor and could repeatedly force the plane's nose down, overriding the pilots' commands. Lawsuits against Boeing allege that the company concealed the existence and dangers of MCAS from pilots and regulators in a rush to get the plane to market, prioritizing profit over passenger safety.",
@@ -587,6 +605,7 @@ export const getAllCaseTypes = (): CaseType[] => {
     {
       "id": "19",
       "slug": "food-poisoning-outbreak",
+      "featured": false,
       "title": "E. Coli & Salmonella Outbreaks",
       "shortDescription": "Individuals who suffered severe food poisoning from contaminated products sold at grocery stores or restaurants may have a claim against the producer or establishment.",
       "fullDescription": "Foodborne illness outbreaks, caused by pathogens like E. coli, Salmonella, and Listeria, can lead to severe health consequences. Contamination can occur at any point in the food supply chain, from farms to processing plants to restaurant kitchens. When a specific product (like romaine lettuce, ground beef, or peanut butter) is identified as the source of a widespread outbreak, victims can file product liability lawsuits. These claims hold the producer, distributor, or retailer accountable for selling a contaminated product that caused serious illness, hospitalization, or death.",
@@ -620,6 +639,7 @@ export const getAllCaseTypes = (): CaseType[] => {
     {
       "id": "20",
       "slug": "predatory-payday-loans",
+      "featured": false,
       "title": "Predatory Payday Loans",
       "shortDescription": "Consumers trapped in a cycle of debt by payday lenders charging illegal interest rates or engaging in abusive collection practices may have a claim.",
       "fullDescription": "Payday loans are short-term, high-cost loans that can trap borrowers in a devastating cycle of debt. Lawsuits and class actions against payday lending companies allege numerous illegal practices, including charging interest rates that violate state usury laws, making automated withdrawals that cause overdraft fees, and using harassing and abusive collection tactics. These claims argue that the business model is inherently predatory, targeting financially vulnerable consumers with loan terms that are designed to be impossible to repay on time, forcing repeated renewals and compounding fees.",

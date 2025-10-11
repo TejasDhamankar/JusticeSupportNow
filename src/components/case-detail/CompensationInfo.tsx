@@ -113,7 +113,7 @@ const CompensationInfo = ({ caseData }: CompensationInfoProps) => {
                                     <div key={item.factor}>
                                         <div className="flex justify-between items-center mb-1">
                                             <span className="font-semibold" style={{ color: colors.whiteText }}>{item.factor}</span>
-                                            <Badge variant="outline" className="border text-xs" style={{ color: item.impact === 'Critical' ? colors.accentRed : colors.accentGreen, borderColor: item.impact === 'Critical' ? colors.accentRed+'50' : colors.accentGreen+'50' }}>{item.impact} Impact</Badge>
+                                            <Badge variant="outline" className="border text-xs" style={{ color: item.impact === 'Critical' ? colors.accentGreen : colors.accentGreen, borderColor: item.impact === 'Critical' ? colors.accentGreen+'50' : colors.accentGreen+'50' }}>{item.impact} Impact</Badge>
                                         </div>
                                         <ProgressBar progress={100} color={colors.accentGreen} />
                                     </div>

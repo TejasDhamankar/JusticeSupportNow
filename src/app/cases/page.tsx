@@ -31,7 +31,7 @@ export default function CasesPage() {
   const caseTypes = getAllCaseTypes();
 
   // Separate hot and regular cases
-  const hotCases = caseTypes.filter(caseType => caseType.featured);
+  const hotCases = caseTypes.filter(caseType => caseType.featured===true);
 
   return (
     <main className="flex min-h-screen flex-col" style={{ backgroundColor: colors.darkBlue, '--accent-green': colors.accentGreen } as React.CSSProperties}>
@@ -115,7 +115,7 @@ export default function CasesPage() {
 
                   <CardContent className="p-6 flex-grow flex flex-col">
                     <div className="flex items-center justify-between mb-3">
-                      <Badge variant="outline" className="font-semibold text-xs border-transparent" style={{ backgroundColor: colors.borderGray, color: colors.lightGrayText }}>{caseType.category}</Badge>
+                      <Badge variant="outline" className="font-semibold text-xs border-transparent" style={{ backgroundColor: colors.borderGray, color: colors.lightGrayText }}>{caseType.slug}</Badge>
                       <div className="flex items-center text-xs font-bold" style={{ color: colors.accentAmber }}>
                         <Clock className="w-3 h-3 mr-1" /> TIME-SENSITIVE
                       </div>
@@ -173,7 +173,7 @@ export default function CasesPage() {
                               <Image src={caseType.imageUrl} alt={caseType.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500"/>
                               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                               <div className="absolute top-4 left-4">
-                                  <Badge className="font-bold text-xs" style={{ backgroundColor: colors.darkBlue, color: colors.lightGrayText }}>{caseType.category}</Badge>
+                                  <Badge className="font-bold text-xs" style={{ backgroundColor: colors.darkBlue, color: colors.lightGrayText }}>{caseType.slug}</Badge>
                               </div>
                               {caseType.featured && (
                                   <div className="absolute top-4 right-4">

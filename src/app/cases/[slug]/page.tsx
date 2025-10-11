@@ -56,7 +56,7 @@ export async function generateMetadata({
         title: `${caseData.title} Compensation & Legal Review | JusticeLink`,
         // Changed: Get your free legal consultation today — no hidden costs.
         description: `${caseData.shortDescription} Secure your complimentary legal assessment now—absolutely no concealed charges.`,
-        keywords: `${caseData.title.toLowerCase()}, lawsuit help, legal support, case review, no win no fee, ${caseData.category?.toLowerCase()}`,
+        keywords: `${caseData.title.toLowerCase()}, lawsuit help, legal support, case review, no win no fee, ${caseData.slug?.toLowerCase()}`,
         openGraph: {
             title: `${caseData.title} Legal Help | Free Consultation`,
             description: caseData.shortDescription,
