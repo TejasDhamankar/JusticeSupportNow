@@ -109,7 +109,7 @@ const UrgencyCTA: React.FC<UrgencyCtaProps> = ({ caseData }) => {
                             style={{ backgroundColor: colors.accentGreen, color: colors.darkBlue }}
                         >
                             <Link href="#case-evaluation">
-                                <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-full group-hover:h-full opacity-20"></span>
+                                <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-full group-hover:h-56 opacity-20"></span>
                                 <span className="relative flex items-center">
                                     <Zap className="w-5 h-5 mr-2" />
                                     Begin Immediate Review

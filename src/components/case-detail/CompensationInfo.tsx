@@ -148,7 +148,7 @@ const CompensationInfo = ({ caseData }: CompensationInfoProps) => {
                             style={{ backgroundColor: colors.accentGreen, color: colors.darkBlue }}
                         >
                             <a href="#case-evaluation">
-                                <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-full group-hover:h-full opacity-20"></span>
+                                <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-full group-hover:h-56 opacity-20"></span>
                                 <span className="relative flex items-center">
                                     Assess My Claim
                                     <ArrowRight className="ml-2 w-5 h-5" />

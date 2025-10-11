@@ -66,7 +66,7 @@ export default function CasesPage() {
             <div className="flex flex-col sm:flex-row items-start gap-4">
                <Button asChild size="lg" className="group relative font-bold py-4 px-8 rounded-lg shadow-lg overflow-hidden transition-all duration-300 text-lg" style={{ backgroundColor: colors.accentGreen, color: colors.darkBlue }}>
                 <Link href="#hot-cases" className="flex items-center justify-center">
-                  <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-56 group-hover:h-56 opacity-20"></span>
+                  <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-full group-hover:h-56 opacity-20"></span>
                   <span className="relative"><TrendingUp className="mr-2 h-5 w-5 inline-block" /> Active Cases Now <ArrowRight className="ml-2 h-5 w-5 inline-block" /></span>
                 </Link>
               </Button>
@@ -226,7 +226,7 @@ export default function CasesPage() {
                             <span className="relative">Get My Free Legal Review <ArrowRight className="ml-2 h-5 w-5 inline-block" /></span>
                         </Link>
                     </Button>
-                    <Button asChild variant="outline" size="lg" className="rounded-lg py-4 px-8 font-semibold transition-colors hover:border-[var(--accent-green)] hover:text-[var(--accent-green)] text-lg" style={{ borderColor: colors.borderGray, color: colors.lightGrayText }}>
+                    <Button asChild variant="outline" size="lg" className="rounded-lg py-4 px-8 font-semibold transition-colors hover:border-[var(--accent-green)] hover:text-[var(--accent-green)] text-lg" style={{ borderColor: colors.borderGray, color: colors.darkBlue }}>
                         <a href="tel:9143002717">Call Now</a>
                     </Button>
                 </div>
