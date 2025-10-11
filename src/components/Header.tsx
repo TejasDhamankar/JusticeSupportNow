@@ -129,21 +129,21 @@ const Header: FC = () => {
   }, [lastScrollY]);
 
   const groupedCaseTypes = () => {
-    const popularCases = caseTypes.slice(0, 4);
-    const medicalCases = caseTypes.filter(c =>
+    const PopularCases = caseTypes.slice(0, 4);
+    const MedicalCases = caseTypes.filter(c =>
       c.title.includes("CPAP") ||
       c.title.includes("Hernia") ||
       c.title.includes("Exactech") ||
       c.title.includes("NEC")
     );
-    const environmentalCases = caseTypes.filter(c =>
+    const EnvironmentalCases = caseTypes.filter(c =>
       c.title.includes("Camp Lejeune") ||
       c.title.includes("Roundup") ||
       c.title.includes("PFAS") ||
       c.title.includes("Paraquat")
     );
 
-    return { popularCases, medicalCases, environmentalCases };
+    return { PopularCases, MedicalCases, EnvironmentalCases };
   };
 
   return (
