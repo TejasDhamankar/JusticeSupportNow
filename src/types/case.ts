@@ -5,6 +5,7 @@ export interface CaseType {
   shortDescription: string;
   fullDescription: string;
   imageUrl: string;
+  featured: boolean;
   compensationInfo: string;
   eligibilityCriteria: string[];
   relatedConditions: string[];

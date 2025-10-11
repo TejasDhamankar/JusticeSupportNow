@@ -34,14 +34,17 @@ const AnimatedCounter = ({ value }: { value: number }) => {
 
 // --- Main Component ---
 
+// Light theme color palette
 const colors = {
-    darkBlue: "#0A0D14",
-    whiteText: "#F0F6FC",
-    accentGreen: "#2AAA8A",
-    lightGrayText: "#8B949E",
-    borderGray: "#30363D",
-    cardBackground: "#161B22",
-    accentRed: "#F87171",
+  background: "#FFFFFF",
+  textPrimary: "#212529",
+  textSecondary: "#6c757d",
+  accentGreen: "#2AAA8A",
+  hoverGreen: "#3BC1A0",
+  accentAmber: "#DBAB09",
+  border: "#E9ECEF",
+  cardBackground: "#F8F9FA",
+  accentRed: "#DC3545", // A bootstrap-like danger red
 };
 
 interface EligibilityCriteriaProps {
@@ -70,7 +73,7 @@ const EligibilityCriteria: React.FC<EligibilityCriteriaProps> = ({ caseData }) =
     };
 
     return (
-        <section className="relative py-20 sm:py-24 overflow-hidden" style={{ backgroundColor: colors.darkBlue }}>
+        <section className="relative py-20 sm:py-24 overflow-hidden" style={{ backgroundColor: colors.background }}>
             {/* Horizontal line */}
             <div className="w-[80%] mx-auto h-px  mb-12 opacity-70" style={{backgroundColor:colors.accentGreen}} />
             {/* Interactive Spotlight Effect */}
@@ -94,10 +97,10 @@ const EligibilityCriteria: React.FC<EligibilityCriteriaProps> = ({ caseData }) =
                             <Target className="w-4 h-4 mr-2" />
                             QUALIFICATION BENCHMARKS
                         </Badge>
-                        <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4" style={{ color: colors.whiteText }}>
+                        <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4" style={{ color: colors.textPrimary }}>
                             Do You Qualify for <span style={{ color: colors.accentGreen }}>Financial Recovery?</span>
                         </h2>
-                        <p className="text-lg sm:text-xl" style={{ color: colors.lightGrayText }}>
+                        <p className="text-lg sm:text-xl" style={{ color: colors.textSecondary }}>
                             Review the criteria below. If these points describe your situation, you may be eligible to file a claim for the <strong>{caseData.title}</strong> lawsuit.
                         </p>
                     </motion.div>
@@ -108,13 +111,13 @@ const EligibilityCriteria: React.FC<EligibilityCriteriaProps> = ({ caseData }) =
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: 0.2 }}
                         className="my-12 p-8 rounded-xl border"
-                        style={{ backgroundColor: colors.cardBackground, borderColor: colors.borderGray }}
+                        style={{ backgroundColor: colors.cardBackground, borderColor: colors.border }}
                     >
                         <Users className="w-10 h-10 mx-auto" style={{ color: colors.accentGreen }} />
-                        <div className="text-6xl md:text-7xl font-bold my-2" style={{ color: colors.whiteText }}>
+                        <div className="text-6xl md:text-7xl font-bold my-2" style={{ color: colors.textPrimary }}>
                             <AnimatedCounter value={92} />
                         </div>
-                        <p style={{ color: colors.lightGrayText }}>Of Applicants Meet the Criteria for a Successful Claim</p>
+                        <p style={{ color: colors.textSecondary }}>Of Applicants Meet the Criteria for a Successful Claim</p>
                     </motion.div>
 
                     <motion.div
@@ -123,23 +126,23 @@ const EligibilityCriteria: React.FC<EligibilityCriteriaProps> = ({ caseData }) =
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: 0.4 }}
                         className="p-8 rounded-xl border text-left"
-                        style={{ backgroundColor: colors.cardBackground, borderColor: colors.borderGray }}
+                        style={{ backgroundColor: colors.cardBackground, borderColor: colors.border }}
                     >
-                        <h3 className="text-2xl font-bold mb-6" style={{ color: colors.whiteText }}>Qualification Checklist</h3>
+                        <h3 className="text-2xl font-bold mb-6" style={{ color: colors.textPrimary }}>Qualification Checklist</h3>
                         <div className="space-y-4">
                             {essential.map((criterion, idx) => (
-                                <div key={idx} className="flex items-start gap-3 p-4 rounded-md" style={{ backgroundColor: colors.darkBlue }}>
+                                <div key={idx} className="flex items-start gap-3 p-4 rounded-md" style={{ backgroundColor: colors.background }}>
                                     <CheckCircle className="w-5 h-5 flex-shrink-0 mt-1" style={{ color: colors.accentGreen }} />
-                                    <p style={{ color: colors.lightGrayText }}>{criterion}</p>
+                                    <p style={{ color: colors.textSecondary }}>{criterion}</p>
                                 </div>
                             ))}
                             {additional.length > 0 && (
                                 <>
-                                    <h4 className="text-lg font-bold pt-4" style={{ color: colors.whiteText }}>Additional Factors</h4>
+                                    <h4 className="text-lg font-bold pt-4" style={{ color: colors.textPrimary }}>Additional Factors</h4>
                                     {additional.map((criterion, idx) => (
-                                        <div key={idx} className="flex items-start gap-3 p-4 rounded-md" style={{ backgroundColor: colors.darkBlue }}>
-                                            <PlusCircle className="w-5 h-5 flex-shrink-0 mt-1" style={{ color: colors.lightGrayText }} />
-                                            <p style={{ color: colors.lightGrayText }}>{criterion}</p>
+                                        <div key={idx} className="flex items-start gap-3 p-4 rounded-md" style={{ backgroundColor: colors.background }}>
+                                            <PlusCircle className="w-5 h-5 flex-shrink-0 mt-1" style={{ color: colors.textSecondary }} />
+                                            <p style={{ color: colors.textSecondary }}>{criterion}</p>
                                         </div>
                                     ))}
                                 </>
@@ -154,7 +157,7 @@ const EligibilityCriteria: React.FC<EligibilityCriteriaProps> = ({ caseData }) =
                         transition={{ duration: 0.5, delay: 0.5 }}
                         className="mt-16"
                     >
-                        <div className="flex justify-center items-center gap-3 mb-6 p-3 rounded-md text-sm" style={{ backgroundColor: '#450a0a', color: colors.accentRed }}>
+                        <div className="flex justify-center items-center gap-3 mb-6 p-3 rounded-md text-sm" style={{ backgroundColor: colors.accentRed + '15', color: colors.accentRed }}>
                             <AlertCircle className="w-5 h-5 flex-shrink-0" />
                             <p className="font-medium">Due to legal deadlines, your time to file a claim is limited. Act now.</p>
                         </div>
@@ -162,7 +165,7 @@ const EligibilityCriteria: React.FC<EligibilityCriteriaProps> = ({ caseData }) =
                             asChild
                             size="lg"
                             className="group relative w-full max-w-md font-bold text-lg py-6 rounded-lg shadow-lg overflow-hidden transition-all duration-300"
-                            style={{ backgroundColor: colors.accentGreen, color: colors.darkBlue }}
+                            style={{ backgroundColor: colors.accentGreen, color: colors.background }}
                             onClick={scrollToCaseEvaluation}
                         >
                             <a href="#case-evaluation">

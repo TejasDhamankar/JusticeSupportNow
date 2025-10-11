@@ -25,16 +25,18 @@ import {
     Scale,
     CheckCircle
 } from "lucide-react";
-import UrgencyCTA from "@/components/sections/Urgency";
-import OtherClaimsSection from "@/components/sections/OtherClaimsSection";
+import UrgencyCTA from "@/components/case-detail/Urgency";
+import OtherClaimsSection from "@/components/case-detail/OtherClaimsSection";
 
 const colors = {
-    darkBlue: "#0A0D14",
-    whiteText: "#F0F6FC",
-    accentGreen: "#2AAA8A",
-    lightGrayText: "#8B949E",
-    borderGray: "#30363D",
-    cardBackground: "#161B22",
+  background: "#FFFFFF",
+  textPrimary: "#212529",
+  textSecondary: "#6c757d",
+  accentGreen: "#2AAA8A",
+  hoverGreen: "#3BC1A0",
+  accentAmber: "#DBAB09",
+  border: "#E9ECEF",
+  cardBackground: "#F8F9FA",
 };
 
 export async function generateMetadata({
@@ -56,7 +58,7 @@ export async function generateMetadata({
         title: `${caseData.title} Compensation & Legal Review | JusticeLink`,
         // Changed: Get your free legal consultation today — no hidden costs.
         description: `${caseData.shortDescription} Secure your complimentary legal assessment now—absolutely no concealed charges.`,
-        keywords: `${caseData.title.toLowerCase()}, lawsuit help, legal support, case review, no win no fee, ${caseData.category?.toLowerCase()}`,
+        keywords: `${caseData.title.toLowerCase()}, lawsuit help, legal support, case review, no win no fee, ${caseData.slug?.toLowerCase()}`,
         openGraph: {
             title: `${caseData.title} Legal Help | Free Consultation`,
             description: caseData.shortDescription,
@@ -77,7 +79,7 @@ export default async function CaseDetailPage({
     }
 
     return (
-        <main className="flex min-h-screen flex-col">
+        <main className="flex min-h-screen flex-col" style={{ backgroundColor: colors.background, color: colors.textPrimary }}>
             <Header />
 
             {/* Case Hero Section */}
@@ -92,32 +94,32 @@ export default async function CaseDetailPage({
             {/* Trust Section */}
             <section
                 className="relative py-16 overflow-hidden"
-                style={{ backgroundColor: "#0A0D14" }}
+                style={{ backgroundColor: colors.cardBackground }}
             >
                 {/* Horizontal Line */}
-                <div className="w-[80%] mx-auto h-px  mb-12 opacity-70" style={{backgroundColor:colors.accentGreen}} />
+                <div className="w-[80%] mx-auto h-px mb-12 opacity-70" style={{backgroundColor:colors.accentGreen}} />
                 {/* Decorative Background Circles */}
                 <div className="absolute -top-40 -left-40 w-72 h-72 rounded-full bg-[#2AAA8A]/20 blur-3xl animate-blob"></div>
                 <div className="absolute -bottom-40 -right-40 w-96 h-96 rounded-full bg-[#2AAA8A]/10 blur-3xl animate-blob animation-delay-2000"></div>
 
-                <div className="container mx-auto px-4 relative z-10 max-w-4xl text-center text-[#F0F6FC]">
+                <div className="container mx-auto px-4 relative z-10 max-w-4xl text-center">
                     {/* Headline */}
                     <h2
                         className="text-4xl sm:text-5xl font-extrabold mb-8 leading-tight"
                         style={{
                             // Gradient text clipped (if you want pure solid, remove below)
                             background:
-                                "linear-gradient(90deg, #2AAA8A 0%, #8B949E 50%, #2AAA8A 100%)",
+                                `linear-gradient(90deg, ${colors.accentGreen} 0%, ${colors.textSecondary} 50%, ${colors.accentGreen} 100%)`,
                             WebkitBackgroundClip: "text",
                             WebkitTextFillColor: "transparent",
                         }}
                     >
                         Why Choose Justice Support Now for Your{" "}
-                        <span className="text-[#2AAA8A]">{caseData.title}</span> Case?
+                        <span style={{ color: colors.accentGreen }}>{caseData.title}</span> Case?
                     </h2>
 
                     {/* Description */}
-                    <p className="text-[#8B949E] text-lg sm:text-xl leading-relaxed mb-12 max-w-3xl mx-auto">
+                    <p className="text-lg sm:text-xl leading-relaxed mb-12 max-w-3xl mx-auto" style={{ color: colors.textSecondary }}>
                         At JusticeLink, our experienced legal team has helped countless clients
                         navigate complex legal challenges. We prioritize your case, providing
                         expert guidance and unwavering support to ensure you receive the justice
@@ -127,7 +129,7 @@ export default async function CaseDetailPage({
                     {/* Call to Action Button with hover & shadow */}
                     <a
                         href="#case-evaluation"
-                        className="inline-flex items-center bg-[#2AAA8A] hover:bg-[#3BC1A0] text-[#F0F6FC] font-bold px-10 py-5 rounded-lg shadow-lg hover:shadow-2xl transition duration-300 text-xl transform hover:-translate-y-1"
+                        className="inline-flex items-center font-bold px-10 py-5 rounded-lg shadow-lg hover:shadow-2xl transition duration-300 text-xl transform hover:-translate-y-1" style={{ backgroundColor: colors.accentGreen, color: colors.background, '&:hover': { backgroundColor: colors.hoverGreen } }}
                     >
                         Get Free Case Evaluation
                         <ArrowRight className="ml-4 w-6 h-6" />
@@ -152,7 +154,7 @@ export default async function CaseDetailPage({
             {/* Case Evaluation */}
             <div
                 id="case-evaluation"
-                style={{ backgroundColor: colors.darkBlue }}
+                style={{ backgroundColor: colors.background }}
                 className="pt-20" // Added padding to the top of the wrapper
             >
                 {/* Separator line for visual distinction */}
@@ -160,7 +162,7 @@ export default async function CaseDetailPage({
                     <div
                         className="h-px w-full"
                         style={{
-                            background: "linear-gradient(to right, transparent, rgba(42, 170, 138, 0.3), transparent)",
+                            background: `linear-gradient(to right, transparent, ${colors.accentGreen}33, transparent)`,
                         }}
                     />
                 </div>
@@ -180,11 +182,11 @@ export default async function CaseDetailPage({
                         </Badge>
                         <h2
                             className="text-4xl md:text-5xl font-serif font-bold mb-4"
-                            style={{ color: colors.whiteText }}
+                            style={{ color: colors.textPrimary }}
                         >
                             Free <span style={{ color: colors.accentGreen }}>{caseData.title}</span> Case Assessment
                         </h2>
-                        <p className="text-lg" style={{ color: colors.lightGrayText }}>
+                        <p className="text-lg" style={{ color: colors.textSecondary }}>
                             A member of our team will examine your situation to confirm your eligibility for financial recovery. Begin with a straightforward, commitment-free evaluation.
                         </p>
                     </div>

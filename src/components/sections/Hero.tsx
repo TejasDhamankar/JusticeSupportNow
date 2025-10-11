@@ -4,15 +4,17 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Phone, CheckCircle, Shield, Clock, Scale } from "lucide-react";
 
-// New color palette from your CaseHero component
+// Light theme color palette
 const colors = {
-  darkBlue: "#0A0D14",
-  whiteText: "#F0F6FC",
-  accentGreen: "#2AAA8A", // A sophisticated, matte-like teal/green
-  hoverGreen: "#3BC1A0", // A slightly lighter version for hovers
-  lightGrayText: "#8B949E",
-  borderGray: "#30363D",
-  cardBackground: "#161B22",
+  background: "#FFFFFF",
+  textPrimary: "#212529",
+  textSecondary: "#6c757d",
+  accentGreen: "#2AAA8A",
+  hoverGreen: "#3BC1A0",
+  accentAmber: "#DBAB09",
+  border: "#E9ECEF",
+  cardBackground: "#F8F9FA",
+  darkBlue: "#0A0D14", // Kept for dark hero section
 };
 
 const Hero = () => {
@@ -63,8 +65,8 @@ const Hero = () => {
     <section
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
       style={{ 
-        backgroundColor: colors.darkBlue, 
-        color: colors.whiteText,
+        backgroundColor: colors.background, 
+        color: colors.textPrimary,
         '--accent-green': colors.accentGreen,
         '--hover-green': colors.hoverGreen 
       } as React.CSSProperties}
@@ -101,7 +103,7 @@ const Hero = () => {
           {/* Subheadline */}
           <motion.p
             className="text-lg md:text-xl mb-8 font-normal max-w-2xl leading-relaxed"
-            style={{ color: colors.lightGrayText }}
+            style={{ color: colors.textSecondary }}
             variants={itemVariants}
           >
             Our dedicated team is committed to navigating the complexities of the
@@ -113,15 +115,15 @@ const Hero = () => {
           <motion.div className="grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-4 mb-10 w-full max-w-2xl" variants={itemVariants}>
             <div className="flex items-center gap-3">
               <CheckCircle size={20} style={{ color: colors.accentGreen }} />
-              <span className="font-medium" style={{ color: colors.lightGrayText }}>Free Consultation</span>
+              <span className="font-medium" style={{ color: colors.textPrimary }}>Free Consultation</span>
             </div>
             <div className="flex items-center gap-3">
               <Shield size={20} style={{ color: colors.accentGreen }} />
-              <span className="font-medium" style={{ color: colors.lightGrayText }}>No Win, No Fee</span>
+              <span className="font-medium" style={{ color: colors.textPrimary }}>No Win, No Fee</span>
             </div>
             <div className="flex items-center gap-3">
               <Clock size={20} style={{ color: colors.accentGreen }} />
-              <span className="font-medium" style={{ color: colors.lightGrayText }}>24/7 Support</span>
+              <span className="font-medium" style={{ color: colors.textPrimary }}>24/7 Support</span>
             </div>
           </motion.div>
 
@@ -134,9 +136,9 @@ const Hero = () => {
             <a
               href="#case-evaluation"
               className="group relative w-full sm:w-auto px-8 py-4 rounded-lg font-bold text-lg flex items-center justify-center shadow-lg overflow-hidden transition-all duration-300 ease-in-out"
-              style={{ backgroundColor: colors.accentGreen, color: colors.whiteText }} // Text color changed to whiteText
+              style={{ backgroundColor: colors.accentGreen, color: colors.background }} // Text color changed to whiteText
             >
-              <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full  group-hover:h-56 opacity-20"></span>
+              <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-full group-hover:h-56 opacity-20"></span>
               <span className="relative flex items-center">
                 Get a Free Case Evaluation
                 <ArrowRight className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
@@ -147,7 +149,7 @@ const Hero = () => {
             <a
               href="tel:9143002717"
               className="w-full sm:w-auto px-8 py-4 rounded-lg font-semibold text-lg flex items-center justify-center transition-colors duration-300 border hover:border-[var(--accent-green)] hover:text-[var(--accent-green)]"
-              style={{ backgroundColor: colors.accentGreen, color: colors.whiteText }}
+              style={{ borderColor: colors.border, color: colors.textSecondary, backgroundColor: 'transparent' }}
             >
               <Phone className="w-5 h-5 mr-2" />
               Call Us Now
@@ -157,22 +159,17 @@ const Hero = () => {
 
         {/* Right Column: Visual Element */}
         <motion.div
-          className="flex-1 relative hidden lg:flex justify-center items-center"
+          className="flex-1 relative  hidden lg:flex justify-center items-center"
           variants={floatingVariants}
           animate="animate"
         >
           <div 
-            className="relative w-80 h-80 flex items-center justify-center rounded-2xl border shadow-2xl p-4
+            className="relative group w-[500px] h-[500px] flex items-center justify-center rounded-2xl border shadow-2xl p-4 transition-all duration-500 hover:border-accent/60 hover:shadow-accent/20 hover:shadow-2xl
                         before:absolute before:top-0 before:left-0 before:w-full before:h-[1px] 
                         before:bg-gradient-to-r from-transparent via-[var(--accent-green)] to-transparent"
-            style={{ backgroundColor: colors.cardBackground, borderColor: colors.borderGray }}
+            style={{ backgroundColor: colors.cardBackground, borderColor: colors.border }}
           >
-            <Scale
-              className="relative z-10"
-              size={120}
-              strokeWidth={1.5}
-              style={{ color: colors.accentGreen }}
-            />
+          <img src="hero(6).png" alt="" />
           </div>
         </motion.div>
       </div>

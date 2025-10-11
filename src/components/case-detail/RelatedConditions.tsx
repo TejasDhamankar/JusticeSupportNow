@@ -11,15 +11,17 @@ import {
 import { cn } from "@/lib/utils";
 
 // The dark theme color palette
+// Light theme color palette
 const colors = {
-    darkBlue: "#0A0D14",
-    whiteText: "#F0F6FC",
-    accentGreen: "#2AAA8A",
-    lightGrayText: "#8B949E",
-    borderGray: "#30363D",
-    cardBackground: "#161B22",
-    accentRed: "#F87171",
-    accentAmber: "#DBAB09",
+  background: "#FFFFFF",
+  textPrimary: "#212529",
+  textSecondary: "#6c757d",
+  accentGreen: "#2AAA8A",
+  hoverGreen: "#3BC1A0",
+  accentAmber: "#DBAB09",
+  border: "#E9ECEF",
+  cardBackground: "#F8F9FA",
+  accentRed: "#DC3545", // A bootstrap-like danger red
 };
 
 interface RelatedConditionsProps {
@@ -61,9 +63,9 @@ const RelatedConditions = ({ caseData }: RelatedConditionsProps) => {
     };
 
     return (
-        <section className="relative py-20 sm:py-24" style={{ backgroundColor: colors.darkBlue }}>
+        <section className="relative py-20 sm:py-24" style={{ backgroundColor: colors.background }}>
             {/* Horizontal line */}
-            <div className="w-[80%] mx-auto h-px  mb-12 opacity-70" style={{backgroundColor:colors.accentGreen}} />
+            <div className="w-[80%] mx-auto h-px mb-12 opacity-70" style={{backgroundColor:colors.accentGreen}} />
             <div className="container mx-auto px-4 relative z-10">
                 {/* Section Header */}
                 <motion.div
@@ -77,7 +79,7 @@ const RelatedConditions = ({ caseData }: RelatedConditionsProps) => {
                         <Stethoscope className="w-4 h-4 mr-2" />
                         QUALIFYING DIAGNOSES
                     </Badge>
-                    <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4" style={{ color: colors.whiteText }}>
+                    <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4" style={{ color: colors.textPrimary }}>
                         Medical Conditions Linked to the <span style={{ color: colors.accentGreen }}>{caseData.title}</span> Lawsuit
                     </h2>
                 </motion.div>
@@ -98,8 +100,8 @@ const RelatedConditions = ({ caseData }: RelatedConditionsProps) => {
                                 className={cn(
                                     "text-left p-4 rounded-md text-lg font-semibold transition-all duration-200 border border-transparent",
                                     hoveredCondition?.name === condition.name
-                                        ? "bg-[#161B22] border-[#30363D] text-white"
-                                        : "text-[#8B949E] hover:text-white"
+                                        ? "bg-cardBackground border-border text-textPrimary"
+                                        : "text-textSecondary hover:text-textPrimary"
                                 )}
                             >
                                 {condition.name}
@@ -115,7 +117,7 @@ const RelatedConditions = ({ caseData }: RelatedConditionsProps) => {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="lg:col-span-2 sticky top-28 h-fit"
                     >
-                        <div className="p-8 rounded-xl border" style={{ backgroundColor: colors.cardBackground, borderColor: colors.borderGray }}>
+                        <div className="p-8 rounded-xl border" style={{ backgroundColor: colors.cardBackground, borderColor: colors.border }}>
                             <AnimatePresence mode="wait">
                                 {hoveredCondition && (
                                     <motion.div
@@ -138,16 +140,16 @@ const RelatedConditions = ({ caseData }: RelatedConditionsProps) => {
                                         <div className="flex items-start gap-4">
                                              <hoveredCondition.icon className="w-12 h-12 flex-shrink-0 mt-1" style={{ color: categoryStyles[hoveredCondition.category].color }} />
                                             <div>
-                                                 <h3 className="text-3xl font-bold" style={{ color: colors.whiteText }}>{hoveredCondition.name}</h3>
-                                                 <p className="mt-2 text-md" style={{ color: colors.lightGrayText }}>This diagnosis is frequently cited in successful claims and is a key indicator for eligibility.</p>
+                                                 <h3 className="text-3xl font-bold" style={{ color: colors.textPrimary }}>{hoveredCondition.name}</h3>
+                                                 <p className="mt-2 text-md" style={{ color: colors.textSecondary }}>This diagnosis is frequently cited in successful claims and is a key indicator for eligibility.</p>
                                             </div>
                                         </div>
                                     </motion.div>
                                 )}
                             </AnimatePresence>
 
-                            <div className="mt-8 pt-8 border-t" style={{ borderColor: colors.borderGray }}>
-                                <div className="flex items-center gap-3 mb-6 p-3 rounded-md text-sm" style={{ backgroundColor: '#450a0a', color: colors.accentRed }}>
+                            <div className="mt-8 pt-8 border-t" style={{ borderColor: colors.border }}>
+                                <div className="flex items-center gap-3 mb-6 p-3 rounded-md text-sm" style={{ backgroundColor: colors.accentRed + '15', color: colors.accentRed }}>
                                     <AlertCircle className="w-5 h-5 flex-shrink-0" />
                                     <p className="font-medium">Time is limited. You must act quickly to preserve your right to file a claim.</p>
                                 </div>
@@ -155,7 +157,7 @@ const RelatedConditions = ({ caseData }: RelatedConditionsProps) => {
                                     asChild
                                     size="lg"
                                     className="group relative w-full font-bold text-lg py-6 rounded-lg shadow-lg overflow-hidden transition-all duration-300"
-                                    style={{ backgroundColor: colors.accentGreen, color: colors.darkBlue }}
+                                    style={{ backgroundColor: colors.accentGreen, color: colors.background }}
                                 >
                                     <a href="#case-evaluation">
                                         <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-full group-hover:h-56 opacity-20"></span>

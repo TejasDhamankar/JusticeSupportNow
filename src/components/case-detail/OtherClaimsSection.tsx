@@ -10,14 +10,17 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, ArrowRight, Scale, TrendingUp } from "lucide-react";
 import { getAllCaseTypes } from "@/lib/utils"; // Assuming this utility function exists
 
-// Define the color palette to match your theme
+// Light theme color palette
 const colors = {
-    darkBlue: "#0A0D14",
-    whiteText: "#F0F6FC",
-    accentGreen: "#2AAA8A",
-    lightGrayText: "#8B949E",
-    borderGray: "#30363D",
-    cardBackground: "#161B22",
+  background: "#FFFFFF",
+  textPrimary: "#212529",
+  textSecondary: "#6c757d",
+  accentGreen: "#2AAA8A",
+  hoverGreen: "#3BC1A0",
+  accentAmber: "#DBAB09",
+  border: "#E9ECEF",
+  cardBackground: "#F8F9FA",
+  darkBlue: "#0A0D14", // Kept for button text
 };
 
 const OtherClaimsSection = () => {
@@ -46,7 +49,7 @@ const OtherClaimsSection = () => {
     }, [emblaApi, onSelect]);
 
     return (
-        <section className="relative py-20 sm:py-24" style={{ backgroundColor: colors.darkBlue }}>
+        <section className="relative py-20 sm:py-24" style={{ backgroundColor: colors.background }}>
 
             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#2AAA8A]/50 to-transparent" />
 
@@ -64,19 +67,19 @@ const OtherClaimsSection = () => {
                             <Scale className="w-4 h-4 mr-2" />
                             OTHER OPEN CLAIMS
                         </Badge>
-                        <h2 className="text-3xl md:text-4xl font-serif font-bold" style={{ color: colors.whiteText }}>
+                        <h2 className="text-3xl md:text-4xl font-serif font-bold" style={{ color: colors.textPrimary }}>
                             Explore Additional Cases
                         </h2>
-                        <p className="mt-2 text-lg" style={{ color: colors.lightGrayText }}>
+                        <p className="mt-2 text-lg" style={{ color: colors.textSecondary }}>
                             You may be entitled to compensation from more than one claim.
                         </p>
                     </div>
 
                     <div className="flex items-center gap-4 mt-6 sm:mt-0">
-                        <Button variant="outline" size="icon" onClick={scrollPrev} disabled={prevBtnDisabled} className="rounded-full bg-transparent border-[#30363D] text-[#8B949E] hover:bg-[#161B22] hover:text-white disabled:opacity-30">
+                        <Button variant="outline" size="icon" onClick={scrollPrev} disabled={prevBtnDisabled} className="rounded-full bg-transparent hover:border-accentGreen hover:text-accentGreen disabled:opacity-30" style={{ borderColor: colors.border, color: colors.textSecondary }}>
                             <ArrowLeft className="w-5 h-5" />
                         </Button>
-                        <Button variant="outline" size="icon" onClick={scrollNext} disabled={nextBtnDisabled} className="rounded-full bg-transparent border-[#30363D] text-[#8B949E] hover:bg-[#161B22] hover:text-white disabled:opacity-30">
+                        <Button variant="outline" size="icon" onClick={scrollNext} disabled={nextBtnDisabled} className="rounded-full bg-transparent hover:border-accentGreen hover:text-accentGreen disabled:opacity-30" style={{ borderColor: colors.border, color: colors.textSecondary }}>
                             <ArrowRight className="w-5 h-5" />
                         </Button>
                     </div>
@@ -94,7 +97,7 @@ const OtherClaimsSection = () => {
                         {featuredCases.map((caseItem) => (
                             <div key={caseItem.id} className="flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 pl-4">
                                 <div className="group relative p-6 rounded-xl h-full transition-all duration-300" 
-                                    style={{ backgroundColor: colors.cardBackground, border: `1px solid ${colors.borderGray}` }}
+                                    style={{ backgroundColor: colors.cardBackground, border: `1px solid ${colors.border}` }}
                                 >
                                     <div 
                                         className="absolute -inset-px rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -108,13 +111,13 @@ const OtherClaimsSection = () => {
                                             <TrendingUp className="w-5 h-5 mr-2" style={{ color: colors.accentGreen }} />
                                             <Badge className="text-xs border" style={{ backgroundColor: colors.accentGreen + '20', color: colors.accentGreen, borderColor: colors.accentGreen+'40' }}>Ongoing</Badge>
                                         </div>
-                                        <h3 className="text-lg font-bold mb-2" style={{ color: colors.whiteText }}>
+                                        <h3 className="text-lg font-bold mb-2" style={{ color: colors.textPrimary }}>
                                             {caseItem.title}
                                         </h3>
-                                        <p className="text-sm mb-6 flex-grow" style={{ color: colors.lightGrayText }}>
+                                        <p className="text-sm mb-6 flex-grow" style={{ color: colors.textSecondary }}>
                                             {caseItem.shortDescription}
                                         </p>
-                                        <Button asChild variant="outline" size="sm" className="w-full border-[#30363D] text-[#8B949E] hover:border-white hover:text-black">
+                                        <Button asChild variant="outline" size="sm" className="w-full hover:border-accentGreen hover:text-accentGreen" style={{ borderColor: colors.border, color: colors.textSecondary }}>
                                             <Link href={`/cases/${caseItem.slug}`}>
                                                 See Details
                                                 <ArrowRight className="ml-2 w-4 h-4" />
@@ -139,7 +142,7 @@ const OtherClaimsSection = () => {
                         asChild
                         size="lg"
                         className="group relative font-bold text-lg py-6 px-8 rounded-lg shadow-lg overflow-hidden transition-all duration-300"
-                        style={{ backgroundColor: colors.accentGreen, color: colors.darkBlue }}
+                        style={{ backgroundColor: colors.accentGreen, color: colors.background }}
                     >
                         <Link href="/cases">
                             <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-full group-hover:h-full opacity-20"></span>

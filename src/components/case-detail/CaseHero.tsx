@@ -24,17 +24,19 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { Darker_Grotesque } from "next/font/google";
 
-// New color palette with a more sophisticated, matte green
+// Light theme color palette
 const colors = {
-  darkBlue: "#0A0D14",
-  whiteText: "#F0F6FC",
-  accentGreen: "#2AAA8A",   // A sophisticated, matte-like teal/green
-  hoverGreen: "#3BC1A0",    // A slightly lighter version for hovers
-  lightGrayText: "#8B949E",
-  borderGray: "#30363D",
+  background: "#FFFFFF",
+  textPrimary: "#212529",
+  textSecondary: "#6c757d",
+  accentGreen: "#2AAA8A",
+  hoverGreen: "#3BC1A0",
   accentAmber: "#DBAB09",
-  cardBackground: "#161B22",
+  border: "#E9ECEF",
+  cardBackground: "#F8F9FA",
+  DarkBule:"#0A0D14"
 };
 
 interface CaseType {
@@ -99,14 +101,14 @@ const CaseHero = ({ caseData }: CaseHeroProps) => {
 
 <section
       className="pt-32 pb-20 relative overflow-hidden min-h-[100vh] flex items-center"
-      style={{ backgroundColor: colors.darkBlue, color: colors.whiteText, '--accent-green': colors.accentGreen, '--hover-green': colors.hoverGreen } as React.CSSProperties}
+      style={{ backgroundColor: colors.background, color: colors.textPrimary, '--accent-green': colors.accentGreen, '--hover-green': colors.hoverGreen } as React.CSSProperties}
     >
       
       {/* Interactive Spotlight Effect */}
       <motion.div
         className="pointer-events-none absolute -inset-px rounded-xl transition-all duration-300"
         style={{
-          background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(42, 170, 138, 0.1), transparent 80%)`,
+          background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(42, 170, 138, 0.05), transparent 80%)`,
         }}
       />
 
@@ -122,15 +124,15 @@ const CaseHero = ({ caseData }: CaseHeroProps) => {
               <Breadcrumb className="mb-8">
                 <BreadcrumbList className="text-sm">
                   <BreadcrumbItem>
-                    <BreadcrumbLink href="/" style={{ color: colors.lightGrayText }} className="hover:text-white transition-colors">Homepage</BreadcrumbLink>
+                    <BreadcrumbLink href="/" style={{ color: colors.textSecondary }} className="hover:text-black transition-colors">Homepage</BreadcrumbLink>
                   </BreadcrumbItem>
                   <BreadcrumbSeparator style={{ color: colors.accentGreen }} />
                   <BreadcrumbItem>
-                    <BreadcrumbLink href="/cases" style={{ color: colors.lightGrayText }} className="hover:text-white transition-colors">View All Claims</BreadcrumbLink>
+                    <BreadcrumbLink href="/cases" style={{ color: colors.textSecondary }} className="hover:text-black transition-colors">View All Claims</BreadcrumbLink>
                   </BreadcrumbItem>
                   <BreadcrumbSeparator style={{ color: colors.accentGreen }} />
                   <BreadcrumbItem>
-                    <BreadcrumbLink className="font-semibold cursor-default" style={{ color: colors.whiteText }}>{caseData.title}</BreadcrumbLink>
+                    <BreadcrumbLink className="font-semibold cursor-default" style={{ color: colors.textPrimary }}>{caseData.title}</BreadcrumbLink>
                   </BreadcrumbItem>
                 </BreadcrumbList>
               </Breadcrumb>
@@ -147,11 +149,11 @@ const CaseHero = ({ caseData }: CaseHeroProps) => {
               )}
             </motion.div>
 
-            <motion.h1 variants={itemVariants} className="text-5xl lg:text-7xl font-serif font-bold mb-6 tracking-tighter" style={{ color: colors.whiteText, textShadow: '0 0 30px rgba(0,0,0,0.5)' }}>
+            <motion.h1 variants={itemVariants} className="text-5xl lg:text-7xl font-serif font-bold mb-6 tracking-tighter" style={{ color: colors.textPrimary }}>
               {caseData.title} Claim
             </motion.h1>
 
-            <motion.p variants={itemVariants} className="text-lg sm:text-xl mb-10 max-w-2xl leading-relaxed" style={{ color: colors.lightGrayText }}>
+            <motion.p variants={itemVariants} className="text-lg sm:text-xl mb-10 max-w-2xl leading-relaxed" style={{ color: colors.textSecondary }}>
               {caseData.shortDescription}
             </motion.p>
 
@@ -159,7 +161,7 @@ const CaseHero = ({ caseData }: CaseHeroProps) => {
               <Button
                 size="lg"
                 className="group relative flex-1 font-bold py-4 rounded-lg shadow-lg overflow-hidden transition-all duration-300 text-lg"
-                style={{ backgroundColor: colors.accentGreen, color: colors.darkBlue }}
+                style={{ backgroundColor: colors.accentGreen, color: colors.background }}
                 onClick={scrollToCaseEvaluation}
               >
                 <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-full group-hover:h-56 opacity-20"></span>
@@ -170,8 +172,8 @@ const CaseHero = ({ caseData }: CaseHeroProps) => {
                 asChild
                 size="lg"
                 variant="outline"
-                style={{ borderColor: colors.borderGray, color: colors.lightGrayText }}
-                className="flex-1 rounded-lg py-4 font-semibold transition-colors hover:border-[var(--accent-green)] hover:text-[var(--accent-green)]"
+                style={{ borderColor: colors.border, color: colors.textSecondary }}
+                className="flex-1 rounded-lg py-4 font-semibold transition-colors hover:border-[var(--accent-green)] hover:text-[var(--accent-green)] hover:bg-transparent"
               >
                 <a href="tel:9143002717" className="flex items-center justify-center gap-2">
                   <Phone size={20} />
@@ -183,21 +185,21 @@ const CaseHero = ({ caseData }: CaseHeroProps) => {
 
           <motion.div variants={itemVariants} className="lg:col-span-2 w-full max-w-md mx-auto lg:mx-0 lg:justify-self-end">
             <Card
-              style={{ backgroundColor: colors.cardBackground, borderColor: colors.borderGray }}
-              className="p-6 shadow-2xl rounded-xl border relative before:absolute before:top-0 before:left-0 before:w-full before:h-[1px] before:bg-gradient-to-r from-transparent via-[var(--accent-green)] to-transparent"
+              style={{ backgroundColor: colors.cardBackground, borderColor: colors.border }}
+              className="p-6 shadow-lg rounded-xl border relative transition-all duration-500 hover:border-accent/60 hover:shadow-accent/20 hover:shadow-2xl"
             >
-              <h3 className="text-xl font-bold mb-4 border-b pb-4" style={{ color: colors.whiteText, borderColor: colors.borderGray }}>
+              <h3 className="text-xl font-bold mb-4 border-b pb-4" style={{ color: colors.textPrimary, borderColor: colors.border }}>
                 Vital Claim Statistics
               </h3>
               <div className="space-y-5">
                 {statItems.map((item) => (
                   <div key={item.label} className="flex gap-4 items-center">
-                    <div style={{ backgroundColor: colors.borderGray }} className="p-3 rounded-lg flex-shrink-0">
+                    <div style={{ backgroundColor: colors.border }} className="p-3 rounded-lg flex-shrink-0">
                       <item.icon className="w-6 h-6" style={{ color: colors.accentGreen }} />
                     </div>
                     <div>
-                      <p className="uppercase font-semibold text-xs tracking-wider" style={{ color: colors.lightGrayText }}>{item.label}</p>
-                      <p className="text-xl font-bold" style={{ color: colors.whiteText }}>{item.value}</p>
+                      <p className="uppercase font-semibold text-xs tracking-wider" style={{ color: colors.textSecondary }}>{item.label}</p>
+                      <p className="text-xl font-bold" style={{ color: colors.textPrimary }}>{item.value}</p>
                     </div>
                   </div>
                 ))}

@@ -27,16 +27,16 @@ import { getAllCaseTypes } from "@/lib/utils";
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
-  // Color palette definition (used directly in JSX via hex codes)
+  // Light theme color palette
   const colors = {
-    darkBlue: "#0A0D14", // Main Background
-    whiteText: "#F0F6FC", // Main Text
-    accentGreen: "#2AAA8A", // Primary Action/Highlight
-    hoverGreen: "#3BC1A0", // Hover State for Primary
-    lightGrayText: "#8B949E", // Secondary/Muted Text
-    borderGray: "#30363D", // Separators/Borders
-    accentAmber: "#DBAB09", // Secondary Accent (e.g., "HOT" badge)
-    cardBackground: "#161B22", // Card/Section Background
+    background: "#FFFFFF",
+    textPrimary: "#212529",
+    textSecondary: "#6c757d",
+    accentGreen: "#2AAA8A",
+    hoverGreen: "#3BC1A0",
+    accentAmber: "#DBAB09",
+    border: "#E9ECEF",
+    cardBackground: "#F8F9FA",
   };
 
   const socialLinks = [
@@ -65,9 +65,9 @@ const Footer = () => {
   ];
 
   const legalLinks = [
-    { label: "Data Protection", href: "/privacy-policy" },
-    { label: "User Agreement", href: "/terms-of-service" },
-    { label: "Attorney Notice", href: "/disclaimer" },
+    { label: "Privacy Policy", href: "/privacy-policy" },
+    { label: "Terms & Conditions", href: "/terms-of-service" },
+
   ];
 
   const containerVariants = {
@@ -84,7 +84,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-[#0A0D14] text-[#F0F6FC] relative overflow-hidden pt-8">
+    <footer style={{ backgroundColor: colors.background, color: colors.textPrimary }} className="relative overflow-hidden pt-8">
       <div className="container mx-auto px-4 relative z-10">
         {/* Top CTA Section */}
         <motion.div
@@ -94,21 +94,21 @@ const Footer = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
         >
-          <Badge className="mb-6 px-4 py-2 bg-[#2AAA8A]/20 text-[#F0F6FC] border-[#DBAB09]/30 font-bold text-sm">
-            <Zap className="w-4 h-4 mr-2 text-[#F0F6FC]" />
+          <Badge className="mb-6 px-4 py-2 font-bold text-sm" style={{ backgroundColor: colors.accentGreen + '20', color: colors.accentGreen, borderColor: colors.accentAmber + '30' }}>
+            <Zap className="w-4 h-4 mr-2" style={{ color: colors.accentGreen }} />
             YOUR FREE CONSULTATION AWAITS
           </Badge>
           <h2 className="text-3xl md:text-5xl font-black mb-4 leading-tight">
-            <span className="text-[#2AAA8A]">Secure the Settlement</span>
-            <span className="text-[#2AAA8A]"> You Deserve</span>
+            <span style={{ color: colors.accentGreen }}>Secure the Settlement</span>
+            <span style={{ color: colors.accentGreen }}> You Deserve</span>
           </h2>
-          <p className="text-lg text-[#F0F6FC]/70 mb-8 max-w-2xl mx-auto">
+          <p className="text-lg mb-8 max-w-2xl mx-auto" style={{ color: colors.textSecondary }}>
             Strict deadlines apply to most claims. Don't forfeit your rights by waiting.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <motion.div whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.98 }}>
               {/* PRIMARY BUTTON: Call Us Now */}
-              <Button asChild size="lg" className="bg-[#2AAA8A] hover:bg-[#3BC1A0] text-[#F0F6FC] font-black px-8 py-6 text-lg shadow-xl w-full sm:w-auto">
+              <Button asChild size="lg" className="font-black px-8 py-6 text-lg shadow-xl w-full sm:w-auto" style={{ backgroundColor: colors.accentGreen, color: colors.background, '&:hover': { backgroundColor: colors.hoverGreen } }}>
                 <a href="tel:9143002727" className="flex items-center justify-center">
                   <Phone className="mr-3 h-5 w-5" /> Call Us Now (24/7)
                 </a>
@@ -117,7 +117,7 @@ const Footer = () => {
             
             {/* SECONDARY BUTTON: Free Review/Evaluation */}
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
-               <Button asChild size="lg" className="bg-[#2AAA8A] hover:bg-[#3BC1A0] text-[#F0F6FC] font-black px-8 py-6 text-lg shadow-xl w-full sm:w-auto">
+               <Button asChild size="lg" className="font-black px-8 py-6 text-lg shadow-xl w-full sm:w-auto" style={{ backgroundColor: colors.accentGreen, color: colors.background, '&:hover': { backgroundColor: colors.hoverGreen } }}>
                 <a href="tel:9143002727" className="flex items-center justify-center">
                   <Phone className="mr-3 h-5 w-5" />  Start Your Free Review 
                 </a>
@@ -126,7 +126,7 @@ const Footer = () => {
           </div>
         </motion.div>             
         
-        <Separator className="bg-[#30363D] my-8" />
+        <Separator style={{ backgroundColor: colors.border }} className="my-8" />
 
         {/* Main Content Layout */}
         <motion.div
@@ -141,14 +141,14 @@ const Footer = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
               {/* Case Types (DYNAMICALLY POPULATED) */}
               <motion.div variants={itemVariants}>
-                <h3 className="text-lg font-bold mb-4 tracking-wider text-[#2AAA8A]">OPEN CASES</h3>
+                <h3 className="text-lg font-bold mb-4 tracking-wider" style={{ color: colors.accentGreen }}>OPEN CASES</h3>
                 <ul className="space-y-2">
                   {caseLinks.map((link) => (
                     <li key={link.href}>
-                      <Link href={link.href} className="flex items-center text-[#8B949E] hover:text-[#F0F6FC] transition-colors group">
-                        <ArrowRight size={14} className="mr-3 text-[#2AAA8A] transition-transform group-hover:translate-x-1" />
+                      <Link href={link.href} className="flex items-center hover:text-black transition-colors group" style={{ color: colors.textSecondary }}>
+                        <ArrowRight size={14} className="mr-3 transition-transform group-hover:translate-x-1" style={{ color: colors.accentGreen }} />
                         <span>{link.label}</span>
-                          {link.hot && <Badge className="ml-2 bg-[#DBAB09]/20 text-[#DBAB09] border-none text-xs px-2 py-0.5">HOT</Badge>}
+                          {link.hot && <Badge className="ml-2 border-none text-xs px-2 py-0.5" style={{ backgroundColor: colors.accentAmber + '20', color: colors.accentAmber }}>HOT</Badge>}
                       </Link>
                     </li>
                   ))}
@@ -156,12 +156,12 @@ const Footer = () => {
               </motion.div>
               {/* Quick Links */}
               <motion.div variants={itemVariants}>
-                <h3 className="text-lg font-bold mb-4 tracking-wider text-[#2AAA8A]">QUICK ACCESS</h3>
+                <h3 className="text-lg font-bold mb-4 tracking-wider" style={{ color: colors.accentGreen }}>QUICK ACCESS</h3>
                 <ul className="space-y-2">
                   {quickLinks.map((link) => (
                     <li key={link.label}>
-                      <Link href={link.href} className="flex items-center text-[#8B949E] hover:text-[#F0F6FC] transition-colors group">
-                        <ArrowRight size={14} className="mr-3 text-[#2AAA8A] transition-transform group-hover:translate-x-1" />
+                      <Link href={link.href} className="flex items-center hover:text-black transition-colors group" style={{ color: colors.textSecondary }}>
+                        <ArrowRight size={14} className="mr-3 transition-transform group-hover:translate-x-1" style={{ color: colors.accentGreen }} />
                         {link.label}
                       </Link>
                     </li>
@@ -171,16 +171,17 @@ const Footer = () => {
             </div>
 
             {/* Newsletter Section */}
-            <motion.div variants={itemVariants} className="bg-[#161B22] border border-[#30363D] rounded-xl p-6 backdrop-blur-sm">
-                <h3 className="font-bold text-[#2AAA8A] mb-2">Stay Updated On Your Rights</h3>
-                <p className="text-[#8B949E] mb-4 text-sm">Get news and updates on important cases directly to your inbox.</p>
+            <motion.div variants={itemVariants} className="border rounded-xl p-6 backdrop-blur-sm" style={{ backgroundColor: colors.cardBackground, borderColor: colors.border }}>
+                <h3 className="font-bold mb-2" style={{ color: colors.accentGreen }}>Stay Updated On Your Rights</h3>
+                <p className="mb-4 text-sm" style={{ color: colors.textSecondary }}>Get news and updates on important cases directly to your inbox.</p>
                 <div className="flex gap-2">
                     <Input 
                         type="email" 
                         placeholder="Enter your email" 
-                        className="bg-[#0A0D14] border-[#30363D] focus:ring-[#2AAA8A] focus:border-[#2AAA8A] text-[#F0F6FC] flex-grow"
+                        className="bg-white focus:ring-accentGreen focus:border-accentGreen flex-grow"
+                        style={{ borderColor: colors.border, color: colors.textPrimary }}
                     />
-                    <Button className="bg-[#2AAA8A] hover:bg-[#3BC1A0] text-[#F0F6FC] font-bold">
+                    <Button className="font-bold" style={{ backgroundColor: colors.accentGreen, color: colors.background, '&:hover': { backgroundColor: colors.hoverGreen } }}>
                         <Mail size={16} className="mr-2"/> Subscribe
                     </Button>
                 </div>
@@ -188,26 +189,26 @@ const Footer = () => {
           </div>
 
           {/* RIGHT SIDE: Brand and Contact */}
-          <motion.div variants={itemVariants} className="bg-[#161B22] border border-[#30363D] rounded-xl p-8 flex flex-col justify-between backdrop-blur-sm">
+          <motion.div variants={itemVariants} className="border rounded-xl p-8 flex flex-col justify-between backdrop-blur-sm" style={{ backgroundColor: colors.cardBackground, borderColor: colors.border }}>
             <div>
               {/* Add new JusticSuppor Logo */}
-              {/* <img src="/logo.png" alt="Justice Support Now Logo" className="w-auto h-20 mb-4" /> */}
-              <p className="text-[#8B949E] mb-6 leading-relaxed">
+              <img src="/JUStice support(3).png" alt="Justice Support Now Logo" className=" h-[200px] w-[200px] mb-4 mx-auto hover:scale-110 transition-all duration-300" /> 
+              <p className="mb-6 leading-relaxed" style={{ color: colors.textSecondary }}>
                 Trusted legal guidance for those affected by corporate wrongdoing. We fight for you.
               </p>
             </div>
             <div className="space-y-4">
-               <a href="tel:9143002717" className="flex items-center p-3 rounded-lg hover:bg-[#0A0D14] transition-colors">
-                <Phone className="w-6 h-6 mr-4 text-[#2AAA8A]"/>
+               <a href="tel:9143002717" className="flex items-center p-3 rounded-lg hover:bg-white transition-colors">
+                <Phone className="w-6 h-6 mr-4" style={{ color: colors.accentGreen }}/>
                 <div>
-                  <p className="text-[#8B949E] text-sm">24/7 Support Line</p>
+                  <p className="text-sm" style={{ color: colors.textSecondary }}>24/7 Support Line</p>
                   <p className="font-bold text-lg">(914) 300 2717</p>
                 </div>
               </a>
-               <a href="mailto:support@justicesupportnow.com" className="flex items-center p-3 rounded-lg hover:bg-[#0A0D14] transition-colors">
-                <Mail className="w-6 h-6 mr-4 text-[#2AAA8A]"/>
+               <a href="mailto:support@justicesupportnow.com" className="flex items-center p-3 rounded-lg hover:bg-white transition-colors">
+                <Mail className="w-6 h-6 mr-4" style={{ color: colors.accentGreen }}/>
                 <div>
-                  <p className="text-[#8B949E] text-sm">Email for a Free Review</p>
+                  <p className="text-sm" style={{ color: colors.textSecondary }}>Email for a Free Review</p>
                   <p className="font-bold text-lg break-all">support@justicesupportnow.com</p>
                 </div>
               </a>
@@ -216,14 +217,14 @@ const Footer = () => {
         </motion.div>
 
         {/* Bottom Bar */}
-        <div className="py-6 mt-8 border-t border-[#30363D] flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
-            <p className="text-sm text-[#8B949E]">© {currentYear} Justice support now. All Rights Reserved.</p>
-            <div className="flex gap-x-4 gap-y-2 flex-wrap justify-center text-sm text-[#8B949E]">
+        <div className="py-6 mt-8 border-t flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left" style={{ borderColor: colors.border }}>
+            <p className="text-sm" style={{ color: colors.textSecondary }}>© {currentYear} Justice support now. All Rights Reserved.</p>
+            <div className="flex gap-x-4 gap-y-2 flex-wrap justify-center text-sm" style={{ color: colors.textSecondary }}>
                 {legalLinks.map((link) => (
-                    <Link key={link.label} href={link.href} className="hover:text-[#F0F6FC] transition-colors">{link.label}</Link>
+                    <Link key={link.label} href={link.href} className="hover:text-black transition-colors">{link.label}</Link>
                 ))}
             </div>
-            <div className="flex space-x-5 text-[#F0F6FC]">
+            <div className="flex space-x-5" style={{ color: colors.textPrimary }}>
                 {socialLinks.map((link) => (
                     <a key={link.label} href={link.href} aria-label={link.label}>{link.icon}</a>
                 ))}

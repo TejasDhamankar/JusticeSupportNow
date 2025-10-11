@@ -8,14 +8,15 @@ import FrequentlyAskedQuestions from "@/components/sections/FrequentlyAskedQuest
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col">
+    <main className="flex min-h-screen flex-col bg-white">
       <Header />
       
       <div className="pt-0"> {/* Removed extra padding since Hero handles its own spacing */}
         <Hero />
+        <CaseEvaluation />
         <CaseTypesList />
         <ClaimProcess />
-        <CaseEvaluation />
+       
         {/* <Testimonials /> */}
         <FrequentlyAskedQuestions />
       </div>
