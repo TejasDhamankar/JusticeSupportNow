@@ -16,9 +16,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-
 // Color palette
-// Light theme color palette
 const colors = {
   background: "#FFFFFF",
   textPrimary: "#212529",
@@ -36,9 +34,16 @@ interface CaseType {
   title: string;
 }
 
+// --- Helper function to format category titles ---
+const formatCategoryTitle = (str: string) => {
+  // Converts "PopularCases" to "Popular Cases"
+  return str.replace(/([A-Z])/g, ' $1').trim();
+};
+
 // --- Hover Dropdown ---
 const NavDropdown: FC<{ title: string; items: CaseType[] }> = ({ title, items }) => {
   const [open, setOpen] = useState(false);
+  const formattedTitle = formatCategoryTitle(title); // Format the title here
 
   return (
     <div
@@ -50,7 +55,7 @@ const NavDropdown: FC<{ title: string; items: CaseType[] }> = ({ title, items })
         className="flex items-center gap-1 font-semibold transition-colors duration-300"
         style={{ color: open ? colors.textPrimary : colors.textSecondary }}
       >
-        {title}
+        {formattedTitle} {/* Use formatted title */}
         <ChevronDown
           size={16}
           className={`ml-1 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
@@ -71,7 +76,7 @@ const NavDropdown: FC<{ title: string; items: CaseType[] }> = ({ title, items })
             }}
           >
             <h4 className="text-sm font-semibold mb-2 px-2" style={{ color: colors.accentGreen }}>
-              {title}
+              {formattedTitle} {/* Use formatted title */}
             </h4>
             <div className="space-y-1">
               {items.map((item) => (
@@ -128,7 +133,8 @@ const Header: FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
-  const groupedCaseTypes = () => {
+  // Memoize the grouped cases to prevent recalculation on every render
+  const groupedCaseTypes = React.useMemo(() => {
     const PopularCases = caseTypes.slice(0, 4);
     const MedicalCases = caseTypes.filter(c =>
       c.title.includes("CPAP") ||
@@ -144,7 +150,7 @@ const Header: FC = () => {
     );
 
     return { PopularCases, MedicalCases, EnvironmentalCases };
-  };
+  }, [caseTypes]);
 
   return (
     <AnimatePresence>
@@ -155,20 +161,23 @@ const Header: FC = () => {
           exit={{ y: -120, opacity: 0 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
           className={cn(
-            "fixed top-0 left-0 w-full z-50 backdrop-blur-lg transition-colors duration-300 border-b",
-            scrolled ? `bg-white/90 border-[${colors.border}]` : "bg-transparent border-transparent"
+            "fixed top-0 left-0 w-full z-50 backdrop-blur-lg transition-all duration-300 border-b",
+            scrolled ? `bg-white/90` : "bg-transparent border-transparent"
           )}
+          style={{
+            borderColor: scrolled ? colors.border : 'transparent',
+          }}
         >
-          <div className="container mx-auto px-5 flex items-center justify-between h-20">
+          <div className="container mx-auto px-4 sm:px-6 flex items-center justify-between h-20">
             {/* Logo */}
-            <Link href="/" className="flex items-center justify-baseline gap-2 ">
-            <img src="/JUSticeCrop(3).png" alt="Justice Support Now Logo" className="mt-4 h-[70px] object-cover w-auto mb-4  hover:scale-110 transition-all duration-300" />
-             
+            <Link href="/" className="flex items-center justify-baseline gap-2">
+              {/* Responsive logo size */}
+              <img src="/JUSticeCrop(3).png" alt="Justice Support Now Logo" className="h-[55px] md:h-[70px] w-auto object-contain hover:scale-105 transition-transform duration-300" />
             </Link>
 
             {/* Desktop Nav */}
-            <nav className="hidden lg:flex space-x-8 items-center">
-              {Object.entries(groupedCaseTypes()).map(([category, cases]) => (
+            <nav className="hidden lg:flex items-center md:space-x-6 lg:space-x-8">
+              {Object.entries(groupedCaseTypes).map(([category, cases]) => (
                 <NavDropdown key={category} title={category} items={cases} />
               ))}
               <Link
@@ -183,10 +192,10 @@ const Header: FC = () => {
             </nav>
 
             {/* Right Actions */}
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 sm:space-x-4">
               <a
-                href="tel:9085336944"
-                className="hidden md:flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-300 border hover:border-accentGreen hover:text-accentGreen"
+                href="tel:9143002717"
+                className="hidden md:flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors duration-300 border hover:border-green-500 hover:text-green-600"
                 style={{ color: colors.textSecondary, borderColor: colors.border }}
               >
                 <Phone size={18} />
@@ -195,7 +204,7 @@ const Header: FC = () => {
 
               <Button
                 asChild
-                className="hidden lg:inline-block font-bold transition-all duration-300 hover:scale-105 shadow-md p-3"
+                className="hidden md:inline-block font-bold transition-transform duration-300 hover:scale-105 shadow-md p-3"
                 style={{ backgroundColor: colors.accentGreen, color: colors.background }}
               >
                 <Link href="#case-evaluation">Free Case Review</Link>
@@ -220,15 +229,16 @@ const Header: FC = () => {
                   <div className="flex flex-col h-full">
                     <div className="pb-6 border-b" style={{ borderColor: colors.border }}>
                       <Link href="/" onClick={() => setMobileMenuOpen(false)}>
-                        <img src="/JUStice support(3).png" alt="Justice Support Now Logo" className="h-[150px] w-[150px]" />
+                        {/* More reasonably sized logo for mobile menu */}
+                        <img src="/JUStice support(3).png" alt="Justice Support Now Logo" className="h-24 w-auto" />
                       </Link>
                     </div>
                     <nav className="flex-grow mt-6 space-y-2">
                       <Accordion type="multiple" className="w-full">
-                        {Object.entries(groupedCaseTypes()).map(([category, cases]) => (
+                        {Object.entries(groupedCaseTypes).map(([category, cases]) => (
                           <AccordionItem key={category} value={category} className="border-b-0">
-                            <AccordionTrigger className="font-semibold text-lg hover:no-underline py-3" style={{ color: colors.textPrimary }}>
-                              {category}
+                            <AccordionTrigger className="font-semibold text-lg hover:no-underline py-3 uppercase" style={{ color: colors.textPrimary }}>
+                              {formatCategoryTitle(category)} {/* Use formatted title */}
                             </AccordionTrigger>
                             <AccordionContent>
                               <div className="pl-4 space-y-2">
@@ -237,7 +247,7 @@ const Header: FC = () => {
                                     key={item.id}
                                     href={`/cases/${item.slug}`}
                                     onClick={() => setMobileMenuOpen(false)}
-                                    className="block py-2 text-md"
+                                    className="block py-2 text-md uppercase"
                                     style={{ color: colors.textSecondary }}
                                   >
                                     {item.title}
