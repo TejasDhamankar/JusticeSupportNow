@@ -227,7 +227,7 @@ const CaseEvaluation = () => {
             <form ref={formRef} onSubmit={handleSubmit} method="POST">
               <div className="space-y-6">
                 {/* Contact Info */}
-                <fieldset className="p-4 border rounded-lg" style={{ borderColor: colors.borderGray }}>
+                <fieldset className="p-4 border rounded-lg" style={{ borderColor: colors.border }}>
                   <legend className="px-2 text-sm font-bold" style={{ color: colors.accentGreen }}>
                     <User className="inline-block w-4 h-4 mr-1 mb-0.5" /> Contact Information
                   </legend>
