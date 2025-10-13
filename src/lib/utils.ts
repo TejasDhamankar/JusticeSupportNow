@@ -16,6 +16,7 @@ export const getAllCaseTypes = (): CaseType[] => {
       shortDescription: "Military personnel and families exposed to contaminated water at Camp Lejeune may qualify for compensation.",
       fullDescription: "From 1953 to 1987, the water supply at Marine Corps Base Camp Lejeune in North Carolina was contaminated with dangerous chemicals including TCE, PCE, benzene, and vinyl chloride. Military personnel, their families, and civilian workers who lived or worked at the base during this period were exposed to these harmful substances, which have been linked to various cancers, Parkinson's disease, and other serious health conditions. The Camp Lejeune Justice Act of 2022 now allows affected individuals to seek compensation for their injuries.",
       imageUrl: "/images/cases/camp.jpg",
+      featured: true,
       compensationInfo: "Compensation amounts vary based on several factors, including the type and severity of your condition, duration of exposure, medical expenses, lost wages, and pain and suffering. Some Camp Lejeune settlements have ranged from $100,000 to over $1 million.",
       eligibilityCriteria: [
         "Stationed, lived, or worked at Camp Lejeune for at least 30 days between August 1953 and December 1987",
@@ -60,6 +61,7 @@ export const getAllCaseTypes = (): CaseType[] => {
       shortDescription: "Military service members who suffered hearing damage after using defective 3M earplugs may be eligible for compensation.",
       fullDescription: "Between 2003 and 2015, 3M Company supplied the U.S. military with Combat Arms Earplugs Version 2 (CAEv2), which were standard issue for military personnel serving in combat zones like Iraq and Afghanistan. These dual-ended earplugs were designed to provide two levels of hearing protection: one end for blocking all sound, and the other for blocking loud impulse sounds while allowing soldiers to hear commands and approaching enemies. However, the earplugs had a design defect that prevented them from forming a proper seal in the ear canal, leaving users vulnerable to hearing damage from loud combat and training noises. As a result, many service members developed hearing loss, tinnitus (ringing in the ears), and other auditory issues.",
       imageUrl: "/images/cases/earplug.jpg",
+      featured: false,
       compensationInfo: "Compensation in 3M earplug cases varies based on the severity of hearing damage and its impact on your life. Settlements may cover medical expenses, lost wages, pain and suffering, and decreased quality of life. Some individual verdicts have reached into the millions, though most settlements are lower.",
       eligibilityCriteria: [
         "Served in the U.S. military between 2003 and 2015",
@@ -90,6 +92,7 @@ export const getAllCaseTypes = (): CaseType[] => {
       shortDescription: "Individuals exposed to Roundup herbicide who later developed cancer may qualify for substantial compensation.",
       fullDescription: "Roundup, manufactured by Monsanto (now owned by Bayer), is one of the world's most widely used herbicides. Its active ingredient, glyphosate, has been linked to the development of non-Hodgkin's lymphoma and other forms of cancer. Thousands of lawsuits have been filed against Bayer alleging that long-term exposure to Roundup caused users to develop cancer and that the company failed to warn consumers about the potential risks. In 2015, the International Agency for Research on Cancer (IARC) classified glyphosate as 'probably carcinogenic to humans,' fueling concerns about Roundup's safety.",
       imageUrl: "/images/cases/roundup.jpg",
+      featured: true,
       compensationInfo: "Roundup lawsuits have resulted in some of the largest product liability settlements in history. Bayer has set aside over $10 billion to resolve Roundup claims. Individual settlements vary widely, with some plaintiffs receiving several million dollars, especially in cases involving serious illness or death.",
       eligibilityCriteria: [
         "Regular exposure to Roundup weed killer (typically over several years)",
@@ -122,6 +125,7 @@ export const getAllCaseTypes = (): CaseType[] => {
       shortDescription: "Users of recalled Philips CPAP, BiPAP, or ventilator devices who suffered injuries may be eligible for compensation.",
       fullDescription: "In June 2021, Philips Respironics issued a recall for millions of CPAP (Continuous Positive Airway Pressure), BiPAP (Bi-Level Positive Airway Pressure), and mechanical ventilator devices manufactured between 2009 and April 26, 2021. The recall was prompted by potential health risks associated with the polyester-based polyurethane (PE-PUR) sound abatement foam used in these devices. This foam can degrade over time, releasing potentially harmful particles and chemicals that users might inhale or ingest. The FDA has classified this as a Class I recall, the most serious type, indicating that use of these devices may cause serious injuries or death.",
       imageUrl: "/images/cases/cpap.jpg",
+      featured: false,
       compensationInfo: "Compensation in Philips CPAP lawsuits may cover medical expenses, ongoing treatment costs, lost wages, pain and suffering, and in some cases, punitive damages. The exact amount varies based on the severity of injuries and individual circumstances.",
       eligibilityCriteria: [
         "Used a recalled Philips CPAP, BiPAP, or ventilator device",
@@ -157,6 +161,7 @@ export const getAllCaseTypes = (): CaseType[] => {
       shortDescription: "Children exposed to acetaminophen (Tylenol) before birth who developed autism or ADHD may qualify for compensation.",
       fullDescription: "Recent scientific studies have suggested a potential link between prenatal exposure to acetaminophen (the active ingredient in Tylenol and many other over-the-counter pain relievers) and an increased risk of autism spectrum disorder (ASD) and attention deficit hyperactivity disorder (ADHD) in children. Lawsuits allege that manufacturers and retailers of acetaminophen products failed to warn pregnant women about the potential risks of using these medications during pregnancy. These cases are based on multiple research studies, including a 2021 consensus statement published in Nature Reviews Endocrinology where 91 medical experts warned against using acetaminophen during pregnancy unless medically necessary.",
       imageUrl: "/images/cases/tylenol.jpg",
+      featured: true,
       compensationInfo: "As this litigation is still in its early stages, specific settlement amounts haven't been established. Compensation may cover medical expenses, therapy costs, educational support, lost earning capacity, and pain and suffering related to autism or ADHD diagnoses linked to prenatal acetaminophen exposure.",
       eligibilityCriteria: [
         "Mother used acetaminophen (Tylenol or generic versions) during pregnancy",
@@ -188,6 +193,7 @@ export const getAllCaseTypes = (): CaseType[] => {
       shortDescription: "Women who regularly used chemical hair relaxers or straighteners and developed uterine, ovarian, or breast cancer may be eligible for compensation.",
       fullDescription: "Recent scientific research, including a 2022 study from the National Institutes of Health, has found that women who used chemical hair straightening or relaxing products may have an increased risk of developing uterine cancer, endometrial cancer, ovarian cancer, and breast cancer. These products contain potentially harmful endocrine-disrupting chemicals that can be absorbed through the scalp, especially if there are burns or lesions present during application. Lawsuits allege that manufacturers of these hair relaxer products, including L'Oréal, SoftSheen-Carson, Namaste, Dark & Lovely, and others, failed to warn consumers about these serious health risks despite allegedly being aware of the dangers.",
       imageUrl: "/images/cases/hair.png",
+      featured: false,
       compensationInfo: "Hair relaxer lawsuits are currently in the early stages of litigation. Potential compensation may include medical expenses, pain and suffering, lost wages, diminished quality of life, and punitive damages in some cases. The amount will likely vary based on factors such as the type and stage of cancer, treatment requirements, and individual circumstances.",
       eligibilityCriteria: [
         "Regular use of chemical hair relaxers or straighteners (usually for several years)",
@@ -219,6 +225,7 @@ export const getAllCaseTypes = (): CaseType[] => {
       shortDescription: "Users of Zantac (ranitidine) who developed cancer may qualify for compensation after the discovery of a cancer-causing contaminant in the medication.",
       fullDescription: "In 2019, the FDA announced that Zantac (ranitidine) and its generic versions contained N-nitrosodimethylamine (NDMA), a probable human carcinogen. This discovery led to a market-wide recall of all ranitidine products in 2020. NDMA can form when ranitidine breaks down, especially when exposed to heat or over time during storage. Lawsuits allege that manufacturers, including GlaxoSmithKline, Boehringer Ingelheim, Sanofi, and Pfizer, knew or should have known about the NDMA contamination but failed to warn consumers about the cancer risks. Many Zantac users who took the medication regularly for heartburn, acid reflux, or GERD have since been diagnosed with various types of cancer, particularly of the digestive system.",
       imageUrl: "/images/cases/zantac.webp",
+      featured: false,
       compensationInfo: "A $500 million settlement was announced in July 2023 to resolve approximately 70,000 Zantac claims. Individual settlements for qualifying cases will vary based on cancer type, severity, age at diagnosis, duration of Zantac use, and other factors. Additional litigation is still ongoing for certain cancer types.",
       eligibilityCriteria: [
         "Regular use of prescription or over-the-counter Zantac/ranitidine (typically for at least one year)",
@@ -251,6 +258,7 @@ export const getAllCaseTypes = (): CaseType[] => {
       shortDescription: "Firefighters and others exposed to AFFF (aqueous film-forming foam) who developed cancer may be eligible for compensation.",
       fullDescription: "Aqueous film-forming foam (AFFF) has been widely used since the 1970s to fight flammable liquid fires, particularly at military bases, airports, and firefighter training facilities. This foam contains per- and polyfluoroalkyl substances (PFAS), sometimes called 'forever chemicals' because they don't break down naturally in the environment or human body. Scientific research has linked PFAS exposure to various types of cancer and other health conditions. Lawsuits allege that manufacturers of AFFF, including 3M and DuPont, knew about the potential health risks but failed to warn users or develop safer alternatives. Those at highest risk include firefighters, military personnel (especially those on naval ships or air bases), and communities near facilities where AFFF was regularly used.",
       imageUrl: "/images/cases/foam.jpg",
+      featured: true,
       compensationInfo: "In June 2023, 3M announced a settlement agreement of up to $12.5 billion to resolve AFFF litigation. Additional settlements may be forthcoming from other manufacturers. The compensation available will vary based on factors such as the type and stage of cancer, duration of exposure, and individual circumstances.",
       eligibilityCriteria: [
         "Significant exposure to AFFF firefighting foam (occupational or environmental)",
@@ -286,6 +294,7 @@ export const getAllCaseTypes = (): CaseType[] => {
       shortDescription: "Premature infants who developed necrotizing enterocolitis (NEC) after consuming cow's milk-based formula may be eligible for compensation.",
       fullDescription: "Necrotizing enterocolitis (NEC) is a serious gastrointestinal condition primarily affecting premature infants, where intestinal tissue becomes inflamed and dies. Research has indicated that premature babies fed cow's milk-based formulas, such as Similac or Enfamil, may have a significantly higher risk of developing NEC compared to those fed with human breast milk. Lawsuits allege that manufacturers of these formulas, including Abbott Laboratories (Similac) and Mead Johnson (Enfamil), failed to properly warn parents and medical providers about the increased risk of NEC associated with their products when used in premature infants.",
       imageUrl: "/images/cases/infant.jpg",
+      featured: false,
       compensationInfo: "Compensation in NEC formula cases may include medical expenses, future medical care, pain and suffering, and in cases of infant death, wrongful death damages. These cases are still developing, but given the serious nature of NEC and its consequences, substantial compensation may be available in successful claims.",
       eligibilityCriteria: [
         "Premature infant (born before 37 weeks gestation)",
@@ -321,6 +330,7 @@ export const getAllCaseTypes = (): CaseType[] => {
       shortDescription: "Patients with failed Exactech knee, hip, or ankle replacements may be eligible for compensation due to defective polyethylene inserts.",
       fullDescription: "In February 2022, Exactech expanded a recall of its joint replacement systems due to defective packaging of polyethylene inserts. The packaging failed to contain a secondary barrier layer that prevents oxygen from diffusing into the plastic insert, causing the plastic to degrade prematurely. This oxidation can lead to accelerated wear, bone loss, component fatigue, and premature joint replacement failure. The recall affects thousands of knee, ankle, and hip replacement systems implanted since 2004. Lawsuits allege that Exactech knew or should have known about these issues but failed to warn patients and surgeons about the risks.",
       imageUrl: "/images/cases/exactech.jpg",
+      featured: false,
       compensationInfo: "Compensation in Exactech cases may cover revision surgery costs, medical expenses, pain and suffering, lost wages, and diminished quality of life. Settlement amounts will likely depend on factors such as the severity of complications, number of revision surgeries needed, and impact on daily functioning.",
       eligibilityCriteria: [
         "Received an Exactech knee, ankle, or hip replacement system after 2004",
@@ -355,6 +365,7 @@ export const getAllCaseTypes = (): CaseType[] => {
       shortDescription: "People exposed to PFAS-contaminated water who developed cancer or other serious conditions may qualify for compensation.",
       fullDescription: "Per- and polyfluoroalkyl substances (PFAS) are a group of man-made chemicals that have been manufactured since the 1940s and used in everything from non-stick cookware to water-resistant clothing, food packaging, and firefighting foam. These 'forever chemicals' persist in the environment and human body, and have contaminated drinking water systems serving millions of Americans. Scientific studies have linked PFAS exposure to various health effects, including cancer, thyroid disease, decreased fertility, developmental issues in children, and immune system suppression. Lawsuits target manufacturers of PFAS chemicals, including 3M and DuPont, as well as companies that used these chemicals in their products, alleging they knew about the potential health risks but failed to warn the public.",
       imageUrl: "/images/cases/pfas.jpg",
+      featured: false,
       compensationInfo: "Several major settlements have been announced, including a $10.3 billion settlement by 3M in June 2023 to resolve public water supplier claims. Compensation in individual cases varies based on exposure level, type and severity of illness, and other factors. Additional settlements are expected as litigation progresses.",
       eligibilityCriteria: [
         "Exposure to PFAS-contaminated water (typically in a known contamination area)",
@@ -389,6 +400,7 @@ export const getAllCaseTypes = (): CaseType[] => {
       shortDescription: "Women who regularly used chemical hair straighteners and developed uterine or other reproductive cancers may be eligible for compensation.",
       fullDescription: "In October 2022, a study from the National Institutes of Health found that women who frequently use chemical hair straightening or relaxer products may have more than twice the risk of developing uterine cancer compared to those who don't use these products. The study, which followed over 33,000 women for nearly 11 years, is particularly significant for Black women, who use hair straightening products at higher rates. These products often contain endocrine-disrupting chemicals like phthalates, parabens, and formaldehyde that can be absorbed through the scalp, especially when there are burns or abrasions present during application. Lawsuits allege that manufacturers failed to warn consumers about these serious health risks despite allegedly having knowledge of the dangers.",
       imageUrl: "/images/cases/hairst.jpg",
+      featured: false,
       compensationInfo: "Hair straightener cancer lawsuits are in the early stages of litigation. Compensation may include medical expenses, pain and suffering, lost wages, diminished quality of life, and possibly punitive damages. The amounts will likely vary based on factors such as cancer type and stage, treatment requirements, and individual circumstances.",
       eligibilityCriteria: [
         "Regular use of chemical hair straighteners/relaxers for several years",
@@ -421,6 +433,7 @@ export const getAllCaseTypes = (): CaseType[] => {
       shortDescription: "Children exposed to heavy metals in baby food who developed autism or ADHD may qualify for compensation.",
       fullDescription: "In February 2021, a U.S. Congressional report revealed that several major baby food manufacturers were selling products containing dangerous levels of toxic heavy metals, including arsenic, lead, cadmium, and mercury. These heavy metals can have serious neurodevelopmental effects on developing brains, potentially contributing to autism spectrum disorder (ASD), attention deficit hyperactivity disorder (ADHD), and other neurological conditions. Lawsuits allege that baby food manufacturers knew their products contained these harmful substances but failed to warn parents about the risks or take adequate steps to reduce contamination levels. Affected brands named in litigation include Gerber, Beech-Nut, Earth's Best Organic, Parent's Choice (Walmart), Happy Baby (Nurture), and others.",
       imageUrl: "/images/cases/toxic.webp",
+      featured: false,
       compensationInfo: "As toxic baby food litigation is still developing, specific settlement amounts haven't been established. Compensation may cover medical expenses, therapy costs, educational support, lost earning capacity, and pain and suffering related to neurodevelopmental conditions linked to heavy metal exposure during critical developmental periods.",
       eligibilityCriteria: [
         "Child consumed commercial baby foods from named manufacturers during first years of life",
@@ -453,6 +466,7 @@ export const getAllCaseTypes = (): CaseType[] => {
       shortDescription: "Agricultural workers exposed to Paraquat herbicide who developed Parkinson's disease may qualify for compensation.",
       fullDescription: "Paraquat dichloride is a highly toxic herbicide used for weed and grass control in agricultural settings. Despite being banned in more than 30 countries due to its extreme toxicity, it remains one of the most widely used herbicides in the United States, primarily in commercial farming. Scientific research has established a potential link between paraquat exposure and an increased risk of developing Parkinson's disease, a progressive nervous system disorder affecting movement. Lawsuits allege that manufacturers of paraquat products, including Syngenta and Chevron, failed to adequately warn users about the potential neurological risks associated with exposure to the chemical, even when used as directed with safety equipment.",
       imageUrl: "/images/cases/paraquat.jpg",
+      featured: false,
       compensationInfo: "In 2023, a significant $220 million settlement was announced to resolve paraquat lawsuits, with individual payouts expected to range from $5,000 to $300,000 depending on factors like age at diagnosis, exposure level, and case strength. Additional litigation is ongoing with potential for further settlements.",
       eligibilityCriteria: [
         "Exposure to paraquat through occupational use, proximity to agricultural spraying, or contaminated water",
@@ -486,6 +500,7 @@ export const getAllCaseTypes = (): CaseType[] => {
       shortDescription: "Women who developed ovarian cancer after using talcum powder products may be entitled to compensation.",
       fullDescription: "For decades, many women used talcum powder products, such as Johnson & Johnson's Baby Powder and Shower to Shower, for feminine hygiene purposes. However, scientific research has suggested a potential link between talcum powder use in the genital area and an increased risk of ovarian cancer. Lawsuits allege that talc manufacturers, particularly Johnson & Johnson, were aware of studies indicating this risk but failed to warn consumers. In October 2023, Johnson & Johnson reached a $6.475 billion settlement agreement to resolve most talcum powder lawsuits after their previous attempts to handle the litigation through bankruptcy were rejected by courts. The controversy centers around the potential contamination of talc with asbestos (a known carcinogen) due to the natural proximity of these minerals in the earth, as well as concerns about talc particles themselves traveling to the ovaries and causing inflammation that may lead to cancer.",
       imageUrl: "/images/cases/talcum-powder.avif",
+      featured: false,
       compensationInfo: "Johnson & Johnson has proposed a settlement of $6.475 billion to resolve talcum powder claims. Individual compensation would vary based on factors such as age at diagnosis, severity of illness, and whether the case involved death. Previous jury verdicts in talcum powder cases ranged from millions to billions of dollars, though many were later reduced on appeal.",
       eligibilityCriteria: [
         "Regular use of talcum powder products in the genital area for an extended period (typically years)",
@@ -516,6 +531,7 @@ export const getAllCaseTypes = (): CaseType[] => {
       shortDescription: "Patients who suffered complications after hernia repair surgery using surgical mesh may qualify for compensation.",
       fullDescription: "Hernia mesh is a medical device used to provide additional support to damaged tissue around hernias during surgical repair. While mesh can be effective in preventing hernia recurrence, certain types of surgical mesh products have been associated with serious complications. Thousands of patients have reported adverse effects including severe pain, infection, adhesion (when the mesh sticks to internal organs), bowel obstruction, mesh migration (when the mesh moves from its original placement), and the need for revision surgery. Several manufacturers have faced lawsuits alleging that their hernia mesh products were defectively designed or that they failed to adequately warn about potential risks.",
       imageUrl: "/images/cases/hernia-mesh.jpg",
+      featured: false,
       compensationInfo: "Compensation in hernia mesh cases typically covers medical expenses, revision surgeries, lost wages, pain and suffering, and decreased quality of life. Settlement amounts vary widely depending on the severity of complications, with some cases resolving for tens of thousands of dollars and others for hundreds of thousands. Manufacturers like C.R. Bard and Ethicon have reached settlements in some cases, while litigation against other manufacturers continues.",
       eligibilityCriteria: [
         "Underwent hernia repair surgery where mesh was implanted",
@@ -550,6 +566,7 @@ export const getAllCaseTypes = (): CaseType[] => {
       shortDescription: "Survivors of sexual abuse within the Church of Jesus Christ of Latter-day Saints (Mormon Church) may be eligible for compensation.",
       fullDescription: "In recent years, numerous allegations have emerged regarding the Church of Jesus Christ of Latter-day Saints' (LDS Church) handling of sexual abuse cases. Lawsuits allege that church officials failed to report abuse to authorities, protected abusers, and used the church's abuse helpline to shield the institution rather than help victims. A significant investigation by the Associated Press in 2022 revealed how the church's helpline was often used to direct abuse reports to church attorneys rather than law enforcement, potentially enabling continued abuse. Cases involve abuse by church leaders, members in positions of authority, and abuse that occurred during church-sponsored activities or on church property. Survivors allege that the church's culture of secrecy and protection of its reputation created an environment where abuse could continue.",
       imageUrl: "/images/cases/lds.jpg",
+      featured: false,
       compensationInfo: "Compensation in LDS abuse cases may include damages for therapy costs, emotional trauma, pain and suffering, and sometimes punitive damages intended to reform institutional practices. Settlement amounts vary widely based on factors such as the nature and duration of abuse, its impact on the survivor's life, and the evidence of institutional negligence. Some religious institution abuse cases have resulted in settlements ranging from tens of thousands to millions of dollars.",
       eligibilityCriteria: [
         "Experienced sexual abuse connected to the LDS Church or its activities",
@@ -588,6 +605,7 @@ export const getAllCaseTypes = (): CaseType[] => {
       shortDescription: "Women who used Depo Provera birth control shots and developed brain tumors may be eligible for compensation.",
       fullDescription: "Depo Provera is a long-acting birth control injection that contains medroxyprogesterone acetate, a synthetic hormone. Recent studies have suggested a potential link between prolonged use of Depo Provera and an increased risk of developing meningiomas, which are typically benign brain tumors that develop in the protective membranes surrounding the brain and spinal cord. A 2024 study published in the BMJ found that women who used Depo Provera for more than a year had a significantly increased risk of developing these brain tumors. Lawsuits allege that Pfizer, the manufacturer of Depo Provera, failed to adequately warn patients and healthcare providers about this serious potential side effect, despite evidence suggesting the connection between synthetic progestins and brain tumor development.",
       imageUrl: "/images/cases/depo.webp",
+      featured: false,
       compensationInfo: "Depo Provera brain tumor lawsuits are in the early stages of litigation. Compensation may include medical expenses for tumor treatment and surgery, ongoing medical monitoring, lost wages, pain and suffering, and diminished quality of life. Settlement amounts will likely vary based on factors such as tumor size and location, treatment required, and long-term effects on cognitive function and daily activities.",
       eligibilityCriteria: [
         "Used Depo Provera birth control injections for an extended period (typically one year or more)",
@@ -627,6 +645,7 @@ export const getAllCaseTypes = (): CaseType[] => {
       shortDescription: "Children who developed gaming addiction and related mental health issues from Roblox may be eligible for compensation.",
       fullDescription: "Roblox is an online gaming platform popular among children and teenagers that allows users to create and play games created by other users. Lawsuits allege that Roblox Corporation deliberately designed their platform to be addictive, using psychological manipulation techniques similar to gambling mechanisms to keep young users engaged for excessive amounts of time. These techniques allegedly include variable reward schedules, social pressure mechanics, fear of missing out (FOMO) triggers, and in-game purchases that create compulsive spending behaviors. Parents and mental health experts have raised concerns about children spending 8-12 hours daily on the platform, neglecting sleep, school, social relationships, and physical health. Lawsuits claim that Roblox knew or should have known that their design choices could lead to addictive behaviors in children but prioritized profits over child welfare.",
       imageUrl: "/images/cases/roblox.png",
+      featured: false,
       compensationInfo: "Roblox addiction lawsuits are still in early stages of litigation. Potential compensation may include costs for mental health treatment, therapy expenses, educational support for academic difficulties, medical expenses for related health issues, and damages for emotional distress. The amount would likely depend on the severity of addiction, impact on the child's development and family relationships, and treatment requirements.",
       eligibilityCriteria: [
         "Child was a regular Roblox user who developed compulsive gaming behaviors",
@@ -666,6 +685,7 @@ export const getAllCaseTypes = (): CaseType[] => {
       shortDescription: "Victims of car accidents, truck collisions, motorcycle crashes, and other motor vehicle incidents may be entitled to compensation.",
       fullDescription: "Motor vehicle accidents are one of the leading causes of personal injury in the United States, resulting in millions of injuries and thousands of deaths each year. These accidents can involve cars, trucks, motorcycles, buses, and other vehicles, and can be caused by various factors including distracted driving, drunk driving, speeding, reckless driving, poor weather conditions, mechanical failures, or defective auto parts. Victims of motor vehicle accidents may suffer from a wide range of injuries, from minor cuts and bruises to severe traumatic brain injuries, spinal cord damage, broken bones, and internal injuries. In many cases, these accidents result from another party's negligence, entitling victims to compensation for their medical expenses, lost wages, pain and suffering, and other damages.",
       imageUrl: "/images/cases/mva.jpg",
+      featured: false,
       compensationInfo: "Compensation in motor vehicle accident cases varies widely based on factors such as the severity of injuries, medical expenses, lost income, property damage, degree of fault, and long-term impact on quality of life. Settlements can range from thousands of dollars for minor injuries to millions for catastrophic injuries or wrongful death. Insurance policy limits and available assets of at-fault parties also affect potential compensation.",
       eligibilityCriteria: [
         "Injured in a motor vehicle accident caused by another party's negligence",
@@ -707,6 +727,7 @@ export const getAllCaseTypes = (): CaseType[] => {
       shortDescription: "People injured in slip and fall accidents on someone else's property may be eligible for compensation due to negligent property maintenance.",
       fullDescription: "Slip and fall accidents, also known as premises liability cases, occur when someone is injured due to dangerous or hazardous conditions on another person's or entity's property. These accidents can happen in various locations including grocery stores, restaurants, shopping malls, office buildings, hotels, private residences, parking lots, and sidewalks. Common causes include wet or slippery floors, uneven surfaces, poor lighting, broken stairs, debris or obstacles in walkways, icy conditions, torn carpeting, and inadequate warning signs. Property owners and managers have a legal duty to maintain their premises in a reasonably safe condition and to warn visitors of known hazards. When they fail to meet this duty and someone is injured as a result, they may be held liable for damages.",
       imageUrl: "/images/cases/slipnfall.avif",
+      featured: false,
       compensationInfo: "Compensation in slip and fall cases depends on the severity of injuries, medical expenses, lost wages, degree of property owner negligence, and the injured person's degree of fault (if any). Settlements can range from thousands of dollars for minor injuries to hundreds of thousands or more for severe injuries requiring surgery, long-term care, or resulting in permanent disability. Factors like ongoing medical treatment needs and impact on earning capacity also affect compensation amounts.",
       eligibilityCriteria: [
         "Injured in a slip, trip, or fall accident on someone else's property",
@@ -749,6 +770,7 @@ export const getAllCaseTypes = (): CaseType[] => {
       shortDescription: "Victims of dog attacks and bites may be entitled to compensation from the dog owner for medical expenses, scarring, and trauma.",
       fullDescription: "Dog bite incidents affect millions of Americans each year, with children being particularly vulnerable to serious injuries. Dog attacks can result in severe physical injuries including deep lacerations, puncture wounds, nerve damage, infections, scarring, and in some cases, permanent disfigurement. Beyond physical injuries, dog bite victims often experience psychological trauma, including fear of dogs, anxiety, and post-traumatic stress disorder. Most states have specific laws regarding dog owner liability, with many following either strict liability rules (where the owner is responsible regardless of the dog's history) or the 'one bite rule' (where owners are liable if they knew or should have known their dog was dangerous). Dog owners may be held responsible not only for direct attacks but also for injuries that occur when people fall or are knocked down while trying to avoid an aggressive dog.",
       imageUrl: "/images/cases/dog-bite.webp",
+      featured: false,
       compensationInfo: "Compensation in dog bite cases typically covers medical expenses, plastic surgery and scar revision costs, lost wages, pain and suffering, and psychological counseling. For children, compensation may also include future medical needs and emotional trauma. Settlement amounts vary widely, from thousands for minor bites to hundreds of thousands or more for severe injuries involving extensive scarring, nerve damage, or psychological trauma. Homeowner's or renter's insurance often covers these claims.",
       eligibilityCriteria: [
         "Bitten or attacked by someone else's dog",
@@ -781,6 +803,85 @@ export const getAllCaseTypes = (): CaseType[] => {
         {
           question: "What if the dog has no history of aggression?",
           answer: "In states with strict liability dog bite laws, the owner can be held responsible even if the dog has never bitten anyone before and showed no previous signs of aggression. These laws recognize that any dog can bite and that owners should be responsible for their pets' actions. However, some states still follow the 'one bite rule,' where owners are only liable if they knew or should have known their dog was dangerous."
+        }
+      ]
+    },
+    {
+      id: "27",
+      slug: "ride-share-accident",
+      title: "Rideshare Accident (Uber/Lyft)",
+      shortDescription: "Victims of accidents involving rideshare services like Uber or Lyft may be entitled to compensation for their injuries.",
+      fullDescription: "Accidents involving rideshare vehicles from companies like Uber and Lyft present unique legal challenges. While rideshare services offer convenience, determining liability and accessing insurance coverage can be complex. These cases can involve passengers, drivers of other vehicles, pedestrians, or even the rideshare drivers themselves. The applicable insurance policy—whether it's the driver's personal policy or the rideshare company's commercial policy—often depends on the driver's status at the time of the crash (e.g., waiting for a ride request, en route to a passenger, or transporting a passenger). Victims may be entitled to significant compensation for their injuries and losses due to the substantial insurance policies these companies are required to carry.",
+      imageUrl: "/images/cases/rideshare.jpg",
+      featured: false,
+      compensationInfo: "Compensation in rideshare accident cases is often determined by the driver's status and the applicable insurance policy. Rideshare companies provide up to $1 million or more in liability coverage for accidents that occur while a driver is transporting a passenger or en route to a pickup. Compensation can cover medical bills, lost wages, pain and suffering, and property damage. An experienced attorney can help navigate the complex insurance claims process to maximize recovery.",
+      eligibilityCriteria: [
+        "Injured as a passenger in an Uber or Lyft vehicle",
+        "Injured as a driver or passenger in another vehicle hit by a rideshare driver",
+        "Injured as a pedestrian, bicyclist, or motorcyclist hit by a rideshare vehicle",
+        "Accident was caused by the negligence of the rideshare driver or another party"
+      ],
+      relatedConditions: [
+        "Traumatic Brain Injury (TBI)",
+        "Spinal Cord Injuries",
+        "Broken Bones and Fractures",
+        "Whiplash and Soft Tissue Injuries",
+        "Internal Injuries",
+        "Psychological Trauma (PTSD)",
+        "Wrongful Death"
+      ],
+      faqs: [
+        {
+          question: "Who is responsible for my injuries in an Uber or Lyft accident?",
+          answer: "Liability can be complex. Depending on the circumstances, the rideshare driver, the rideshare company (Uber/Lyft), or another at-fault driver could be held responsible. The key is determining who was negligent and which insurance policy applies at the time of the accident."
+        },
+        {
+          question: "What insurance covers an accident in a rideshare vehicle?",
+          answer: "This depends on the driver's activity. If the driver is transporting a passenger, Uber/Lyft's large commercial liability policy is typically active. If the driver is waiting for a ride request, a lower level of company coverage may apply. If the driver's app is off, their personal auto insurance is usually the primary coverage. An attorney can help determine which policy is applicable."
+        },
+        {
+          question: "What should I do after a rideshare accident?",
+          answer: "Seek immediate medical attention, report the accident to the police, document the scene with photos, and get contact information from witnesses. It is also crucial to report the incident through the rideshare app and consult a personal injury attorney before speaking with any insurance adjusters."
+        }
+      ]
+    },
+    {
+      id: "28",
+      slug: "transvaginal-mesh",
+      title: "Transvaginal Mesh Complications",
+      shortDescription: "Women who suffered severe complications from transvaginal mesh implants may be eligible for compensation.",
+      fullDescription: "Transvaginal mesh (TVM) is a surgical product used to treat pelvic organ prolapse (POP) and stress urinary incontinence (SUI) in women. While intended to provide support to pelvic organs, these devices have been linked to a high rate of severe and life-altering complications. The FDA has issued multiple warnings about the risks associated with TVM, noting that complications are not rare. Many women have experienced mesh erosion through the vaginal wall, organ perforation, chronic pain, infection, and urinary problems. Lawsuits against manufacturers like Johnson & Johnson (Ethicon), C.R. Bard, and Boston Scientific allege that the devices were defectively designed and that companies failed to warn doctors and patients of the significant risks.",
+      imageUrl: "/images/cases/tvm.jpg",
+      featured: false,
+      compensationInfo: "Tens of thousands of TVM lawsuits have been filed, resulting in billions of dollars in settlements and jury verdicts. Compensation is intended to cover medical costs for revision surgeries, treatment for chronic pain and infection, lost wages, and significant pain and suffering. The amount of compensation varies based on the severity of the injury, the number of corrective surgeries required, and the long-term impact on the victim's quality of life.",
+      eligibilityCriteria: [
+        "Implanted with a transvaginal mesh or bladder sling for POP or SUI",
+        "Suffered serious complications such as mesh erosion, organ perforation, or chronic pain",
+        "Required one or more revision or removal surgeries",
+        "Experienced a significant decline in quality of life due to mesh complications"
+      ],
+      relatedConditions: [
+        "Mesh Erosion",
+        "Organ Perforation (Bladder, Bowel, Blood Vessels)",
+        "Chronic Pelvic Pain",
+        "Pain during Intercourse (Dyspareunia)",
+        "Recurrent Infections",
+        "Urinary and Fecal Incontinence",
+        "Vaginal Scarring and Shrinkage",
+        "Need for Revision/Removal Surgery"
+      ],
+      faqs: [
+        {
+          question: "How do I know if I have a transvaginal mesh implant?",
+          answer: "If you underwent surgery for pelvic organ prolapse or stress urinary incontinence, your surgical records will indicate what type of procedure was performed and if a mesh product was used. You can request these medical records from your surgeon or the hospital where the procedure took place to confirm."
+        },
+        {
+          question: "What should I do if I'm experiencing complications from my TVM implant?",
+          answer: "First, seek medical evaluation from a specialist, such as a urogynecologist, who is experienced in treating TVM complications. Document all of your symptoms and treatments. It is also important to consult with an attorney who specializes in medical device litigation to understand your legal rights and options for pursuing compensation."
+        },
+        {
+          question: "Is it too late to file a transvaginal mesh lawsuit?",
+          answer: "The time limit (statute of limitations) for filing a claim varies by state. Generally, the clock starts when you knew or should have known that your injury was caused by the mesh implant. Because these rules are complex, you should speak with an attorney as soon as possible to determine if you are still eligible to file a claim."
         }
       ]
     }
