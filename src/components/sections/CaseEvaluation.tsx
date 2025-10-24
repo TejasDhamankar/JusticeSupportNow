@@ -25,9 +25,19 @@ import {
   DollarSign,
 } from "lucide-react";
 
-// Dummy Types/Utils
+import { getAllCaseTypes } from "@/lib/utils";
+import { CaseType } from "@/types/case";
+
+// Global Window for TrustedForm
+declare global {
+  interface Window {
+    trustedFormCertIdCallback?: (id: string) => void;
+    trustedFormCertUrlCallback?: (url: string) => void;
+  }
+}
+
 type FormStatus = { type: string; message: string };
-type CaseEvaluationFormData = {
+interface CaseEvaluationFormData {
   firstName: string;
   lastName: string;
   email: string;
@@ -36,21 +46,6 @@ type CaseEvaluationFormData = {
   exposurePeriod: string;
   medicalCondition: string;
   additionalInfo: string;
-  agreeToTerms: boolean;
-};
-const getAllCaseTypes = () => [
-  { id: 1, title: "Mass Tort Litigation", slug: "mass-tort" },
-  { id: 2, title: "Dangerous Drug Lawsuit", slug: "drug-lawsuit" },
-  { id: 3, title: "Personal Injury Claim", slug: "personal-injury" },
-  { id: 4, title: "Environmental Claim", slug: "environmental" },
-];
-
-// Global Window for TrustedForm
-declare global {
-  interface Window {
-    trustedFormCertIdCallback?: (id: string) => void;
-    trustedFormCertUrlCallback?: (url: string) => void;
-  }
 }
 
 interface ExtendedFormData extends CaseEvaluationFormData {
@@ -90,7 +85,6 @@ const CaseEvaluation = () => {
     exposurePeriod: "",
     medicalCondition: "",
     additionalInfo: "",
-    agreeToTerms: false,
     agreeToQualification: false,
     agreeToTermsAndContact: false,
     agreeToDisclaimer: false,
@@ -150,9 +144,9 @@ const CaseEvaluation = () => {
     setIsSubmitting(true);
     setFormStatus({ type: "", message: "" });
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      setFormStatus({ type: "success", message: "Success! Your free case evaluation has been submitted. A legal expert will contact you within 24 hours." });
-      setFormData({ firstName: "", lastName: "", email: "", phone: "", caseType: "", exposurePeriod: "", medicalCondition: "", additionalInfo: "", agreeToTerms: false, agreeToQualification: false, agreeToTermsAndContact: false, agreeToDisclaimer: false, trustedFormCertUrl: "" });
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      setFormStatus({ type: "success", message: "Success! Your free case evaluation has been submitted. A legal expert will contact you within 24 hours." });      
+      setFormData({ firstName: "", lastName: "", email: "", phone: "", caseType: "", exposurePeriod: "", medicalCondition: "", additionalInfo: "", agreeToQualification: false, agreeToTermsAndContact: false, agreeToDisclaimer: false, trustedFormCertUrl: "" });
     } catch (error) {
       setFormStatus({ type: "error", message: "Submission failed. Please check your connection or contact us directly." });
     } finally {
