@@ -9,6 +9,11 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Justice Support Now | Free Legal Case Evaluation & Mass Tort Assistance",
   description: "Justice Support Now connects individuals affected by harmful products, corporate negligence, and environmental hazards with trusted legal teams. Get your free case review today and explore active mass tort and class action cases.",
+  icons: {
+    // Add a version query to bust the cache
+    icon: `/JUSticeCrop(3).png?v=2`,
+    apple: `/apple-touch-icon.png?v=2`,
+  },
 };
 
 export default function RootLayout({
