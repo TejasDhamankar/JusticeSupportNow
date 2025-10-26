@@ -55,37 +55,6 @@ export const getAllCaseTypes = (): CaseType[] => {
       ]
     },
     {
-      id: "2",
-      slug: "3m-earplugs",
-      title: "3M Combat Arms Earplugs",
-      shortDescription: "Military service members who suffered hearing damage after using defective 3M earplugs may be eligible for compensation.",
-      fullDescription: "Between 2003 and 2015, 3M Company supplied the U.S. military with Combat Arms Earplugs Version 2 (CAEv2), which were standard issue for military personnel serving in combat zones like Iraq and Afghanistan. These dual-ended earplugs were designed to provide two levels of hearing protection: one end for blocking all sound, and the other for blocking loud impulse sounds while allowing soldiers to hear commands and approaching enemies. However, the earplugs had a design defect that prevented them from forming a proper seal in the ear canal, leaving users vulnerable to hearing damage from loud combat and training noises. As a result, many service members developed hearing loss, tinnitus (ringing in the ears), and other auditory issues.",
-      imageUrl: "/images/cases/earplug.jpg",
-      featured: false,
-      compensationInfo: "Compensation in 3M earplug cases varies based on the severity of hearing damage and its impact on your life. Settlements may cover medical expenses, lost wages, pain and suffering, and decreased quality of life. Some individual verdicts have reached into the millions, though most settlements are lower.",
-      eligibilityCriteria: [
-        "Served in the U.S. military between 2003 and 2015",
-        "Used 3M Combat Arms Earplugs during service",
-        "Diagnosed with hearing loss, tinnitus, or other hearing-related condition"
-      ],
-      relatedConditions: [
-        "Hearing Loss",
-        "Tinnitus (Ringing in the Ears)",
-        "Auditory Processing Disorder",
-        "Permanent Hearing Damage"
-      ],
-      faqs: [
-        {
-          question: "How do I know if I used 3M Combat Arms Earplugs during my service?",
-          answer: "The dual-ended Combat Arms Earplugs Version 2 (CAEv2) were standard issue to many service members deployed to Iraq and Afghanistan between 2003 and 2015. If you served during this time and were issued earplugs, there's a good chance they were the 3M product in question."
-        },
-        {
-          question: "What evidence do I need for my 3M earplug claim?",
-          answer: "Important evidence includes military service records, medical records documenting your hearing issues, diagnosis of hearing loss or tinnitus, and documentation of when and where you used the 3M earplugs. Our legal team can help you gather the necessary documentation."
-        }
-      ]
-    },
-    {
       id: "3",
       slug: "roundup",
       title: "Roundup Weed Killer",
@@ -118,74 +87,7 @@ export const getAllCaseTypes = (): CaseType[] => {
         }
       ]
     },
-    {
-      id: "4",
-      slug: "cpap",
-      title: "CPAP Machine Recall",
-      shortDescription: "Users of recalled Philips CPAP, BiPAP, or ventilator devices who suffered injuries may be eligible for compensation.",
-      fullDescription: "In June 2021, Philips Respironics issued a recall for millions of CPAP (Continuous Positive Airway Pressure), BiPAP (Bi-Level Positive Airway Pressure), and mechanical ventilator devices manufactured between 2009 and April 26, 2021. The recall was prompted by potential health risks associated with the polyester-based polyurethane (PE-PUR) sound abatement foam used in these devices. This foam can degrade over time, releasing potentially harmful particles and chemicals that users might inhale or ingest. The FDA has classified this as a Class I recall, the most serious type, indicating that use of these devices may cause serious injuries or death.",
-      imageUrl: "/images/cases/cpap.jpg",
-      featured: false,
-      compensationInfo: "Compensation in Philips CPAP lawsuits may cover medical expenses, ongoing treatment costs, lost wages, pain and suffering, and in some cases, punitive damages. The exact amount varies based on the severity of injuries and individual circumstances.",
-      eligibilityCriteria: [
-        "Used a recalled Philips CPAP, BiPAP, or ventilator device",
-        "Experienced symptoms or diagnosed with a condition potentially related to foam degradation or exposure",
-        "Used the device within the relevant timeframe (generally between 2009 and April 2021)"
-      ],
-      relatedConditions: [
-        "Respiratory Issues (Inflammation, Irritation)",
-        "Asthma",
-        "Chemical Exposure Effects",
-        "Headache",
-        "Airway Inflammation",
-        "Cancer (Lung, Kidney, Liver)",
-        "Organ Damage",
-        "Sinus Infection"
-      ],
-      faqs: [
-        {
-          question: "How do I know if my CPAP device is part of the recall?",
-          answer: "You can check if your device is affected by looking up the serial number on the Philips Respironics recall website or by contacting Philips directly. Recalled devices include most DreamStation models made before April 26, 2021, as well as several other CPAP, BiPAP, and ventilator models."
-        },
-        {
-          question: "What should I do if I have a recalled device?",
-          answer: "Consult with your doctor before stopping use of your device, as the benefits may outweigh the risks for some users. Register your device with Philips for the recall, and consider alternative treatment options after discussing with your healthcare provider. If you've experienced health issues, document your symptoms and seek medical attention."
-        }
-      ]
-    },
     // Additional cases from reference websites
-    {
-      id: "9",
-      slug: "tylenol-autism",
-      title: "Tylenol Autism & ADHD",
-      shortDescription: "Children exposed to acetaminophen (Tylenol) before birth who developed autism or ADHD may qualify for compensation.",
-      fullDescription: "Recent scientific studies have suggested a potential link between prenatal exposure to acetaminophen (the active ingredient in Tylenol and many other over-the-counter pain relievers) and an increased risk of autism spectrum disorder (ASD) and attention deficit hyperactivity disorder (ADHD) in children. Lawsuits allege that manufacturers and retailers of acetaminophen products failed to warn pregnant women about the potential risks of using these medications during pregnancy. These cases are based on multiple research studies, including a 2021 consensus statement published in Nature Reviews Endocrinology where 91 medical experts warned against using acetaminophen during pregnancy unless medically necessary.",
-      imageUrl: "/images/cases/tylenol.jpg",
-      featured: true,
-      compensationInfo: "As this litigation is still in its early stages, specific settlement amounts haven't been established. Compensation may cover medical expenses, therapy costs, educational support, lost earning capacity, and pain and suffering related to autism or ADHD diagnoses linked to prenatal acetaminophen exposure.",
-      eligibilityCriteria: [
-        "Mother used acetaminophen (Tylenol or generic versions) during pregnancy",
-        "Child diagnosed with autism spectrum disorder (ASD) or ADHD",
-        "Clear documentation of acetaminophen use during pregnancy and subsequent diagnosis"
-      ],
-      relatedConditions: [
-        "Autism Spectrum Disorder (ASD)",
-        "Attention Deficit Hyperactivity Disorder (ADHD)",
-        "Developmental Delays",
-        "Language Impairments",
-        "Behavioral Issues"
-      ],
-      faqs: [
-        {
-          question: "Does all acetaminophen use during pregnancy cause autism or ADHD?",
-          answer: "No, research suggests a potential increased risk, not a guaranteed outcome. Studies indicate that factors such as the amount, frequency, and duration of acetaminophen use during pregnancy may influence the level of risk. Many children whose mothers took acetaminophen during pregnancy do not develop these conditions."
-        },
-        {
-          question: "What evidence will I need for a Tylenol autism lawsuit?",
-          answer: "Important evidence includes medical records documenting acetaminophen use during pregnancy (such as doctor recommendations, prescriptions, or purchase receipts), the child's diagnostic records for autism or ADHD, and documentation of ongoing treatments and therapies. Our legal team can help determine if your case qualifies."
-        }
-      ]
-    },
     {
       id: "10",
       slug: "hair-relaxer",
@@ -323,41 +225,6 @@ export const getAllCaseTypes = (): CaseType[] => {
       ]
     },
     // Continuing with additional cases
-    {
-      id: "14",
-      slug: "exactech",
-      title: "Exactech Joint Replacement",
-      shortDescription: "Patients with failed Exactech knee, hip, or ankle replacements may be eligible for compensation due to defective polyethylene inserts.",
-      fullDescription: "In February 2022, Exactech expanded a recall of its joint replacement systems due to defective packaging of polyethylene inserts. The packaging failed to contain a secondary barrier layer that prevents oxygen from diffusing into the plastic insert, causing the plastic to degrade prematurely. This oxidation can lead to accelerated wear, bone loss, component fatigue, and premature joint replacement failure. The recall affects thousands of knee, ankle, and hip replacement systems implanted since 2004. Lawsuits allege that Exactech knew or should have known about these issues but failed to warn patients and surgeons about the risks.",
-      imageUrl: "/images/cases/exactech.jpg",
-      featured: false,
-      compensationInfo: "Compensation in Exactech cases may cover revision surgery costs, medical expenses, pain and suffering, lost wages, and diminished quality of life. Settlement amounts will likely depend on factors such as the severity of complications, number of revision surgeries needed, and impact on daily functioning.",
-      eligibilityCriteria: [
-        "Received an Exactech knee, ankle, or hip replacement system after 2004",
-        "Experienced premature device failure or complications",
-        "Required or scheduled for revision surgery",
-        "Device is part of the recall (Optetrak, Truliant, Vantage, or other Exactech systems)"
-      ],
-      relatedConditions: [
-        "Joint Pain and Swelling",
-        "Instability or Loosening",
-        "Osteolysis (Bone Loss)",
-        "Polyethylene Wear",
-        "Component Fatigue Cracking/Fracture",
-        "Limited Mobility",
-        "Revision Surgery"
-      ],
-      faqs: [
-        {
-          question: "How do I know if my Exactech implant is recalled?",
-          answer: "Exactech has provided a look-up tool on their website where patients can enter their implant serial number to determine if it's part of the recall. Your orthopedic surgeon or their office staff may also be able to verify if your specific device is affected. The recall mainly includes Optetrak, Optetrak Logic, Truliant knee systems, Vantage ankle systems, and certain hip inserts."
-        },
-        {
-          question: "What should I do if I have a recalled Exactech joint replacement?",
-          answer: "First, consult with your orthopedic surgeon to evaluate your implant's condition and determine if you're experiencing any symptoms of premature wear. Your surgeon may recommend imaging tests such as X-rays to assess the implant. Even if you're not currently experiencing symptoms, regular monitoring is important. If you have complications, document all symptoms and medical visits, and contact an attorney to discuss your legal options."
-        }
-      ]
-    },
     {
       id: "15",
       slug: "pfas-water-contamination",
@@ -717,92 +584,6 @@ export const getAllCaseTypes = (): CaseType[] => {
         {
           question: "What if the other driver doesn't have insurance?",
           answer: "If the at-fault driver is uninsured, you may still have options for compensation through your own uninsured motorist coverage, underinsured motorist coverage, or by pursuing a personal lawsuit against the at-fault driver. Your attorney can help evaluate all available sources of compensation and determine the best strategy for your specific situation."
-        }
-      ]
-    },
-    {
-      id: "25",
-      slug: "slip-and-fall",
-      title: "Slip and Fall Accident",
-      shortDescription: "People injured in slip and fall accidents on someone else's property may be eligible for compensation due to negligent property maintenance.",
-      fullDescription: "Slip and fall accidents, also known as premises liability cases, occur when someone is injured due to dangerous or hazardous conditions on another person's or entity's property. These accidents can happen in various locations including grocery stores, restaurants, shopping malls, office buildings, hotels, private residences, parking lots, and sidewalks. Common causes include wet or slippery floors, uneven surfaces, poor lighting, broken stairs, debris or obstacles in walkways, icy conditions, torn carpeting, and inadequate warning signs. Property owners and managers have a legal duty to maintain their premises in a reasonably safe condition and to warn visitors of known hazards. When they fail to meet this duty and someone is injured as a result, they may be held liable for damages.",
-      imageUrl: "/images/cases/slipnfall.avif",
-      featured: false,
-      compensationInfo: "Compensation in slip and fall cases depends on the severity of injuries, medical expenses, lost wages, degree of property owner negligence, and the injured person's degree of fault (if any). Settlements can range from thousands of dollars for minor injuries to hundreds of thousands or more for severe injuries requiring surgery, long-term care, or resulting in permanent disability. Factors like ongoing medical treatment needs and impact on earning capacity also affect compensation amounts.",
-      eligibilityCriteria: [
-        "Injured in a slip, trip, or fall accident on someone else's property",
-        "Accident caused by a dangerous or hazardous condition on the property",
-        "Property owner knew or should have known about the dangerous condition",
-        "Documented injuries requiring medical treatment",
-        "Accident reported and documented (when possible)"
-      ],
-      relatedConditions: [
-        "Broken Bones and Fractures",
-        "Hip Fractures",
-        "Wrist and Arm Injuries",
-        "Traumatic Brain Injury",
-        "Spinal Injuries",
-        "Knee and Ankle Injuries",
-        "Soft Tissue Injuries",
-        "Bruises and Lacerations",
-        "Chronic Pain",
-        "Limited Mobility"
-      ],
-      faqs: [
-        {
-          question: "What makes a property owner liable for my slip and fall injury?",
-          answer: "Property owners can be held liable if they knew or should have reasonably known about a dangerous condition and failed to fix it or warn visitors about it. This could include things like failing to clean up spills promptly, not maintaining proper lighting, ignoring broken stairs, or not placing warning signs around hazardous areas. The key is proving that the property owner was negligent in maintaining safe conditions."
-        },
-        {
-          question: "What should I do immediately after a slip and fall accident?",
-          answer: "Seek medical attention right away, even for seemingly minor injuries. Report the accident to the property owner or manager and ask for an incident report to be filed. Take photos of the accident scene, the hazardous condition, and your injuries if possible. Collect contact information from witnesses. Keep records of all medical treatment and expenses. Avoid giving detailed statements to insurance companies before consulting with an attorney."
-        },
-        {
-          question: "Can I still recover compensation if I was partially at fault for my accident?",
-          answer: "In many states, you may still be able to recover compensation even if you were partially at fault, though your compensation may be reduced by your percentage of fault. This is called comparative negligence. For example, if you were found to be 20% at fault and your damages were $100,000, you might recover $80,000. The specific rules vary by state, so it's important to consult with a local attorney."
-        }
-      ]
-    },
-    {
-      id: "26",
-      slug: "dog-bite",
-      title: "Dog Bite Injury",
-      shortDescription: "Victims of dog attacks and bites may be entitled to compensation from the dog owner for medical expenses, scarring, and trauma.",
-      fullDescription: "Dog bite incidents affect millions of Americans each year, with children being particularly vulnerable to serious injuries. Dog attacks can result in severe physical injuries including deep lacerations, puncture wounds, nerve damage, infections, scarring, and in some cases, permanent disfigurement. Beyond physical injuries, dog bite victims often experience psychological trauma, including fear of dogs, anxiety, and post-traumatic stress disorder. Most states have specific laws regarding dog owner liability, with many following either strict liability rules (where the owner is responsible regardless of the dog's history) or the 'one bite rule' (where owners are liable if they knew or should have known their dog was dangerous). Dog owners may be held responsible not only for direct attacks but also for injuries that occur when people fall or are knocked down while trying to avoid an aggressive dog.",
-      imageUrl: "/images/cases/dog-bite.webp",
-      featured: false,
-      compensationInfo: "Compensation in dog bite cases typically covers medical expenses, plastic surgery and scar revision costs, lost wages, pain and suffering, and psychological counseling. For children, compensation may also include future medical needs and emotional trauma. Settlement amounts vary widely, from thousands for minor bites to hundreds of thousands or more for severe injuries involving extensive scarring, nerve damage, or psychological trauma. Homeowner's or renter's insurance often covers these claims.",
-      eligibilityCriteria: [
-        "Bitten or attacked by someone else's dog",
-        "Documented injuries requiring medical treatment",
-        "Clear identification of the dog and its owner",
-        "Incident occurred in a location where you had a legal right to be",
-        "Reported to appropriate authorities (animal control, police) when possible"
-      ],
-      relatedConditions: [
-        "Deep Lacerations and Puncture Wounds",
-        "Scarring and Disfigurement",
-        "Nerve Damage",
-        "Infections (including risk of rabies)",
-        "Broken Bones",
-        "Muscle and Tendon Damage",
-        "Post-Traumatic Stress Disorder (PTSD)",
-        "Anxiety and Fear of Dogs",
-        "Need for Plastic Surgery",
-        "Permanent Disability"
-      ],
-      faqs: [
-        {
-          question: "What should I do immediately after a dog bite?",
-          answer: "Seek immediate medical attention, as dog bites can cause serious infections even if they appear minor. Clean the wound thoroughly if possible. Identify the dog and owner, and get their contact and insurance information. Take photos of your injuries and the location where the bite occurred. Report the incident to local animal control authorities and police. Get contact information from any witnesses. Keep detailed records of all medical treatment and expenses."
-        },
-        {
-          question: "Am I entitled to compensation even if I was on the dog owner's property?",
-          answer: "In many cases, yes. Most states hold dog owners liable for bites that occur on their property if the victim was lawfully present (such as a mail carrier, delivery person, or invited guest). However, compensation may be limited if you were trespassing or provoking the dog. The specific laws vary by state, with some states having strict liability and others requiring proof that the owner knew the dog was dangerous."
-        },
-        {
-          question: "What if the dog has no history of aggression?",
-          answer: "In states with strict liability dog bite laws, the owner can be held responsible even if the dog has never bitten anyone before and showed no previous signs of aggression. These laws recognize that any dog can bite and that owners should be responsible for their pets' actions. However, some states still follow the 'one bite rule,' where owners are only liable if they knew or should have known their dog was dangerous."
         }
       ]
     },
