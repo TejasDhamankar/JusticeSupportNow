@@ -29,15 +29,6 @@ import {
 import { getAllCaseTypes } from "@/lib/utils";
 import { CaseType } from "@/types/case";
 
-// Global Window for TrustedForm
-declare global {
-  interface Window {
-    trustedFormCertIdCallback?: (id: string) => void;
-    trustedFormCertUrlCallback?: (url: string) => void;
-  }
-  var trustedForm: any; // Declare trustedForm global for direct access if needed
-}
-
 type FormStatus = { type: string; message: string };
 
 interface CaseEvaluationFormData {
@@ -96,8 +87,6 @@ const CaseEvaluation = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formStatus, setFormStatus] = useState<FormStatus>({ type: "", message: "" });
-  const [isTrustedFormLoaded, setIsTrustedFormLoaded] = useState(false);
-  const scriptLoadedRef = useRef(false); // To ensure TrustedForm callback is set only once
 
   // Mouse position for the interactive spotlight effect
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -109,13 +98,6 @@ const CaseEvaluation = () => {
       setMousePosition({ x: event.clientX, y: event.clientY });
     };
     window.addEventListener("mousemove", handleMouseMove);
-
-    if (scriptLoadedRef.current) return;
-    // Define the callback for the globally loaded TrustedForm script
-    window.trustedFormCertUrlCallback = (url: string) => {
-      setIsTrustedFormLoaded(true);
-    };
-    scriptLoadedRef.current = true; // Mark script as loaded
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
@@ -150,14 +132,6 @@ const CaseEvaluation = () => {
 
     const trustedFormCertUrlInput = document.getElementById("xxTrustedFormCertUrl") as HTMLInputElement;
     const currentTrustedFormCertUrl = trustedFormCertUrlInput?.value || "";
-
-    if (!currentTrustedFormCertUrl && process.env.NODE_ENV === "production" ) {
-      setFormStatus({
-        type: "error",
-        message: "TrustedForm verification is not complete. Please wait a moment and try again.",
-      });
-      return;
-    }
 
     setIsSubmitting(true);
     setFormStatus({ type: "", message: "" });
@@ -294,7 +268,7 @@ const CaseEvaluation = () => {
               All information is kept private and secure.
             </p>
             <form onSubmit={handleSubmit} method="POST" data-tf-form>
-              <input type="hidden" id="xxTrustedFormCertUrl" name="xxTrustedFormCertUrl" />
+              <input type="hidden" id="xxTrustedFormCertUrl" name="xxTrustedFormCertUrl" data-tf-field="xxTrustedFormCertUrl" />
               
               {/* Contact Info */}
               <fieldset className="p-4 border rounded-lg" style={{ borderColor: colors.border }}>
