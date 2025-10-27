@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import axios, { isAxiosError } from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -34,12 +35,14 @@ declare global {
     trustedFormCertIdCallback?: (id: string) => void;
     trustedFormCertUrlCallback?: (url: string) => void;
   }
+  var trustedForm: any; // Declare trustedForm global for direct access if needed
 }
 
 type FormStatus = { type: string; message: string };
+
 interface CaseEvaluationFormData {
   firstName: string;
-  lastName: string;
+  lastName:string;
   email: string;
   phone: string;
   caseType: string;
@@ -55,7 +58,6 @@ interface ExtendedFormData extends CaseEvaluationFormData {
   trustedFormCertUrl?: string;
 }
 
-// *** COLOR PALETTE from the first CaseHero component ***
 // Light theme color palette
 const colors = {
   background: "#FFFFFF",
@@ -75,6 +77,7 @@ const TRUST_POINTS = [
   { icon: Briefcase, text: "Connect with Top Firms" },
 ];
 
+// CaseEvaluation component
 const CaseEvaluation = () => {
   const [formData, setFormData] = useState<ExtendedFormData>({
     firstName: "",
@@ -94,44 +97,48 @@ const CaseEvaluation = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formStatus, setFormStatus] = useState<FormStatus>({ type: "", message: "" });
   const [isTrustedFormLoaded, setIsTrustedFormLoaded] = useState(false);
-  const formRef = useRef<HTMLFormElement | null>(null);
-  const tfUrlRef = useRef<string>("");
-  const scriptLoadedRef = useRef(false);
+  const scriptLoadedRef = useRef(false); // To ensure TrustedForm callback is set only once
 
-  const caseTypes = getAllCaseTypes();
+  // Mouse position for the interactive spotlight effect
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  // TrustedForm Script (No changes here)
+  const caseTypes: CaseType[] = getAllCaseTypes();
+
   useEffect(() => {
-    if (scriptLoadedRef.current) return;
-    const timer = setTimeout(() => {
-      window.trustedFormCertUrlCallback = (url: string) => {
-        tfUrlRef.current = url;
-        setFormData((prev) => ({ ...prev, trustedFormCertUrl: url }));
-        setIsTrustedFormLoaded(true);
-      };
-      const scriptContent = `(function() { var tf = document.createElement('script'); tf.type = 'text/javascript'; tf.async = true; tf.src = 'https://api.trustedform.com/trustedform.js?field=xxTrustedFormCertUrl&l=' + new Date().getTime() + Math.random(); var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(tf, s); })();`;
-      const script = document.createElement("script");
-      script.type = "text/javascript";
-      script.innerHTML = scriptContent;
-      document.body.appendChild(script);
-      scriptLoadedRef.current = true;
-    }, 100);
-    return () => clearTimeout(timer);
-  }, []);
+    const handleMouseMove = (event: MouseEvent) => {
+      setMousePosition({ x: event.clientX, y: event.clientY });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
 
-  // Handlers (No changes here)
+    if (scriptLoadedRef.current) return;
+    // Define the callback for the globally loaded TrustedForm script
+    window.trustedFormCertUrlCallback = (url: string) => {
+      setIsTrustedFormLoaded(true);
+    };
+    scriptLoadedRef.current = true; // Mark script as loaded
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []); // Empty dependency array to run once on mount
+
+  // Handlers
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
   const handleSelectChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
+
   const handleCheckboxChange = (field: string, checked: boolean) => {
     setFormData((prev) => ({ ...prev, [field]: checked }));
   };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone || !formData.caseType) {
       setFormStatus({ type: "error", message: "Please fill in all required contact and case type fields." });
       return;
@@ -141,14 +148,64 @@ const CaseEvaluation = () => {
       return;
     }
 
+    const trustedFormCertUrlInput = document.getElementById("xxTrustedFormCertUrl") as HTMLInputElement;
+    const currentTrustedFormCertUrl = trustedFormCertUrlInput?.value || "";
+
+    if (!currentTrustedFormCertUrl && process.env.NODE_ENV === "production" ) {
+      setFormStatus({
+        type: "error",
+        message: "TrustedForm verification is not complete. Please wait a moment and try again.",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
     setFormStatus({ type: "", message: "" });
+
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      setFormStatus({ type: "success", message: "Success! Your free case evaluation has been submitted. A legal expert will contact you within 24 hours." });      
-      setFormData({ firstName: "", lastName: "", email: "", phone: "", caseType: "", exposurePeriod: "", medicalCondition: "", additionalInfo: "", agreeToQualification: false, agreeToTermsAndContact: false, agreeToDisclaimer: false, trustedFormCertUrl: "" });
+      const response = await axios.post("/api/contact", {
+        ...formData,
+        trustedFormCertUrl: currentTrustedFormCertUrl,
+      });
+
+      if (response.status === 201) {
+        setFormStatus({
+          type: "success",
+          message:
+            "Success! Your free case evaluation has been submitted. A legal expert will contact you within 24 hours.",
+        });
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          caseType: "",
+          exposurePeriod: "",
+          medicalCondition: "",
+          additionalInfo: "",
+          agreeToQualification: false,
+          agreeToTermsAndContact: false,
+          agreeToDisclaimer: false,
+          trustedFormCertUrl: "",
+        });
+      } else {
+        setFormStatus({
+          type: "error",
+          message: response.data.message || "Submission failed. Please check your connection or contact us directly.",
+        });
+      }
     } catch (error) {
-      setFormStatus({ type: "error", message: "Submission failed. Please check your connection or contact us directly." });
+      if (isAxiosError(error) && error.response) {
+        setFormStatus({
+          type: "error",
+          message: error.response.data.message || "An API error occurred. Please try again.",
+        });
+      } else {
+        setFormStatus({
+          type: "error",
+          message: "Submission failed. Please check your connection or contact us directly.",
+        });
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -159,14 +216,21 @@ const CaseEvaluation = () => {
       id="case-evaluation"
       style={{
         backgroundColor: colors.background,
-        '--accent-green': colors.accentGreen,
-        '--border-gray': colors.border,
-        '--card-background': colors.cardBackground,
-        '--light-gray-text': colors.textSecondary,
+        "--accent-green": colors.accentGreen,
+        "--border-gray": colors.border,
+        "--card-background": colors.cardBackground,
+        "--light-gray-text": colors.textSecondary,
       } as React.CSSProperties}
       className="py-16 sm:py-24"
     >
-       <div className="w-[80%] mx-auto h-px  mb-12 opacity-70" style={{backgroundColor:colors.accentGreen}} />
+      <div className="w-[80%] mx-auto h-px mb-12 opacity-70" style={{ backgroundColor: colors.accentGreen }} />
+      {/* Interactive Spotlight Effect */}
+      <motion.div
+        className="pointer-events-none absolute -inset-px rounded-xl transition-all duration-300"
+        style={{
+          background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(42, 170, 138, 0.1), transparent 80%)`,
+        }}
+      />
       <div className="container mx-auto px-4">
         <motion.div
           className="max-w-6xl mx-auto rounded-xl border overflow-hidden md:grid md:grid-cols-5"
@@ -180,19 +244,22 @@ const CaseEvaluation = () => {
           <div
             className="col-span-2 p-8 sm:p-12 flex flex-col justify-between"
             style={{
-              backgroundColor: colors.accentGreen, // Changed background to accentGreen
-              color: colors.background, // Ensures all default text in this div is white
+              backgroundColor: colors.accentGreen,
+              color: colors.background,
             }}
           >
             <div>
-              <Scale className="w-10 h-10 mb-6" style={{ color: colors.background }} /> {/* Icon color also to white for contrast */}
-              <h2 className="text-3xl font-bold mb-4 leading-tight " style={{ color: colors.background }}> {/* Changed h2 text color to white */}
-                Start Your Free<br />Case Assessment
+              <Scale className="w-10 h-10 mb-6 text-white" />
+              <h2 className="text-3xl font-bold mb-4 leading-tight text-white">
+                Start Your Free
+                <br />
+                Case Assessment
               </h2>
-              <p style={{ color: colors.background }} className="mb-8 text-lg" > {/* Changed paragraph text color to white for better contrast */}
-                Your path to justice begins here. Fill out the form and a dedicated legal specialist will evaluate your claim immediately.
+              <p className="mb-8 text-lg text-white">
+                Your path to justice begins here. Fill out the form and a dedicated legal specialist will evaluate your
+                claim immediately.
               </p>
-              <div className="space-y-4">
+              <div className="space-y-4 text-white">
                 {TRUST_POINTS.map((point, i) => (
                   <motion.div
                     key={i}
@@ -201,121 +268,213 @@ const CaseEvaluation = () => {
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.2 + i * 0.1, duration: 0.5 }}
                   >
-                    <point.icon className="w-5 h-5 mr-3 flex-shrink-0" style={{ color: colors.background }} /> {/* Icon color also to white for contrast */}
-                    <span className="font-semibold" style={{ color: colors.background }}>{point.text}</span>
+                    <point.icon className="w-5 h-5 mr-3 flex-shrink-0 text-white" />
+                    <span className="font-semibold text-white">{point.text}</span>
                   </motion.div>
                 ))}
               </div>
             </div>
-            <div className="mt-10 pt-6 border-t" style={{ borderColor: colors.background }}> {/* Changed border color to white */}
-              <p style={{ color: colors.background }} className="text-sm italic"> {/* Changed text color to white */}
-                "No matter how complex your case, we connect you with experienced counsel to fight for the compensation you deserve."
+            <div className="mt-10 pt-6 border-t border-white/50">
+              <p className="text-sm italic text-white">
+                "No matter how complex your case, we connect you with experienced counsel to fight for the compensation
+                you deserve."
               </p>
             </div>
           </div>
 
           {/* RIGHT PANEL: Form */}
-          <div className="col-span-3 p-8 sm:p-12" style={{ backgroundColor: colors.background, color: colors.textPrimary }}>
-            <h3 className="text-2xl font-bold mb-2" style={{ color: colors.accentGreen }}>Qualify in 60 Seconds</h3>
-            <p className="mb-8" style={{ color: colors.textSecondary }}>All information is kept private and secure.</p>
-            <form ref={formRef} onSubmit={handleSubmit} method="POST">
-              <div className="space-y-6">
-                {/* Contact Info */}
-                <fieldset className="p-4 border rounded-lg" style={{ borderColor: colors.border }}>
-                  <legend className="px-2 text-sm font-bold" style={{ color: colors.accentGreen }}>
-                    <User className="inline-block w-4 h-4 mr-1 mb-0.5" /> Contact Information
-                  </legend>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <Input name="firstName" placeholder="First Name*" value={formData.firstName} onChange={handleInputChange} className="h-12 bg-transparent border-[var(--border-gray)] focus:border-[var(--accent-green)] transition-colors" required />
-                    <Input name="lastName" placeholder="Last Name*" value={formData.lastName} onChange={handleInputChange} className="h-12 bg-transparent border-[var(--border-gray)] focus:border-[var(--accent-green)] transition-colors" required />
-                    <Input name="email" type="email" placeholder="Email*" value={formData.email} onChange={handleInputChange} className="h-12 bg-transparent border-[var(--border-gray)] focus:border-[var(--accent-green)] transition-colors" required />
-                    <Input name="phone" placeholder="Phone (Best Contact)*" value={formData.phone} onChange={handleInputChange} className="h-12 bg-transparent border-[var(--border-gray)] focus:border-[var(--accent-green)] transition-colors" required />
-                  </div>
-                </fieldset>
-
-                {/* Case Details */}
-                <fieldset className="p-4 border rounded-lg" style={{ borderColor: colors.border }}>
-                  <legend className="px-2 text-sm font-bold" style={{ color: colors.accentGreen }}>
-                    <Scale className="inline-block w-4 h-4 mr-1 mb-0.5" /> Case Details
-                  </legend>
-                  <div className="space-y-4">
-                    <Select onValueChange={(val) => handleSelectChange("caseType", val)} value={formData.caseType}>
-                      <SelectTrigger className="h-12 bg-transparent border-[var(--border-gray)] focus:border-[var(--accent-green)] transition-colors">
-                        <SelectValue placeholder="Choose your case type*" />
-                      </SelectTrigger>
-                      <SelectContent style={{ backgroundColor: colors.cardBackground, borderColor: colors.border }}>
-                        {caseTypes.map((c) => (<SelectItem key={c.id} value={c.slug}>{c.title}</SelectItem>))}
-                        <SelectItem value="other">Other / Unsure</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <Textarea name="additionalInfo" placeholder="Provide details about your injury..." value={formData.additionalInfo} onChange={handleInputChange} className="min-h-[100px] bg-transparent border-[var(--border-gray)] focus:border-[var(--accent-green)] transition-colors" />
-                  </div>
-                </fieldset>
-
-                {/* Agreements */}
-                <div style={{ backgroundColor: colors.cardBackground, borderColor: colors.border }} className="border rounded-lg p-4 space-y-4">
-                  <h4 className="font-bold text-base"  style={{ color: colors.accentGreen }} >Required Agreements</h4>
-                  {[
-                    { id: "agreeToQualification", label: "I want to see if I may qualify for compensation." },
-                    { id: "agreeToTermsAndContact", label: "I agree to be contacted... I acknowledge reading the Terms of Service and Privacy Policy." },
-                    { id: "agreeToDisclaimer", label: "I understand this is not a law firm and does not create an attorney-client relationship." }
-                  ].map((item) => (
-                    <div key={item.id} className="flex items-start space-x-3">
-                      <Checkbox
-                        id={item.id}
-                        checked={formData[item.id as keyof ExtendedFormData] as boolean}
-                        onCheckedChange={(checked) => handleCheckboxChange(item.id, checked as boolean)}
-                        className="mt-0.5 border-[var(--border-gray)] data-[state=checked]:bg-[var(--accent-green)] data-[state=checked]:border-[var(--accent-green)] flex-shrink-0"
-                      />
-                      <label htmlFor={item.id} className="text-xs text-[var(--light-gray-text)] cursor-pointer leading-relaxed">{item.label}</label>
-                    </div>
-                  ))}
+          <div
+            className="col-span-3 p-8 sm:p-12"
+            style={{ backgroundColor: colors.background, color: colors.textPrimary }}
+          >
+            <h3 className="text-2xl font-bold mb-2" style={{ color: colors.accentGreen }}>
+              Qualify in 60 Seconds
+            </h3>
+            <p className="mb-8" style={{ color: colors.textSecondary }}>
+              All information is kept private and secure.
+            </p>
+            <form onSubmit={handleSubmit} method="POST" data-tf-form>
+              <input type="hidden" id="xxTrustedFormCertUrl" name="xxTrustedFormCertUrl" />
+              
+              {/* Contact Info */}
+              <fieldset className="p-4 border rounded-lg" style={{ borderColor: colors.border }}>
+                <legend className="px-2 text-sm font-bold" style={{ color: colors.accentGreen }}>
+                  <User className="inline-block w-4 h-4 mr-1 mb-0.5" /> Contact Information
+                </legend>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <Input
+                    name="firstName"
+                    placeholder="First Name*"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                    className="h-12 bg-transparent border-[var(--border-gray)] focus:border-[var(--accent-green)] transition-colors"
+                    required
+                  />
+                  <Input
+                    name="lastName"
+                    placeholder="Last Name*"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                    className="h-12 bg-transparent border-[var(--border-gray)] focus:border-[var(--accent-green)] transition-colors"
+                    required
+                  />
+                  <Input
+                    name="email"
+                    type="email"
+                    placeholder="Email*"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className="h-12 bg-transparent border-[var(--border-gray)] focus:border-[var(--accent-green)] transition-colors"
+                    required
+                  />
+                  <Input
+                    name="phone"
+                    placeholder="Phone (Best Contact)*"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    className="h-12 bg-transparent border-[var(--border-gray)] focus:border-[var(--accent-green)] transition-colors"
+                    required
+                  />
                 </div>
+              </fieldset>
 
-                {/* Status Message */}
-                <AnimatePresence>
-                  {formStatus.message && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
-                      className="p-4 rounded-lg border"
-                      style={{
-                        borderColor: formStatus.type === "success" ? colors.accentGreen : colors.accentAmber,
-                        backgroundColor: formStatus.type === 'success' ? 'rgba(42, 170, 138, 0.1)' : 'rgba(219, 171, 9, 0.1)'
-                      }}
+              {/* Case Details */}
+              <fieldset className="p-4 border rounded-lg mt-4" style={{ borderColor: colors.border }}>
+                <legend className="px-2 text-sm font-bold" style={{ color: colors.accentGreen }}>
+                  <Scale className="inline-block w-4 h-4 mr-1 mb-0.5" /> Case Details
+                </legend>
+                <div className="space-y-4">
+                  <Select onValueChange={(val) => handleSelectChange("caseType", val)} value={formData.caseType}>
+                    <SelectTrigger className="h-12 bg-transparent border-[var(--border-gray)] focus:border-[var(--accent-green)] transition-colors">
+                      <SelectValue placeholder="Choose your case type*" />
+                    </SelectTrigger>
+                    <SelectContent style={{ backgroundColor: colors.cardBackground, borderColor: colors.border }}>
+                      {caseTypes.map((c) => (
+                        <SelectItem key={c.id} value={c.slug}>
+                          {c.title}
+                        </SelectItem>
+                      ))}
+                      <SelectItem value="other">Other / Unsure</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Textarea
+                    name="additionalInfo"
+                    placeholder="Provide details about your injury..."
+                    value={formData.additionalInfo}
+                    onChange={handleInputChange}
+                    className="min-h-[100px] bg-transparent border-[var(--border-gray)] focus:border-[var(--accent-green)] transition-colors"
+                  />
+                </div>
+              </fieldset>
+
+              {/* Agreements */}
+              <div
+                style={{ backgroundColor: colors.cardBackground, borderColor: colors.border }}
+                className="border rounded-lg p-4 space-y-4 mt-4"
+              >
+                <h4 className="font-bold text-base" style={{ color: colors.accentGreen }}>
+                  Required Agreements
+                </h4>
+                {[
+                  { id: "agreeToQualification", label: "I want to see if I may qualify for compensation." },
+                  {
+                    id: "agreeToTermsAndContact",
+                    label:
+                      "I agree to be contacted... I acknowledge reading the Terms of Service and Privacy Policy.",
+                  },
+                  {
+                    id: "agreeToDisclaimer",
+                    label:
+                      "I understand this is not a law firm and does not create an attorney-client relationship.",
+                  },
+                ].map((item) => (
+                  <div key={item.id} className="flex items-start space-x-3">
+                    <Checkbox
+                      id={item.id}
+                      checked={formData[item.id as keyof ExtendedFormData] as boolean}
+                      onCheckedChange={(checked) => handleCheckboxChange(item.id, checked as boolean)}
+                      className="mt-0.5 border-[var(--border-gray)] data-[state=checked]:bg-[var(--accent-green)] data-[state=checked]:border-[var(--accent-green)] flex-shrink-0"
+                    />
+                    <label
+                      htmlFor={item.id}
+                      className="text-xs text-[var(--light-gray-text)] cursor-pointer leading-relaxed"
                     >
-                      <div className="flex items-start">
-                        <div style={{ color: formStatus.type === 'success' ? colors.accentGreen : colors.accentAmber }}>
-                          {formStatus.type === "success" ? (<CheckCircle2 className="mr-3 mt-0.5 flex-shrink-0 w-5 h-5" />) : (<AlertCircle className="mr-3 mt-0.5 flex-shrink-0 w-5 h-5" />)}
-                        </div>
-                        <p className="font-medium text-sm" style={{ color: formStatus.type === 'success' ? colors.textPrimary : colors.accentAmber }}>{formStatus.message}</p>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                      {item.label}
+                    </label>
+                  </div>
+                ))}
+              </div>
 
-                {/* Submit Button */}
-                <div className="pt-2">
-                  <Button
-                    type="submit" size="lg" disabled={isSubmitting}
-                    className="group relative w-full text-lg font-bold px-10 py-7 transition-all duration-300 shadow-lg overflow-hidden"
-                    style={{ backgroundColor: colors.accentGreen, color: colors.background }}
+              {/* Status Message */}
+              <AnimatePresence>
+                {formStatus.message && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="p-4 rounded-lg border mt-4"
+                    style={{
+                      borderColor: formStatus.type === "success" ? colors.accentGreen : colors.accentAmber,
+                      backgroundColor:
+                        formStatus.type === "success"
+                          ? "rgba(42, 170, 138, 0.1)"
+                          : "rgba(219, 171, 9, 0.1)",
+                    }}
                   >
-                    <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-full group-hover:h-56 opacity-20"></span>
-                    <span className="relative flex items-center justify-center">
-                      {isSubmitting ? (
-                        <>
-                          <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: "linear" }} className="mr-2 w-5 h-5 border-2 border-black border-t-transparent rounded-full" />
-                          Submitting...
-                        </>
-                      ) : (
-                        <>
-                          Get My Free Assessment
-                          <ArrowRight className="ml-3 w-5 h-5 transition-transform group-hover:translate-x-1" />
-                        </>
-                      )}
-                    </span>
-                  </Button>
-                </div>
+                    <div className="flex items-start">
+                      <div
+                        style={{
+                          color: formStatus.type === "success" ? colors.accentGreen : colors.accentAmber,
+                        }}
+                      >
+                        {formStatus.type === "success" ? (
+                          <CheckCircle2 className="mr-3 mt-0.5 flex-shrink-0 w-5 h-5" />
+                        ) : (
+                          <AlertCircle className="mr-3 mt-0.5 flex-shrink-0 w-5 h-5" />
+                        )}
+                      </div>
+                      <p
+                        className="font-medium text-sm"
+                        style={{
+                          color:
+                            formStatus.type === "success" ? colors.textPrimary : colors.accentAmber,
+                        }}
+                      >
+                        {formStatus.message}
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Submit Button */}
+              <div className="pt-2">
+                <Button
+                  type="submit"
+                  size="lg"
+                  disabled={isSubmitting}
+                  className="group relative w-full text-lg font-bold px-10 py-7 transition-all duration-300 shadow-lg overflow-hidden"
+                  style={{ backgroundColor: colors.accentGreen, color: colors.background }}
+                >
+                  <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-full group-hover:h-56 opacity-20"></span>
+                  <span className="relative flex items-center justify-center">
+                    {isSubmitting ? (
+                      <>
+                        <motion.div
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                          className="mr-2 w-5 h-5 border-2 border-black border-t-transparent rounded-full"
+                        />
+                        Submitting...
+                      </>
+                    ) : (
+                      <>
+                        Get My Free Assessment
+                        <ArrowRight className="ml-3 w-5 h-5 transition-transform group-hover:translate-x-1" />
+                      </>
+                    )}
+                  </span>
+                </Button>
               </div>
             </form>
           </div>
