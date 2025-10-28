@@ -64,37 +64,35 @@ export async function POST(req: NextRequest) {
     const userAgent = req.headers.get("user-agent") || "Unknown";
     const referer = req.headers.get("referer") || "";
     const tfUrl = isLikelyTrustedFormUrl(rawTfUrl) ? rawTfUrl : "";
-
-    // --- MODIFICATION START: Database Save Attempt ---
-    // We wrap the database logic in its own try...catch block.
+    
+    // --- FIX: Ensure database connection and save happens first ---
+    // This is now the primary try block. If this fails, the whole operation fails.
     try {
       await connectToDatabase();
 
       submission = new ContactForm({
         ...body,
         trustedFormCertUrl: tfUrl,
-        ipAddress,
-        userAgent,
-        referer,
+        ipAddress: ipAddress,
+        userAgent: userAgent,
+        referer: referer,
         submittedAt: new Date(),
       });
       await submission.save();
       submissionId = submission._id.toString(); // Get the ID for the TF reference
       
-    } catch (dbError) {
-      console.error("Database save failed. Proceeding with TrustedForm claim.", dbError);
-      // We log the error but do NOT stop the function.
-      // submission and submissionId will remain null.
+    } catch (dbError: any) {
+      console.error("CRITICAL: Database save failed. Aborting operation.", dbError);
+      // If the database save fails, we cannot proceed. Return a server error.
+      return NextResponse.json({ message: "Failed to save contact information.", success: false, error: dbError.message }, { status: 500 });
     }
-    // --- MODIFICATION END ---
 
     let claimSummary: { ok: boolean; status?: number } | null = null;
 
-    // This block will now run even if the database save failed.
     if (tfUrl && TF_API_KEY) {
       try {
         const claim = await claimTrustedFormCertificate(tfUrl, {
-          // MODIFICATION: Use submissionId if it exists, otherwise pass undefined.
+          // Use the submissionId which is now guaranteed to exist.
           reference: submissionId ?? undefined,
           vendor: "lexclaimconnect.com",
           email_1: body.email,
@@ -103,37 +101,23 @@ export async function POST(req: NextRequest) {
 
         claimSummary = { ok: claim.ok, status: claim.status };
 
-        // MODIFICATION: Only try to update the DB document if it was successfully created.
-        if (submission) {
-          try {
-            submission.set({
-              trustedFormClaimed: claim.ok,
-              trustedFormClaimStatus: claim.status,
-              trustedFormClaimResponse: claim.json ?? claim.raw,
-              claimedAt: new Date(),
-            });
-            await submission.save();
-          } catch (dbUpdateError) {
-             console.error("DB update failed after successful TF claim:", dbUpdateError);
-             // Log this error, but don't fail the request, as the claim was successful.
-          }
-        }
+        // Update the submission with the claim result.
+        // We don't need to check if `submission` exists because we would have already exited if it failed.
+        submission.set({
+          trustedFormClaimed: claim.ok,
+          trustedFormClaimStatus: claim.status,
+          trustedFormClaimResponse: claim.json ?? claim.raw,
+          claimedAt: new Date(),
+        });
+        await submission.save();
+
       } catch (e) {
         console.error("TrustedForm claim error:", e);
         
-        // MODIFICATION: If DB save worked, try to log the claim error to the DB.
-        if (submission) {
-          try {
-            submission.set({ trustedFormClaimed: false, trustedFormClaimError: String(e) });
-            await submission.save();
-          } catch (dbUpdateError) {
-            console.error("DB update failed while logging TF error:", dbUpdateError);
-          }
-        }
-        
-        // If the TF claim fails, we consider the whole operation a failure
-        // and throw the error to be caught by the outer catch block.
-        throw e; 
+        // Log the claim error to the DB record, but don't fail the entire request,
+        // as the primary goal (saving the lead) was successful.
+        submission.set({ trustedFormClaimed: false, trustedFormClaimError: String(e) });
+        await submission.save();
       }
     }
 
@@ -141,8 +125,8 @@ export async function POST(req: NextRequest) {
       {
         message: "Contact form submitted successfully",
         success: true,
-        // MODIFICATION: We now report back whether the DB save was successful.
-        databaseSaved: !!submissionId, 
+        // This will now always be true if we reach this point.
+        databaseSaved: true, 
         trustedForm: {
           providedUrl: Boolean(tfUrl),
           claimed: claimSummary?.ok ?? false,
@@ -154,11 +138,7 @@ export async function POST(req: NextRequest) {
     );
 
   } catch (error) {
-    // This outer block will now catch:
-    // 1. JSON parsing errors (from req.json())
-    // 2. Critical TrustedForm claim errors (if we re-threw them)
-    // 3. Any other unexpected errors.
-    console.error("Error submitting contact form:", error);
+    console.error("An unexpected error occurred in the contact form API:", error);
     return NextResponse.json(
       {
         message: "Error submitting contact form",
