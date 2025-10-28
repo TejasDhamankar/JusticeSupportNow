@@ -29,11 +29,19 @@ import {
 import { getAllCaseTypes } from "@/lib/utils";
 import { CaseType } from "@/types/case";
 
+// ✅ Added from old code
+declare global {
+  interface Window {
+    trustedFormCertIdCallback?: (id: string) => void;
+    trustedFormCertUrlCallback?: (url: string) => void;
+  }
+}
+
 type FormStatus = { type: string; message: string };
 
 interface CaseEvaluationFormData {
   firstName: string;
-  lastName:string;
+  lastName: string;
   email: string;
   phone: string;
   caseType: string;
@@ -87,12 +95,17 @@ const CaseEvaluation = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formStatus, setFormStatus] = useState<FormStatus>({ type: "", message: "" });
-
-  // Mouse position for the interactive spotlight effect
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  // ✅ Refs added from old code
+  const formRef = useRef<HTMLFormElement | null>(null);
+  const tfUrlRef = useRef<string>("");
+  const scriptLoadedRef = useRef(false);
+  const [isTrustedFormLoaded, setIsTrustedFormLoaded] = useState(false); // Optional: for debugging
 
   const caseTypes: CaseType[] = getAllCaseTypes();
 
+  // Keep your existing mousemove effect
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
       setMousePosition({ x: event.clientX, y: event.clientY });
@@ -102,7 +115,76 @@ const CaseEvaluation = () => {
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, []); // Empty dependency array to run once on mount
+  }, []);
+
+  // ✅ Added TrustedForm SDK Loader from old code
+  useEffect(() => {
+    if (scriptLoadedRef.current) return;
+
+    const timer = setTimeout(() => {
+      console.log("Loading TrustedForm SDK...");
+
+      window.trustedFormCertUrlCallback = (url: string) => {
+        console.log("TrustedForm URL received via callback:", url);
+        tfUrlRef.current = url;
+        setFormData((prev) => ({ ...prev, trustedFormCertUrl: url }));
+        setIsTrustedFormLoaded(true);
+      };
+
+      const scriptContent = `
+        (function() {
+          var tf = document.createElement('script');
+          tf.type = 'text/javascript';
+          tf.async = true;
+          tf.src = ("https:" == document.location.protocol ? 'https' : 'http') +
+            '://api.trustedform.com/trustedform.js?field=xxTrustedFormCertUrl&use_tagged_consent=true&l=' +
+            new Date().getTime() + Math.random();
+
+          tf.onload = function() {
+            console.log('TrustedForm script loaded successfully');
+            setTimeout(function() {
+              var hiddenField = document.querySelector('input[name="xxTrustedFormCertUrl"]');
+              if (hiddenField && hiddenField.value && window.trustedFormCertUrlCallback) {
+                window.trustedFormCertUrlCallback(hiddenField.value);
+              }
+            }, 1000);
+          };
+
+          tf.onerror = function() {
+            console.error('Failed to load TrustedForm script');
+          };
+
+          var s = document.getElementsByTagName('script')[0];
+          s.parentNode.insertBefore(tf, s);
+        })();
+      `;
+
+      const script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.innerHTML = scriptContent;
+      document.body.appendChild(script);
+
+      scriptLoadedRef.current = true;
+
+      const checkInterval = setInterval(() => {
+        const hiddenField = document.querySelector('input[name="xxTrustedFormCertUrl"]') as HTMLInputElement;
+        if (hiddenField && hiddenField.value) {
+          console.log('TrustedForm field found via polling:', hiddenField.value);
+          if (tfUrlRef.current !== hiddenField.value) {
+             tfUrlRef.current = hiddenField.value;
+             setFormData((prev) => ({ ...prev, trustedFormCertUrl: hiddenField.value }));
+             setIsTrustedFormLoaded(true);
+          }
+          clearInterval(checkInterval);
+        }
+      }, 500);
+
+      setTimeout(() => clearInterval(checkInterval), 10000);
+
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []); // Empty dependency array
 
   // Handlers
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -118,6 +200,7 @@ const CaseEvaluation = () => {
     setFormData((prev) => ({ ...prev, [field]: checked }));
   };
 
+  // ✅ Updated handleSubmit
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -130,8 +213,9 @@ const CaseEvaluation = () => {
       return;
     }
 
-    const trustedFormCertUrlInput = document.getElementById("xxTrustedFormCertUrl") as HTMLInputElement;
-    const currentTrustedFormCertUrl = trustedFormCertUrlInput?.value || "";
+    // Use robust TF URL grabbing logic from old code
+    const injectedField = document.querySelector('input[name="xxTrustedFormCertUrl"]') as HTMLInputElement | null;
+    const tfUrl = injectedField?.value || tfUrlRef.current || "";
 
     setIsSubmitting(true);
     setFormStatus({ type: "", message: "" });
@@ -139,9 +223,10 @@ const CaseEvaluation = () => {
     try {
       const response = await axios.post("/api/contact", {
         ...formData,
-        trustedFormCertUrl: currentTrustedFormCertUrl,
+        trustedFormCertUrl: tfUrl, // Send the correct URL
       });
 
+      // Check for 201 status (used in both route options)
       if (response.status === 201) {
         setFormStatus({
           type: "success",
@@ -198,7 +283,6 @@ const CaseEvaluation = () => {
       className="py-16 sm:py-24"
     >
       <div className="w-[80%] mx-auto h-px mb-12 opacity-70" style={{ backgroundColor: colors.accentGreen }} />
-      {/* Interactive Spotlight Effect */}
       <motion.div
         className="pointer-events-none absolute -inset-px rounded-xl transition-all duration-300"
         style={{
@@ -267,8 +351,10 @@ const CaseEvaluation = () => {
             <p className="mb-8" style={{ color: colors.textSecondary }}>
               All information is kept private and secure.
             </p>
-            <form onSubmit={handleSubmit} method="POST" data-tf-form>
-              <input type="hidden" id="xxTrustedFormCertUrl" name="xxTrustedFormCertUrl" data-tf-field="xxTrustedFormCertUrl" />
+            {/* ✅ Added ref and data-tf-element from old code */}
+            <form onSubmit={handleSubmit} method="POST" ref={formRef} data-tf-element="form">
+              {/* Note: the id here is "xxTrustedFormCertUrl" to match the SDK script */}
+              <input type="hidden" id="xxTrustedFormCertUrl" name="xxTrustedFormCertUrl" />
               
               {/* Contact Info */}
               <fieldset className="p-4 border rounded-lg" style={{ borderColor: colors.border }}>
@@ -283,6 +369,7 @@ const CaseEvaluation = () => {
                     onChange={handleInputChange}
                     className="h-12 bg-transparent border-[var(--border-gray)] focus:border-[var(--accent-green)] transition-colors"
                     required
+                    data-tf-element-role="first-name" // ✅ Added from old code
                   />
                   <Input
                     name="lastName"
@@ -291,6 +378,7 @@ const CaseEvaluation = () => {
                     onChange={handleInputChange}
                     className="h-12 bg-transparent border-[var(--border-gray)] focus:border-[var(--accent-green)] transition-colors"
                     required
+                    data-tf-element-role="last-name" // ✅ Added from old code
                   />
                   <Input
                     name="email"
@@ -300,6 +388,7 @@ const CaseEvaluation = () => {
                     onChange={handleInputChange}
                     className="h-12 bg-transparent border-[var(--border-gray)] focus:border-[var(--accent-green)] transition-colors"
                     required
+                    data-tf-element-role="email" // ✅ Added from old code
                   />
                   <Input
                     name="phone"
@@ -308,6 +397,7 @@ const CaseEvaluation = () => {
                     onChange={handleInputChange}
                     className="h-12 bg-transparent border-[var(--border-gray)] focus:border-[var(--accent-green)] transition-colors"
                     required
+                    data-tf-element-role="phone" // ✅ Added from old code
                   />
                 </div>
               </fieldset>
@@ -368,10 +458,12 @@ const CaseEvaluation = () => {
                       checked={formData[item.id as keyof ExtendedFormData] as boolean}
                       onCheckedChange={(checked) => handleCheckboxChange(item.id, checked as boolean)}
                       className="mt-0.5 border-[var(--border-gray)] data-[state=checked]:bg-[var(--accent-green)] data-[state=checked]:border-[var(--accent-green)] flex-shrink-0"
+                      data-tf-element-role="consent-opt-in" // ✅ Added from old code
                     />
                     <label
                       htmlFor={item.id}
                       className="text-xs text-[var(--light-gray-text)] cursor-pointer leading-relaxed"
+                      data-tf-element-role="consent-language" // ✅ Added from old code
                     >
                       {item.label}
                     </label>
@@ -425,6 +517,8 @@ const CaseEvaluation = () => {
               <div className="pt-2">
                 <Button
                   type="submit"
+                  name="submit" // ✅ Added from old code
+                  data-tf-element-role="submit" // ✅ Added from old code
                   size="lg"
                   disabled={isSubmitting}
                   className="group relative w-full text-lg font-bold px-10 py-7 transition-all duration-300 shadow-lg overflow-hidden"
@@ -443,7 +537,8 @@ const CaseEvaluation = () => {
                       </>
                     ) : (
                       <>
-                        Get My Free Assessment
+                        {/* ✅ Added span from old code */}
+                        <span data-tf-element-role="submit-text">Get My Free Assessment</span>
                         <ArrowRight className="ml-3 w-5 h-5 transition-transform group-hover:translate-x-1" />
                       </>
                     )}
