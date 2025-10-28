@@ -52,6 +52,7 @@ interface Submission {
   ipAddress: string;
   userAgent: string;
   createdAt: string;
+  trustedFormCertUrl?: string;
 }
 
 export default function AdminDashboard() {
@@ -263,6 +264,10 @@ export default function AdminDashboard() {
                 <p><span className="font-medium">Name:</span> {selectedSubmission.firstName} {selectedSubmission.lastName}</p>
                 <p><span className="font-medium">Email:</span> {selectedSubmission.email}</p>
                 <p><span className="font-medium">Phone:</span> {selectedSubmission.phone}</p>
+              </div>
+              <div className="space-y-2">
+                <h3 className="font-medium text-sm text-gray-500">TrustedForm</h3>
+                <p><span className="font-medium">Cert URL:</span> {selectedSubmission.trustedFormCertUrl ? <a href={selectedSubmission.trustedFormCertUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">View Certificate</a> : "Not provided"}</p>
               </div>
 
               <div className="space-y-2">
