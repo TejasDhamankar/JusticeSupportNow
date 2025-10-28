@@ -18,6 +18,7 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
+    console.log("Sign In button clicked, handleSubmit called.");
     e.preventDefault();
     setIsLoading(true);
     setError("");
