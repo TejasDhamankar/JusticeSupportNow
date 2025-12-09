@@ -2,7 +2,8 @@
 import mongoose, { Connection } from "mongoose";
 
 const MONGODB_URI = process.env.MONGODB_URI;
-const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME || "equity-legal";
+// Removed MONGODB_DB_NAME declaration/usage to fix URI concatenation issue.
+// const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME || "equity-legal";
 
 // --- MODIFICATION 1: REMOVED THE ERROR CHECK FROM HERE ---
 // The original error check here would crash the server on load.
@@ -20,18 +21,19 @@ if (!cached.mongoose) {
 }
 
 export async function connectToDatabase() {
-  // --- MODIFICATION 2: MOVED THE CHECK HERE ---
-  // Now, if the URI is missing, it throws an error *during* the connection
-  // attempt, which our try...catch block in route.ts can handle.
-  if (!MONGODB_URI) {
-    throw new Error("MONGODB_URI is not defined. Skipping database connection.");
-  }
+  // --- MODIFICATION 2: MOVED THE CHECK HERE ---
+  // Now, if the URI is missing, it throws an error *during* the connection
+  // attempt, which our try...catch block in route.ts can handle.
+  if (!MONGODB_URI) {
+    throw new Error("MONGODB_URI is not defined. Skipping database connection.");
+  }
 
   if (cached.mongoose.conn) return { db: cached.mongoose.conn, mongoose };
 
   if (!cached.mongoose.promise) {
     const opts = { bufferCommands: false } as any;
-    cached.mongoose.promise = mongoose.connect(`${MONGODB_URI}/${MONGODB_DB_NAME}`, opts).then((m) => m);
+    // FIX: Use MONGODB_URI directly as it already contains the database name.
+    cached.mongoose.promise = mongoose.connect(MONGODB_URI, opts).then((m) => m);
   }
   try {
     const m = await cached.mongoose.promise;
@@ -55,6 +57,8 @@ const ContactFormSchema = new mongoose.Schema(
     exposurePeriod: { type: String },
     medicalCondition: { type: String },
     additionalInfo: { type: String },
+    // ⬇️ NEW FIELD ADDED HERE
+    raceEthnicity: { type: String },
 
     // TrustedForm + metadata
     trustedFormCertUrl: { type: String },
