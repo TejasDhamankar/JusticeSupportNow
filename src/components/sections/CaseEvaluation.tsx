@@ -23,6 +23,7 @@ import {
   Shield,
   Clock,
   Briefcase,
+  Users,
   DollarSign,
 } from "lucide-react";
 
@@ -44,6 +45,7 @@ interface CaseEvaluationFormData {
   lastName: string;
   email: string;
   phone: string;
+  raceEthnicity: string;
   caseType: string;
   exposurePeriod: string;
   medicalCondition: string;
@@ -83,6 +85,7 @@ const CaseEvaluation = () => {
     lastName: "",
     email: "",
     phone: "",
+    raceEthnicity: "",
     caseType: "",
     exposurePeriod: "",
     medicalCondition: "",
@@ -204,7 +207,7 @@ const CaseEvaluation = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone || !formData.caseType) {
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone || !formData.caseType || !formData.raceEthnicity) {
       setFormStatus({ type: "error", message: "Please fill in all required contact and case type fields." });
       return;
     }
@@ -238,6 +241,7 @@ const CaseEvaluation = () => {
           lastName: "",
           email: "",
           phone: "",
+          raceEthnicity: "",
           caseType: "",
           exposurePeriod: "",
           medicalCondition: "",
@@ -402,6 +406,30 @@ const CaseEvaluation = () => {
                 </div>
               </fieldset>
 
+              {/* Race/Ethnicity Details */}
+              <fieldset className="p-4 border rounded-lg mt-4" style={{ borderColor: colors.border }}>
+                <legend className="px-2 text-sm font-bold" style={{ color: colors.accentGreen }}>
+                  <Users className="inline-block w-4 h-4 mr-1 mb-0.5" /> Race / Ethnicity
+                </legend>
+                <div className="space-y-4">
+                  <Select onValueChange={(val) => handleSelectChange("raceEthnicity", val)} value={formData.raceEthnicity}>
+                    <SelectTrigger className="h-12 bg-transparent border-[var(--border-gray)] focus:border-[var(--accent-green)] transition-colors">
+                      <SelectValue placeholder="Select your race / ethnicity*" />
+                    </SelectTrigger>
+                    <SelectContent style={{ backgroundColor: colors.cardBackground, borderColor: colors.border }}>
+                      <SelectItem value="white-caucasian">White / Caucasian</SelectItem>
+                      <SelectItem value="black-african-american">Black or African American</SelectItem>
+                      <SelectItem value="hispanic-latino">Hispanic or Latino</SelectItem>
+                      <SelectItem value="asian">Asian</SelectItem>
+                      <SelectItem value="american-indian-alaska-native">American Indian or Alaska Native</SelectItem>
+                      <SelectItem value="native-hawaiian-pacific-islander">Native Hawaiian or Other Pacific Islander</SelectItem>
+                      <SelectItem value="mena">Middle Eastern or North African (MENA)</SelectItem>
+                      <SelectItem value="two-or-more-races">Two or More Races</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </fieldset>
+              
               {/* Case Details */}
               <fieldset className="p-4 border rounded-lg mt-4" style={{ borderColor: colors.border }}>
                 <legend className="px-2 text-sm font-bold" style={{ color: colors.accentGreen }}>
@@ -430,6 +458,8 @@ const CaseEvaluation = () => {
                   />
                 </div>
               </fieldset>
+
+              
 
               {/* Agreements */}
               <div
